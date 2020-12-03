@@ -239,7 +239,8 @@ MonoBehaviour:
   CC: {fileID: 1484725907}
   Speed: 10
   TurnSmoothTime: 0.1
-  JumpHeight: 2
+  Mass: 2
+  JumpHeight: 5
 --- !u!143 &1484725907
 CharacterController:
   m_ObjectHideFlags: 0
