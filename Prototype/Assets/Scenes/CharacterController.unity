@@ -237,10 +237,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CC: {fileID: 1484725907}
+  JumpHeight: 20
   Speed: 10
   TurnSmoothTime: 0.1
-  Mass: 2
-  JumpHeight: 5
+  Mass: 5
 --- !u!143 &1484725907
 CharacterController:
   m_ObjectHideFlags: 0
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 2130785545}
   - component: {fileID: 2130785544}
   - component: {fileID: 2130785543}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

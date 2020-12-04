@@ -9,6 +9,7 @@ public class CharacterControl : MonoBehaviour
 {
     public CharacterController CC;
     public Controls Controls;
+    public float JumpHeight;
 
     [Range(0, 30)]
     public float Speed;    
@@ -24,9 +25,7 @@ public class CharacterControl : MonoBehaviour
     private Vector3 _moveDirection = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
     private Vector2 _movementInput;    
-    private float _forwardInput, _horizontalInput,_turnSmoothVelocity;
-
-    public float JumpHeight;
+    private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
     private bool _jump;
     private void Awake()
     {
@@ -40,9 +39,10 @@ public class CharacterControl : MonoBehaviour
     
     void Update()
     {        
-        _forwardInput = _movementInput.y;
+        _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
         SetVelocity();
+        Debug.Log(_velocity);
     }
 
     private void FixedUpdate()
@@ -59,6 +59,7 @@ public class CharacterControl : MonoBehaviour
         {
             _moveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;           
         }
+
         if (CC.isGrounded)
         {
             _moveDirection.y = -CC.stepOffset * 10;           
@@ -68,18 +69,20 @@ public class CharacterControl : MonoBehaviour
     private void ApplyMovement()
     {
         float horizontal = _horizontalInput;
-        float vertical = _forwardInput;
+        float vertical = _verticalInput;
+
         if (CC.isGrounded)
         {
             _moveDirection.x = horizontal * Speed;
             _moveDirection.z = vertical * Speed;
         }
+
         if (!CC.isGrounded)
         {
+            //Applies saved velocity to player when jumping
             _moveDirection.x = _velocity.x;
             _moveDirection.z = _velocity.z;
-        }
-           
+        }           
 
         if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
         {
@@ -100,6 +103,7 @@ public class CharacterControl : MonoBehaviour
 
     private void SetVelocity()
     {
+        //Saves the player velocity before he jumps
         if(!_jump && CC.isGrounded)
         {
             _velocity = _moveDirection.normalized * Speed;
