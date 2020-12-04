@@ -5,8 +5,12 @@ using UnityEngine;
 public class CubeMove : MonoBehaviour
 {
     public float Speed;
+    public float MaxHeight;
     void Update()
     {
-        this.transform.position += Vector3.up * Speed * Time.deltaTime;
+        if(transform.position.y < MaxHeight)
+        {
+            this.transform.position += Vector3.up * Speed * Time.deltaTime;
+        }        
     }
 }

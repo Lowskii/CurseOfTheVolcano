@@ -23,11 +23,13 @@ public class CameraFollow : MonoBehaviour
     {
         Vector2 lavaViewPortPosition = Camera.main.WorldToViewportPoint(Lava.position);
         Vector2 playerViewPortPosition = Camera.main.WorldToViewportPoint(Player.position);
-        float distance = playerViewPortPosition.y - lavaViewPortPosition.y;        
-
-        if(distance >= .6f)
+        float distance = playerViewPortPosition.y - lavaViewPortPosition.y;
+        Debug.Log(distance);
+        if(distance > .6f)
         {
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.transform.position + new Vector3(0, 0, -50), Time.deltaTime);
+            //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.transform.position + new Vector3(0, 0, -10), Time.deltaTime);
+            Vector3 newPosition = Camera.main.transform.position + new Vector3(0, 0, -50);
+            Camera.main.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, _smoothTime);
         }
        
     }
