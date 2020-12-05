@@ -308,6 +308,7 @@ public class CharacterControl : MonoBehaviour
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+   
         Debug.Log(hit.gameObject.name);
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PickUpSpeedUp"))
         {
