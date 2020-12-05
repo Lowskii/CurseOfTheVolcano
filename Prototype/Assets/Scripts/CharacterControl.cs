@@ -89,12 +89,11 @@ public class CharacterControl : MonoBehaviour
 
         if (!CC.isGrounded)
         {
-            float y = _moveDirection.y;
-            _moveDirection = transform.forward * Speed;
-            _moveDirection.y = y;
-
             if (new Vector2(horizontal, vertical).magnitude > .1f)
             {
+                float y = _moveDirection.y;
+                _moveDirection = transform.forward * Speed;
+                _moveDirection.y = y;
                 float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
@@ -106,8 +105,10 @@ public class CharacterControl : MonoBehaviour
     {
         if (_jump && CC.isGrounded)
         {            
-            _jump = false;           
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);           
+            _jump = false;
+            _moveDirection = _velocity;
+            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+            
         }            
     }      
 
