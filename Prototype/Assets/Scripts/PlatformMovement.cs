@@ -13,6 +13,7 @@ public class PlatformMovement : MonoBehaviour
     private int pointsIndex;
     private float _tolerance;
     private float _delayStart;
+    private bool _moving;
 
     void Start()
     {
@@ -20,6 +21,8 @@ public class PlatformMovement : MonoBehaviour
         if (Points.Length > 0) _currentTarget = Points[pointsIndex].transform.position;
 
         _tolerance = Speed * Time.deltaTime;
+
+        _moving = false;
     }
 
     void Update()
@@ -38,6 +41,7 @@ public class PlatformMovement : MonoBehaviour
         {
             this.transform.position = _currentTarget;
             _delayStart = Time.time;
+            _moving = false;
         }
     }
 
@@ -50,10 +54,13 @@ public class PlatformMovement : MonoBehaviour
     }
     private void NextPlatform()
     {
-        pointsIndex++;
-        if (pointsIndex >= Points.Length) pointsIndex = 0;
+        if (!_moving)
+        {
+            pointsIndex++;
+            if (pointsIndex >= Points.Length) pointsIndex = 0;
 
-        _currentTarget = Points[pointsIndex].transform.position;
+            _currentTarget = Points[pointsIndex].transform.position;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
