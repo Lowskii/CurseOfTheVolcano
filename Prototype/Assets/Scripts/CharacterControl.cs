@@ -9,13 +9,18 @@ public class CharacterControl : MonoBehaviour
 {
     public CharacterController CC;
     public Controls Controls;
+    public float JumpHeight;
 
     [Range(0, 30)]
     public float Speed;    
 
     [Tooltip("How smooth the character turns")]
     [Range(0,1)]
-    public float TurnSmoothTime = .1f;
+    public float TurnSmoothTime;
+
+    [Tooltip("How smooth the character turns while jumping")]
+    [Range(0, 1)]
+    public float JumpTurnSmoothTime;
 
     [Tooltip("Multiplies with gravity")]
     [Range(0,100)]
@@ -24,9 +29,7 @@ public class CharacterControl : MonoBehaviour
     private Vector3 _moveDirection = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
     private Vector2 _movementInput;    
-    private float _forwardInput, _horizontalInput,_turnSmoothVelocity;
-
-    public float JumpHeight;
+    private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
     private bool _jump;
     private void Awake()
     {
@@ -40,9 +43,9 @@ public class CharacterControl : MonoBehaviour
     
     void Update()
     {        
-        _forwardInput = _movementInput.y;
+        _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
-        SetVelocity();
+        SetVelocity();        
     }
 
     private void FixedUpdate()
@@ -59,6 +62,7 @@ public class CharacterControl : MonoBehaviour
         {
             _moveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;           
         }
+
         if (CC.isGrounded)
         {
             _moveDirection.y = -CC.stepOffset * 10;           
@@ -68,38 +72,49 @@ public class CharacterControl : MonoBehaviour
     private void ApplyMovement()
     {
         float horizontal = _horizontalInput;
-        float vertical = _forwardInput;
+        float vertical = _verticalInput;
+
         if (CC.isGrounded)
         {
             _moveDirection.x = horizontal * Speed;
             _moveDirection.z = vertical * Speed;
+
+            if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
+            {
+                float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
+                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            }
         }
+
         if (!CC.isGrounded)
         {
-            _moveDirection.x = _velocity.x;
-            _moveDirection.z = _velocity.z;
-        }
-           
-
-        if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
-        {
-            float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
-            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        }
+            if (new Vector2(horizontal, vertical).magnitude > .1f)
+            {
+                float y = _moveDirection.y;
+                _moveDirection = transform.forward * Speed;
+                _moveDirection.y = y;
+                float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
+                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            }
+        }            
     }
 
     private void ApplyJump()
     {
         if (_jump && CC.isGrounded)
         {            
-            _jump = false;           
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);            
+            _jump = false;
+            _moveDirection = _velocity;
+            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+            
         }            
     }      
 
     private void SetVelocity()
     {
+        //Saves the player velocity before he jumps
         if(!_jump && CC.isGrounded)
         {
             _velocity = _moveDirection.normalized * Speed;
