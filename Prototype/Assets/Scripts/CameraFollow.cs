@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour
     private void Update()
     {
         CalculateDistance();
-        MoveCamera();
+        MoveCamera();        
     }
     private void CalculateDistance()
     {
@@ -29,7 +29,7 @@ public class CameraFollow : MonoBehaviour
         {
             //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.transform.position + new Vector3(0, 0, -10), Time.deltaTime);
             Vector3 newPosition = Camera.main.transform.position + new Vector3(0, 0, -50);
-            Camera.main.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, _smoothTime);
+            Camera.main.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1f);
         }
        
     }

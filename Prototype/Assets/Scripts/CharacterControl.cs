@@ -16,7 +16,11 @@ public class CharacterControl : MonoBehaviour
 
     [Tooltip("How smooth the character turns")]
     [Range(0,1)]
-    public float TurnSmoothTime = .1f;
+    public float TurnSmoothTime;
+
+    [Tooltip("How smooth the character turns while jumping")]
+    [Range(0, 1)]
+    public float JumpTurnSmoothTime;
 
     [Tooltip("Multiplies with gravity")]
     [Range(0,100)]
@@ -41,8 +45,7 @@ public class CharacterControl : MonoBehaviour
     {        
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
-        SetVelocity();
-        Debug.Log(_velocity);
+        SetVelocity();        
     }
 
     private void FixedUpdate()
@@ -75,21 +78,28 @@ public class CharacterControl : MonoBehaviour
         {
             _moveDirection.x = horizontal * Speed;
             _moveDirection.z = vertical * Speed;
+
+            if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
+            {
+                float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
+                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            }
         }
 
         if (!CC.isGrounded)
         {
-            //Applies saved velocity to player when jumping
-            _moveDirection.x = _velocity.x;
-            _moveDirection.z = _velocity.z;
-        }           
+            float y = _moveDirection.y;
+            _moveDirection = transform.forward * Speed;
+            _moveDirection.y = y;
 
-        if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
-        {
-            float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
-            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        }
+            if (new Vector2(horizontal, vertical).magnitude > .1f)
+            {
+                float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
+                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            }
+        }            
     }
 
     private void ApplyJump()
@@ -97,7 +107,7 @@ public class CharacterControl : MonoBehaviour
         if (_jump && CC.isGrounded)
         {            
             _jump = false;           
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);            
+            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);           
         }            
     }      
 
