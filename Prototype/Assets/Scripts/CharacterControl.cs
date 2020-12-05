@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
+
+    private SpawnBehaviour SpawnBeh;
     public CharacterController CC;
     public Controls Controls;
     public float JumpHeight;
@@ -51,6 +53,13 @@ public class CharacterControl : MonoBehaviour
 
     private void Awake()
     {
+        //spawning
+        SpawnBeh = FindObjectOfType<SpawnBehaviour>();
+
+        transform.position = SpawnBeh.GetSpawnPosition();
+
+        //controls
+        //controls
         Controls = new Controls();
         Controls.PlayerControls.Jump.performed += context => _jump = true;
         Controls.PlayerControls.Jump.canceled += context => _jump = false;
