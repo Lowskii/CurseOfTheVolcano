@@ -38,7 +38,11 @@ public class CharacterControl : MonoBehaviour
     public float TrampolineForce = 15f;
     public float SpedUpSpeed = 1.5f;
     public float SlowedDownSpeed = 1.5f;
-    public float TimeOutPickUpsAndCurses = 10;
+
+
+    public float RunOutTimeDoubleJump = 3;
+    public float RunOutTimeSpeedUp = 5;
+
 
     private bool IsSlowedDown = false;
     private bool IsSpedUp;
@@ -49,6 +53,7 @@ public class CharacterControl : MonoBehaviour
     private bool IsInverseControlActive = false;   
 
     private float SpeedUpTime, SpeedDownTime, ParalysedTime, DoubleJumpTime, InversedTime, BounceTime;
+    private bool _bounce;
 
     private void Awake()
     {
@@ -75,6 +80,16 @@ public class CharacterControl : MonoBehaviour
         _jump = false;
     }
 
+    public void SetBounceTrue()
+    {
+        _bounce = true;
+    }
+
+    public void SetBounceFalse()
+    {
+        _bounce = false;
+    }
+
     void Update()
     {
         _movementInput = InputBeh.RotationVector;
@@ -89,8 +104,8 @@ public class CharacterControl : MonoBehaviour
         ApplyGravity();
         ApplyJump();
         CheckControls();
-        Bounce();
         CheckCoolDowns();
+        BounceWhenHitGround();
         CC.Move(MoveDirection * Time.fixedDeltaTime);
     }
 
@@ -106,34 +121,13 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = -CC.stepOffset * 10;           
         }        
     }
-    private void BounceTimer()
-    {
-        if (IsAlwaysJumping)
-        {
-            BounceTime += Time.deltaTime;
-            if (BounceTime > TimeOutPickUpsAndCurses)
-            {
-                IsAlwaysJumping = false;
-            }
-        }
-    }
-    private void ParalyseTimer()
-    {
-        if (IsParalaysed)
-        {
-            ParalysedTime += Time.deltaTime;
-            if (ParalysedTime > TimeOutPickUpsAndCurses)
-            {
-                IsParalaysed = false;
-            }
-        }
-    }
+  
     private void DoubleJumpTimer()
     {
         if (IsDoubleJumpActive)
         {
             DoubleJumpTime += Time.deltaTime;
-            if (DoubleJumpTime > TimeOutPickUpsAndCurses)
+            if (DoubleJumpTime > RunOutTimeDoubleJump)
             {
                 IsDoubleJumpActive = false;
             }
@@ -144,53 +138,22 @@ public class CharacterControl : MonoBehaviour
         if (IsSpedUp)
         {
             SpeedUpTime += Time.deltaTime;
-            if (SpeedUpTime > TimeOutPickUpsAndCurses)
+            if (SpeedUpTime > RunOutTimeSpeedUp)
             {
                 IsSpedUp = false;
             }
         }
     }
-    private void SpeedDownTimer()
-    {
-        if (IsSlowedDown)
-        {
-            SpeedDownTime += Time.deltaTime;
-            if (SpeedDownTime > TimeOutPickUpsAndCurses)
-            {
-                IsSlowedDown = false;
-            }
-        }
-    }
-    private void InverseControlTimer()
-    {
-        if (IsInverseControlActive)
-        {
-            InversedTime += Time.deltaTime;
-            if (InversedTime > TimeOutPickUpsAndCurses)
-            {
-                IsInverseControlActive = false;
-            }
-        }
-    }
+ 
 
     private void CheckCoolDowns()
     {
-        BounceTimer();
-        ParalyseTimer();
+        
         DoubleJumpTimer();
-        SpeedDownTimer();
         SpeedUpTimer();
-        InverseControlTimer();
 
     }
-    private void Bounce()
-    {       
-        if (IsAlwaysJumping && CC.isGrounded)
-        {
-            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * BounceHeight);
-        }
-        
-    }
+ 
 
     private void CheckControls()
     {
@@ -296,7 +259,39 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+    public void BounceWhenHitGround()
+    {
+        if (CC.isGrounded&&_bounce)
+        {
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+        }
+    
+    }
+    public void SetControlsInverseActive()
+    {
+        IsInverseControlActive = true;
+    }
+    public void SetControlsInverseNotActive()
+    {
+        IsInverseControlActive = false;
+    }
 
+    public void Paralyse()
+    {
+        IsParalaysed = true;
+    }
+    public void DeParalyse()
+    {
+        IsParalaysed = false;
+    }
+    public void SpeedDown()
+    {
+        IsSlowedDown = true;
+    }
+    public void NormalizeSpeedDown()
+    {
+        IsSlowedDown = false;
+    }
     public void ApplyJump()
     {
         if (_jump && CC.isGrounded)
@@ -314,6 +309,8 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
     }
+    
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
    
@@ -328,31 +325,7 @@ public class CharacterControl : MonoBehaviour
             IsDoubleJumpActive = true;
             hit.gameObject.SetActive(false);
 
-        }
-        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("CurseBounce"))
-        {
-            IsAlwaysJumping = true;
-            hit.gameObject.SetActive(false);
-
-        }
-        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("CurseParalyse"))
-        {
-            IsParalaysed = true;
-            hit.gameObject.SetActive(false);
-
-        }
-        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("CurseSpeedDown"))
-        {
-            IsSlowedDown = true;
-            hit.gameObject.SetActive(false);
-
-        }
-        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("CurseInvertControls"))
-        {
-            IsInverseControlActive = true;
-            hit.gameObject.SetActive(false);
-
-        }
+        }      
     }
 
     private void SetVelocity()
