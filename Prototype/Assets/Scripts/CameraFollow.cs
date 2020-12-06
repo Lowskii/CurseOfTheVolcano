@@ -14,10 +14,22 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private Vector3 _offset;
 
+    private void Start()
+    {
+          
+    }
+
     private void Update()
     {
-        CalculateDistance();
-        MoveCamera();        
+        if (GameObject.Find("TempPlayer(Clone)"))
+        {
+            Player = FindObjectOfType<CharacterControl>().gameObject.transform;
+        }
+        if (Player != null)
+        {
+            MoveCamera();
+        }
+       // CalculateDistance();                
     }
     private void CalculateDistance()
     {
@@ -41,8 +53,8 @@ public class CameraFollow : MonoBehaviour
     }
     private Vector3 GetCenterPoint()
     {        
-        var bounds = new Bounds(Lava.position, Vector3.zero);
-        bounds.Encapsulate(Player.position);
+        var bounds = new Bounds(Player.position, Vector3.zero);
+        //bounds.Encapsulate(Lava.position);
 
         return bounds.center;
     }
