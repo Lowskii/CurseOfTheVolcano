@@ -20,6 +20,16 @@ public class LavaBehaviour : MonoBehaviour
         if (hit.gameObject.tag == "Player")
         {
             Destroy(hit.gameObject);
+
+            //check if there is only one player left+
+           var players = FindObjectsOfType<CharacterControl >();
+
+            if(players.Length == 2)
+
+            {
+                Application.Quit();
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
         }
     }
 }
