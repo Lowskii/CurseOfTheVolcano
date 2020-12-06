@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
-
+    InputBehaviour InputBeh;
     private SpawnBehaviour SpawnBeh;
     public CharacterController CC;
     public Controls Controls;
@@ -59,17 +59,27 @@ public class CharacterControl : MonoBehaviour
         transform.position = SpawnBeh.GetSpawnPosition();
 
         //controls
-        //controls
-        Controls = new Controls();
-        Controls.PlayerControls.Jump.performed += context => _jump = true;
-        Controls.PlayerControls.Jump.canceled += context => _jump = false;
 
-        Controls.PlayerControls.Move.performed += context => _movementInput = context.ReadValue<Vector2>();
-        Controls.PlayerControls.Move.canceled += context => _movementInput = Vector2.zero;
+        InputBeh = GetComponent<InputBehaviour>();
+
+        InputBeh.StartJumpEvent.AddListener(StartJump);
+        InputBeh.CancelJumpEvent.AddListener(CancelJump);        
     }
     
+    private void StartJump()
+    {
+        _jump = true;
+    }
+
+    private void CancelJump()
+    {
+        _jump = false;
+    }
+
     void Update()
-    {        
+    {
+        _movementInput = InputBeh.RotationVector;
+
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
         SetVelocity();        
