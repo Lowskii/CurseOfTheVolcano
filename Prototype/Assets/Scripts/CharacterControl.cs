@@ -378,13 +378,4 @@ public class CharacterControl : MonoBehaviour
             _velocity = _moveDirection.normalized * Speed;
         }
     }
-
-    private void OnEnable()
-    {
-        Controls.PlayerControls.Enable();
-    }
-    private void OnDisable()
-    {
-        Controls.PlayerControls.Disable();
-    }
 }
