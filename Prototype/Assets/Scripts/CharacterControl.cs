@@ -56,7 +56,7 @@ public class CharacterControl : MonoBehaviour
         //spawning
         SpawnBeh = FindObjectOfType<SpawnBehaviour>();
 
-        transform.position = SpawnBeh.GetSpawnPosition();
+       if(SpawnBeh) transform.position = SpawnBeh.GetSpawnPosition();
 
         //controls
 
@@ -196,9 +196,7 @@ public class CharacterControl : MonoBehaviour
         {
             _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * BounceHeight);
         }
-
-
-
+        
     }
 
     private void CheckControls()
