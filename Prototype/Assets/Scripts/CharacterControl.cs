@@ -29,11 +29,11 @@ public class CharacterControl : MonoBehaviour
     [Range(0,100)]
     public float Mass;
 
-    private Vector3 _moveDirection = Vector3.zero;
+    public Vector3 MoveDirection = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
     private Vector2 _movementInput;    
     private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
-    private bool _jump;
+    public bool _jump;
 
     public float TrampolineForce = 15f;
     public float SpedUpSpeed = 1.5f;
@@ -46,8 +46,7 @@ public class CharacterControl : MonoBehaviour
     private bool IsAlwaysJumping = false;
     private bool IsDoubleJumpActive = false;
     private bool DoubleJumpPossible = false;
-    private bool IsInverseControlActive = false;
-    private bool TrampolineHit = false;
+    private bool IsInverseControlActive = false;   
 
     private float SpeedUpTime, SpeedDownTime, ParalysedTime, DoubleJumpTime, InversedTime, BounceTime;
 
@@ -66,12 +65,12 @@ public class CharacterControl : MonoBehaviour
         InputBeh.CancelJumpEvent.AddListener(CancelJump);        
     }
     
-    private void StartJump()
+    public void StartJump()
     {
         _jump = true;
     }
 
-    private void CancelJump()
+    public void CancelJump()
     {
         _jump = false;
     }
@@ -92,19 +91,19 @@ public class CharacterControl : MonoBehaviour
         CheckControls();
         Bounce();
         CheckCoolDowns();
-        CC.Move(_moveDirection * Time.fixedDeltaTime);
+        CC.Move(MoveDirection * Time.fixedDeltaTime);
     }
 
     private void ApplyGravity()
     {
         if (!CC.isGrounded)
         {
-            _moveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;           
+            MoveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;           
         }
 
         if (CC.isGrounded)
         {
-            _moveDirection.y = -CC.stepOffset * 10;           
+            MoveDirection.y = -CC.stepOffset * 10;           
         }        
     }
     private void BounceTimer()
@@ -185,16 +184,10 @@ public class CharacterControl : MonoBehaviour
 
     }
     private void Bounce()
-    {
-        if (TrampolineHit)
-        {
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * TrampolineForce);
-            TrampolineHit = false;
-        }
-
+    {       
         if (IsAlwaysJumping && CC.isGrounded)
         {
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * BounceHeight);
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * BounceHeight);
         }
         
     }
@@ -215,7 +208,7 @@ public class CharacterControl : MonoBehaviour
         }
         else
         {
-            _moveDirection = Vector3.zero;
+            MoveDirection = Vector3.zero;
         }
     }
 
@@ -237,12 +230,12 @@ public class CharacterControl : MonoBehaviour
 
         if (CC.isGrounded)
         {
-            _moveDirection.x = horizontal * Speed;
-            _moveDirection.z = vertical * Speed;
+            MoveDirection.x = horizontal * Speed;
+            MoveDirection.z = vertical * Speed;
 
-            if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
+            if (new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 3)
             {
-                float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
+                float targetAngle = Mathf.Atan2(MoveDirection.x, MoveDirection.z) * Mathf.Rad2Deg;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
             }
@@ -252,9 +245,9 @@ public class CharacterControl : MonoBehaviour
         {
             if (new Vector2(horizontal, vertical).magnitude > .1f)
             {
-                float y = _moveDirection.y;
-                _moveDirection = transform.forward * Speed;
-                _moveDirection.y = y;
+                float y = MoveDirection.y;
+                MoveDirection = transform.forward * Speed;
+                MoveDirection.y = y;
                 float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
@@ -279,12 +272,12 @@ public class CharacterControl : MonoBehaviour
 
         if (CC.isGrounded)
         {
-            _moveDirection.x = horizontal * Speed;
-            _moveDirection.z = vertical * Speed;
+            MoveDirection.x = horizontal * Speed;
+            MoveDirection.z = vertical * Speed;
 
-            if (new Vector2(_moveDirection.x, _moveDirection.z).magnitude > 3)
+            if (new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 3)
             {
-                float targetAngle = Mathf.Atan2(_moveDirection.x, _moveDirection.z) * Mathf.Rad2Deg;
+                float targetAngle = Mathf.Atan2(MoveDirection.x, MoveDirection.z) * Mathf.Rad2Deg;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
             }
@@ -294,9 +287,9 @@ public class CharacterControl : MonoBehaviour
         {
             if (new Vector2(horizontal, vertical).magnitude > .1f)
             {
-                float y = _moveDirection.y;
-                _moveDirection = transform.forward * Speed;
-                _moveDirection.y = y;
+                float y = MoveDirection.y;
+                MoveDirection = transform.forward * Speed;
+                MoveDirection.y = y;
                 float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
@@ -304,38 +297,32 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
-    private void ApplyJump()
+    public void ApplyJump()
     {
         if (_jump && CC.isGrounded)
         {
             _jump = false;
             DoubleJumpPossible = true;
 
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
 
         else if (_jump && !CC.isGrounded && IsDoubleJumpActive && DoubleJumpPossible)
         {
             _jump = false;
             DoubleJumpPossible = false;
-            _moveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
-
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
    
-        Debug.Log(hit.gameObject.name);
+        //Debug.Log(hit.gameObject.name);
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PickUpSpeedUp"))
         {
             IsSpedUp = true;
             hit.gameObject.SetActive(false);
-        }
-        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Trampoline"))
-        {
-            TrampolineHit = true;
-        }
+        }        
         else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PickUpDoubleJump"))
         {
             IsDoubleJumpActive = true;
@@ -373,7 +360,7 @@ public class CharacterControl : MonoBehaviour
         //Saves the player velocity before he jumps
         if(!_jump && CC.isGrounded)
         {
-            _velocity = _moveDirection.normalized * Speed;
+            _velocity = MoveDirection.normalized * Speed;
         }
     }
 }
