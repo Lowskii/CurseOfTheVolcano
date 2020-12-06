@@ -43,6 +43,7 @@ public class PlatformMovement : MonoBehaviour
             _delayStart = Time.time;
             _moving = false;
         }
+        else _moving = true;
     }
 
     private void UpdateTarget()
@@ -54,19 +55,16 @@ public class PlatformMovement : MonoBehaviour
     }
     private void NextPlatform()
     {
-        if (!_moving)
-        {
-            pointsIndex++;
-            if (pointsIndex >= Points.Length) pointsIndex = 0;
+        pointsIndex++;
+        if (pointsIndex >= Points.Length) pointsIndex = 0;
 
-            _currentTarget = Points[pointsIndex].transform.position;
-        }
+        _currentTarget = Points[pointsIndex].transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         other.transform.parent = this.transform;
-        if (!Continuous) NextPlatform();
+        if (!Continuous && !_moving) NextPlatform();
     }
     private void OnTriggerExit(Collider other)
     {
