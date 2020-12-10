@@ -70,12 +70,12 @@ public class CharacterControl : MonoBehaviour
         InputBeh.CancelJumpEvent.AddListener(CancelJump);        
     }
     
-    private void StartJump()
+    public void StartJump()
     {
         _jump = true;
     }
 
-    private void CancelJump()
+    public void CancelJump()
     {
         _jump = false;
     }
