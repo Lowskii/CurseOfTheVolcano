@@ -9,6 +9,7 @@ public class InputBehaviour : MonoBehaviour
 
     UnityEvent _StartJumpEvent = new UnityEvent();
     UnityEvent _CancelJumpEvent = new UnityEvent();
+    UnityEvent _StartInteractEvent = new UnityEvent();
 
 
     public UnityEvent StartJumpEvent
@@ -17,6 +18,8 @@ public class InputBehaviour : MonoBehaviour
     public UnityEvent CancelJumpEvent
     { get { return _CancelJumpEvent; } }
 
+    public UnityEvent StartInteractEvent
+    { get { return _StartInteractEvent; } }
 
     public Vector2 RotationVector
     {
@@ -32,6 +35,11 @@ public class InputBehaviour : MonoBehaviour
     public void OnJump()
     {
         _StartJumpEvent.Invoke();
+    }
+
+    public void OnInteract()
+    {
+        _StartInteractEvent.Invoke();
     }
 }
 

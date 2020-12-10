@@ -33,7 +33,8 @@ public class CharacterControl : MonoBehaviour
     private Vector3 _velocity = Vector3.zero;
     private Vector2 _movementInput;    
     private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
-    public bool _jump;
+    private bool _jump;
+    public bool Interact;
 
     public float TrampolineForce = 15f;
     public float SpedUpSpeed = 1.5f;
@@ -67,13 +68,19 @@ public class CharacterControl : MonoBehaviour
         InputBeh = GetComponent<InputBehaviour>();
 
         InputBeh.StartJumpEvent.AddListener(StartJump);
-        InputBeh.CancelJumpEvent.AddListener(CancelJump);        
+        InputBeh.CancelJumpEvent.AddListener(CancelJump);
+        InputBeh.StartInteractEvent.AddListener(StartInteract);    
+       
     }
     
-    private void StartJump()
+    public void StartJump()
     {
         _jump = true;
     }
+    public void StartInteract()
+    {
+        Interact = !Interact;       
+    }    
 
     private void CancelJump()
     {
@@ -93,7 +100,7 @@ public class CharacterControl : MonoBehaviour
     void Update()
     {
         _movementInput = InputBeh.RotationVector;
-
+        Debug.Log(Interact);
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
         SetVelocity();        
