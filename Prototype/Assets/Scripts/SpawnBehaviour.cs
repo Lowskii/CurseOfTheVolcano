@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class SpawnBehaviour : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class SpawnBehaviour : MonoBehaviour
     InputDevice _CurrentController;
 
     int _PlayerID = -1; //we increment this each spawn but the arrays start at 0
+    int _PlayersInGame = 0;
+
+    UnityEvent _PlayerDied = new UnityEvent();
+
+    public UnityEvent PlayerDiedEvent
+    { get { return _PlayerDied; } }
 
     public int PlayerId
     {
@@ -27,5 +34,17 @@ public class SpawnBehaviour : MonoBehaviour
     {
         _CurrentController = playerInput.devices[0];
         ++_PlayerID;
+        ++_PlayersInGame;
     }
+
+    public void RemovePlayer()
+    {
+        --_PlayersInGame;
+        PlayerDiedEvent.Invoke();
+    }
+
+    public int PlayersLeft
+    { get { return _PlayersInGame; } }
+
+
 }
