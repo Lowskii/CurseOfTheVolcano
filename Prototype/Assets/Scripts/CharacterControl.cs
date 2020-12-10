@@ -30,7 +30,7 @@ public class CharacterControl : MonoBehaviour
     public float Mass;
 
     public Vector3 MoveDirection = Vector3.zero;
-    private Vector3 _velocity = Vector3.zero;
+    public Vector3 _velocity = Vector3.zero;
     private Vector2 _movementInput;    
     private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
     private bool _jump;
@@ -99,8 +99,8 @@ public class CharacterControl : MonoBehaviour
 
     void Update()
     {
-        _movementInput = InputBeh.RotationVector;
-        Debug.Log(Interact);
+        Debug.Log(CC.velocity);
+        _movementInput = InputBeh.RotationVector;       
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
         SetVelocity();        
@@ -150,8 +150,7 @@ public class CharacterControl : MonoBehaviour
                 IsSpedUp = false;
             }
         }
-    }
- 
+    } 
 
     private void CheckCoolDowns()
     {
@@ -159,8 +158,7 @@ public class CharacterControl : MonoBehaviour
         DoubleJumpTimer();
         SpeedUpTimer();
 
-    }
- 
+    } 
 
     private void CheckControls()
     {

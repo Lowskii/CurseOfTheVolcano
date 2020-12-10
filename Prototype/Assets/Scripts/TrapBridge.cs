@@ -29,9 +29,7 @@ public class TrapBridge : MonoBehaviour
         if (_buttonPressed)
             DropBridge();
         else
-            ResetBridge();
-
-        //Debug.Log(_buttonPressed);
+            ResetBridge();        
     }
 
     private void DropBridge()
@@ -78,8 +76,7 @@ public class TrapBridge : MonoBehaviour
     private void StartDelayTimer()
     {
         if (_buttonPressed)
-        {
-            //_player.Interact = false;
+        {            
             _delayTimer += Time.deltaTime;
             if (_delayTimer > _resetDelay)
             {
