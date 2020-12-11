@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class CharacterControl : MonoBehaviour
 {
     InputBehaviour InputBeh;
-    private SpawnBehaviour SpawnBeh;
     public CharacterController CC;
     public Controls Controls;
     public float JumpHeight;
@@ -58,11 +57,6 @@ public class CharacterControl : MonoBehaviour
 
     private void Awake()
     {
-        //spawning
-        SpawnBeh = FindObjectOfType<SpawnBehaviour>();
-
-       if(SpawnBeh) transform.position = SpawnBeh.GetSpawnPosition();
-
         //controls
 
         InputBeh = GetComponent<InputBehaviour>();

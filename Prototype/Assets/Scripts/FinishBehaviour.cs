@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class FinishBehaviour : MonoBehaviour
 {
-    private SpawnBehaviour SpawnBeh;
-
-    private void Awake()
-    {
-        SpawnBeh = FindObjectOfType<SpawnBehaviour>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -17,15 +11,12 @@ public class FinishBehaviour : MonoBehaviour
 
             Destroy(other.gameObject);
 
-            if (SpawnBeh)
-            {
-                SpawnBeh.RemovePlayer();
+            InputBehaviour.PlayerDied();
 
-                if (SpawnBeh.PlayersLeft == 1)
-                {
-                    UnityEditor.EditorApplication.isPlaying = false;
-                    Application.Quit();
-                }
+            if (InputBehaviour.PlayersAlive == 1)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Application.Quit();
             }
         }
     }

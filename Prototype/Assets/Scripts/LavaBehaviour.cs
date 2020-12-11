@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class LavaBehaviour : MonoBehaviour
 {
-    [SerializeField] private  float _riseSpeed;
-    [SerializeField] private  float _MaxHeight;
-    [SerializeField] private  float _riseSpeedMultiplier = 0.25f;
-    private SpawnBehaviour SpawnBeh;
+    [SerializeField] private float _riseSpeed;
+    [SerializeField] private float _MaxHeight;
+    [SerializeField] private float _riseSpeedMultiplier = 0.25f;
 
     float _ActiveRiseSpeed;
 
     private void Awake()
     {
-        SpawnBeh = FindObjectOfType<SpawnBehaviour>();
+        InputBehaviour.PlayerDiedEvent.AddListener(IncreaseSpeed);
 
-        if (SpawnBeh) SpawnBeh.PlayerDiedEvent.AddListener(IncreaseSpeed);
-
-
-            _ActiveRiseSpeed = _riseSpeed;
+        _ActiveRiseSpeed = _riseSpeed;
     }
 
-    
+
     void IncreaseSpeed()
     {
         _ActiveRiseSpeed += _riseSpeed * _riseSpeedMultiplier;
@@ -39,16 +35,14 @@ public class LavaBehaviour : MonoBehaviour
         {
             Destroy(hit.gameObject);
 
-            if (SpawnBeh)
-            {
-                SpawnBeh.RemovePlayer();
 
-                //check if there is only one player left+
-                if (SpawnBeh.PlayersLeft == 1)
-                {
-                    Application.Quit();
-                    UnityEditor.EditorApplication.isPlaying = false;
-                }
+            InputBehaviour.PlayerDied();
+
+            //check if there is only one player left+
+            if (InputBehaviour.PlayersAlive == 1)
+            {
+                Application.Quit();
+                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
     }
