@@ -10,17 +10,8 @@ public class GameSceneBehaviour : MonoBehaviour
 
     private void Start()
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("CharacterSelectionScreen");
-=======
         //spawn players
         var playerConfigs = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
->>>>>>> Stashed changes
-=======
-        //spawn players
-        var playerConfigs = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
->>>>>>> Stashed changes
 
         for (int i = 0; i < playerConfigs.Length; i++)
         {
