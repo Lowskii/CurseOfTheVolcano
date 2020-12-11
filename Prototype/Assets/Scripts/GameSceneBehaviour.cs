@@ -6,7 +6,7 @@ public class GameSceneBehaviour : MonoBehaviour
 {
     void Start()
     {
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("CharacterSelectionScreen");
+        //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("CharacterSelectionScreen");
 
     }
 
