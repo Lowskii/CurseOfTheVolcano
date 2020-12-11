@@ -74,7 +74,7 @@ public class CharacterControl : MonoBehaviour
     public void StartInteract()
     {
         Interact = !Interact;       
-    }    
+    }
 
     public void CancelJump()
     {
@@ -92,8 +92,8 @@ public class CharacterControl : MonoBehaviour
     }
 
     void Update()
-    {
-        Debug.Log(CC.velocity);
+    {        
+        Debug.Log(_jump);
         _movementInput = InputBeh.RotationVector;       
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
@@ -297,10 +297,8 @@ public class CharacterControl : MonoBehaviour
         {
             _jump = false;
             DoubleJumpPossible = true;
-
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-
         else if (_jump && !CC.isGrounded && IsDoubleJumpActive && DoubleJumpPossible)
         {
             _jump = false;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
-{
-    public Transform Lava;
+{    
     public Transform Player;
     private Vector3 _velocity;
 
@@ -12,39 +11,20 @@ public class CameraFollow : MonoBehaviour
     private float _smoothTime;
 
     [SerializeField]
-    private Vector3 _offset;
-
-    private void Start()
-    {
-          
-    }
+    private Vector3 _offset;   
 
     private void Update()
     {
-        if (GameObject.Find("TempPlayer(Clone)"))
-        {
-            Player = FindObjectOfType<CharacterControl>().gameObject.transform;
-        }
+        //if (GameObject.Find("TempPlayer(Clone)"))
+        //{
+        //    Player = FindObjectOfType<CharacterControl>().gameObject.transform;
+        //}
         if (Player != null)
         {
             MoveCamera();
-        }
-       // CalculateDistance();                
+        }                      
     }
-    private void CalculateDistance()
-    {
-        Vector2 lavaViewPortPosition = Camera.main.WorldToViewportPoint(Lava.position);
-        Vector2 playerViewPortPosition = Camera.main.WorldToViewportPoint(Player.position);
-        float distance = playerViewPortPosition.y - lavaViewPortPosition.y;
-        Debug.Log(distance);
-        if(distance > .6f)
-        {
-            //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.transform.position + new Vector3(0, 0, -10), Time.deltaTime);
-            Vector3 newPosition = Camera.main.transform.position + new Vector3(0, 0, -50);
-            Camera.main.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1f);
-        }
-       
-    }
+   
     private void MoveCamera()
     {
         Vector3 centerPoint = GetCenterPoint();
@@ -54,8 +34,6 @@ public class CameraFollow : MonoBehaviour
     private Vector3 GetCenterPoint()
     {        
         var bounds = new Bounds(Player.position, Vector3.zero);
-        //bounds.Encapsulate(Lava.position);
-
         return bounds.center;
     }
 

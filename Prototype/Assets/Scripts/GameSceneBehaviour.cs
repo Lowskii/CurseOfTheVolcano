@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class GameSceneBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform[] _SpawnPoints = new Transform[4];
-    [SerializeField] private GameObject _PlayerPrefab;
+    [SerializeField] private GameObject _PlayerPrefab;    
 
     private void Start()
     {
@@ -15,9 +15,10 @@ public class GameSceneBehaviour : MonoBehaviour
 
         for (int i = 0; i < playerConfigs.Length; i++)
         {
-            var player = Instantiate(_PlayerPrefab, _SpawnPoints[i].position, _SpawnPoints[i].rotation);
-
+            var player = Instantiate(_PlayerPrefab, _SpawnPoints[i].position, _SpawnPoints[i].rotation);          
             player.GetComponent<InputBehaviour>().InitialiazePlayer(playerConfigs[i]);
-        }
+            playerConfigs[i].Input.gameObject.GetComponentInChildren<CameraFollow>().Player = player.transform;
+            
+        }      
     }
 }

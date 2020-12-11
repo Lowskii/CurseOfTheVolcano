@@ -39,7 +39,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
         if (_PlayerConfigs.Count >= _MinPlayers && _PlayerConfigs.Count <= _MaxPlayers && _PlayerConfigs.All(p => p.IsReady == true))
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("LevelPrototype");
         }
     }
 
