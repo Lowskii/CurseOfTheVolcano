@@ -8,7 +8,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 {
     private List<PlayerConfiguration> _PlayerConfigs;
     int _MaxPlayers = 4;
-    int _MinPlayers = 2;
+    int _MinPlayers = 1;
 
 
     public static PlayerConfigurationManager Instance { get; private set; }
@@ -39,7 +39,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
         if (_PlayerConfigs.Count >= _MinPlayers && _PlayerConfigs.Count <= _MaxPlayers && _PlayerConfigs.All(p => p.IsReady == true))
         {
-            SceneManager.LoadScene("LevelPrototype");
+            SceneManager.LoadScene("GameScene");
         }
     }
 
