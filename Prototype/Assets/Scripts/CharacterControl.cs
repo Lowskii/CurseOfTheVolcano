@@ -14,10 +14,10 @@ public class CharacterControl : MonoBehaviour
     public float BounceHeight;
 
     [Range(0, 30)]
-    public float Speed;    
+    public float Speed;
 
     [Tooltip("How smooth the character turns")]
-    [Range(0,1)]
+    [Range(0, 1)]
     public float TurnSmoothTime;
 
     [Tooltip("How smooth the character turns while jumping")]
@@ -25,13 +25,13 @@ public class CharacterControl : MonoBehaviour
     public float JumpTurnSmoothTime;
 
     [Tooltip("Multiplies with gravity")]
-    [Range(0,100)]
+    [Range(0, 100)]
     public float Mass;
 
     public Vector3 MoveDirection = Vector3.zero;
     public Vector3 _velocity = Vector3.zero;
-    private Vector2 _movementInput;    
-    private float _verticalInput, _horizontalInput,_turnSmoothVelocity;    
+    private Vector2 _movementInput;
+    private float _verticalInput, _horizontalInput, _turnSmoothVelocity;
     private bool _jump;
     public bool Interact;
 
@@ -50,7 +50,7 @@ public class CharacterControl : MonoBehaviour
     private bool IsAlwaysJumping = false;
     private bool IsDoubleJumpActive = false;
     private bool DoubleJumpPossible = false;
-    private bool IsInverseControlActive = false;   
+    private bool IsInverseControlActive = false;
 
     private float SpeedUpTime, DoubleJumpTime, PushForceTime;
     private bool _bounce;
@@ -69,17 +69,23 @@ public class CharacterControl : MonoBehaviour
 
         InputBeh.StartJumpEvent.AddListener(StartJump);
         InputBeh.CancelJumpEvent.AddListener(CancelJump);
-        InputBeh.StartInteractEvent.AddListener(StartInteract);    
-       
+        InputBeh.StartInteractEvent.AddListener(StartInteract);
+
     }
-    
+
     public void StartJump()
     {
         _jump = true;
     }
     public void StartInteract()
     {
-        Interact = !Interact;       
+        Interact = true;
+        Invoke("StopInteract", 0.5f);
+    }
+
+    private void StopInteract()
+    {
+        Interact = false;
     }
 
     public void CancelJump()
@@ -98,14 +104,13 @@ public class CharacterControl : MonoBehaviour
     }
 
     void Update()
-    {        
-        Debug.Log(_jump);
-        _movementInput = InputBeh.RotationVector;       
+    {
+        _movementInput = InputBeh.RotationVector;
         _verticalInput = _movementInput.y;
-        _horizontalInput = _movementInput.x;        
+        _horizontalInput = _movementInput.x;
         SetVelocity();
 
-        
+
     }
 
     private void FixedUpdate()
@@ -122,15 +127,15 @@ public class CharacterControl : MonoBehaviour
     {
         if (!CC.isGrounded)
         {
-            MoveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;           
+            MoveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;
         }
 
         if (CC.isGrounded)
         {
-            MoveDirection.y = -CC.stepOffset * 10;           
-        }        
+            MoveDirection.y = -CC.stepOffset * 10;
+        }
     }
-  
+
     private void DoubleJumpTimer()
     {
         if (IsDoubleJumpActive)
@@ -165,15 +170,15 @@ public class CharacterControl : MonoBehaviour
                 IsSpedUp = false;
             }
         }
-    } 
+    }
 
     private void CheckCoolDowns()
     {
-        
+
         DoubleJumpTimer();
         SpeedUpTimer();
         ForceTimer();
-    } 
+    }
 
     private void CheckControls()
     {
@@ -235,11 +240,11 @@ public class CharacterControl : MonoBehaviour
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
             }
-        }            
+        }
     }
     private void ApplyInverseMovement()
     {
-        float horizontal = -1*_horizontalInput;
+        float horizontal = -1 * _horizontalInput;
         float vertical = -1 * _verticalInput;
 
         if (IsSpedUp)
@@ -281,11 +286,11 @@ public class CharacterControl : MonoBehaviour
     }
     public void BounceWhenHitGround()
     {
-        if (CC.isGrounded&&_bounce)
+        if (CC.isGrounded && _bounce)
         {
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-    
+
     }
     public void SetControlsInverseActive()
     {
@@ -330,22 +335,25 @@ public class CharacterControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null)
+        if (other.tag == "Player")
         {
+            Vector3 dir = other.transform.position - transform.position;
+            dir.Normalize();
+
             CharacterController CC = other.GetComponent<CharacterController>();
-            CC.Move(MoveDirection * Time.fixedDeltaTime*CurrentForce);
+            CC.Move(dir * CurrentForce);
         }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-   
+
         //Debug.Log(hit.gameObject.name);
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PickUpSpeedUp"))
         {
             IsSpedUp = true;
             hit.gameObject.SetActive(false);
-        }        
+        }
         else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PickUpDoubleJump"))
         {
             IsDoubleJumpActive = true;
@@ -363,7 +371,7 @@ public class CharacterControl : MonoBehaviour
     private void SetVelocity()
     {
         //Saves the player velocity before he jumps
-        if(!_jump && CC.isGrounded)
+        if (!_jump && CC.isGrounded)
         {
             _velocity = MoveDirection.normalized * Speed;
         }
