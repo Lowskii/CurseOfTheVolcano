@@ -340,6 +340,8 @@ public class CharacterControl : MonoBehaviour
             Vector3 dir = other.transform.position - transform.position;
             dir.Normalize();
 
+            //Vector3.Lerp(transform.position, transform.position + dir);
+
             CharacterController CC = other.GetComponent<CharacterController>();
             CC.Move(dir * CurrentForce);
         }
@@ -362,7 +364,7 @@ public class CharacterControl : MonoBehaviour
         }
         else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("StrongPush"))
         {
-            IsDoubleJumpActive = true;
+            IsForceDoubled = true;
             hit.gameObject.SetActive(false);
 
         }
