@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class PlayerConfigurationManager : MonoBehaviour
 {
+    [SerializeField] bool _PlayLevel1 = false;
+
     private List<PlayerConfiguration> _PlayerConfigs;
     int _MaxPlayers = 4;
     int _MinPlayers = 1;
@@ -39,7 +41,8 @@ public class PlayerConfigurationManager : MonoBehaviour
 
         if (_PlayerConfigs.Count >= _MinPlayers && _PlayerConfigs.Count <= _MaxPlayers && _PlayerConfigs.All(p => p.IsReady == true))
         {
-            SceneManager.LoadScene("LevelPrototype");
+           if(_PlayLevel1) SceneManager.LoadScene("LevelPrototype");
+            else SceneManager.LoadScene("GameScene");
         }
     }
 
