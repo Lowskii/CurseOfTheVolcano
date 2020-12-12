@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,7 +23,7 @@ public class CharacterControl : MonoBehaviour
 
     [Tooltip("How smooth the character turns while jumping")]
     [Range(0, 1)]
-    public float JumpTurnSmoothTime;
+    public float JumpTurnSmoothTime;    
 
     [Tooltip("Multiplies with gravity")]
     [Range(0, 100)]
@@ -102,26 +103,23 @@ public class CharacterControl : MonoBehaviour
     {
         _bounce = false;
     }
-
     void Update()
-    {
+    {        
         _movementInput = InputBeh.RotationVector;
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;
         SetVelocity();
-
-
     }
 
     private void FixedUpdate()
     {
         ApplyGravity();
-        ApplyJump();
+        ApplyJump();       
         CheckControls();
         CheckCoolDowns();
         BounceWhenHitGround();
         CC.Move(MoveDirection * Time.fixedDeltaTime);
-    }
+    }    
 
     private void ApplyGravity()
     {

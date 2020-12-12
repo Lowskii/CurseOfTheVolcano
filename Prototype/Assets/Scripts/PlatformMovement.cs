@@ -14,6 +14,7 @@ public class PlatformMovement : MonoBehaviour
     private float _tolerance;
     private float _delayStart;
     private bool _moving;
+    public bool Moving => _moving;
 
     void Start()
     {
