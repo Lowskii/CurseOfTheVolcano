@@ -52,11 +52,17 @@ public class CharacterControl : MonoBehaviour
     private bool DoubleJumpPossible = false;
     private bool IsInverseControlActive = false;   
 
-    private float SpeedUpTime, SpeedDownTime, ParalysedTime, DoubleJumpTime, InversedTime, BounceTime;
+    private float SpeedUpTime, DoubleJumpTime, PushForceTime;
     private bool _bounce;
+
+    public float Force, StrongerForce;
+    private float CurrentForce;
+    private bool IsForceDoubled = false;
 
     private void Awake()
     {
+        CurrentForce = Force;
+
         //controls
 
         InputBeh = GetComponent<InputBehaviour>();
@@ -97,7 +103,9 @@ public class CharacterControl : MonoBehaviour
         _movementInput = InputBeh.RotationVector;       
         _verticalInput = _movementInput.y;
         _horizontalInput = _movementInput.x;        
-        SetVelocity();        
+        SetVelocity();
+
+        
     }
 
     private void FixedUpdate()
@@ -134,6 +142,19 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+    private void ForceTimer()
+    {
+        if (IsForceDoubled)
+        {
+            CurrentForce = StrongerForce;
+            PushForceTime += Time.deltaTime;
+            if (PushForceTime > RunOutTimeDoubleJump)
+            {
+                IsForceDoubled = false;
+                CurrentForce = Force;
+            }
+        }
+    }
     private void SpeedUpTimer()
     {
         if (IsSpedUp)
@@ -151,7 +172,7 @@ public class CharacterControl : MonoBehaviour
         
         DoubleJumpTimer();
         SpeedUpTimer();
-
+        ForceTimer();
     } 
 
     private void CheckControls()
@@ -306,7 +327,15 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<CharacterController>() != null)
+        {
+            CharacterController CC = other.GetComponent<CharacterController>();
+            CC.Move(MoveDirection * Time.fixedDeltaTime*CurrentForce);
+        }
+    }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -322,7 +351,13 @@ public class CharacterControl : MonoBehaviour
             IsDoubleJumpActive = true;
             hit.gameObject.SetActive(false);
 
-        }      
+        }
+        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("StrongPush"))
+        {
+            IsDoubleJumpActive = true;
+            hit.gameObject.SetActive(false);
+
+        }
     }
 
     private void SetVelocity()
