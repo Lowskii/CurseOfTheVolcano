@@ -5,8 +5,6 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 public class InputBehaviour : MonoBehaviour
 {
-    static int _PlayersAlive = 0;
-
     Vector2 _RotationVector;
 
     UnityEvent _StartJumpEvent = new UnityEvent();
@@ -16,10 +14,6 @@ public class InputBehaviour : MonoBehaviour
     UnityEvent _EndPushEvent = new UnityEvent();
 
 
-    static UnityEvent _PlayerDiedEvent = new UnityEvent();
-
-    private Controls _Controls;
-    private PlayerConfiguration _PlayerConfig;
     public UnityEvent StartJumpEvent
     { get { return _StartJumpEvent; } }
 
@@ -35,60 +29,15 @@ public class InputBehaviour : MonoBehaviour
     public UnityEvent StartInteractEvent
     { get { return _StartInteractEvent; } }
 
-    static public UnityEvent PlayerDiedEvent
-    { get { return _PlayerDiedEvent; } }
-    public Vector2 RotationVector
+        public Vector2 RotationVector
     {
         get { return _RotationVector; }
     }
 
-    private void Awake()
-    {
-        _Controls = new Controls();
-    }
-
-    public void InitialiazePlayer(PlayerConfiguration pc)
-    {
-        _PlayerConfig = pc;
-
-        //set correct color
-        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-        for (int t = 0; t < meshRenderers.Length; t++)
-        {
-            meshRenderers[t].material = _PlayerConfig.PlayerMaterial;
-        }
-
-        //setup input
-        _PlayerConfig.Input.onActionTriggered += Input_OnActionTriggered;
-
-        ++_PlayersAlive;
-    }
-
-    private void Input_OnActionTriggered(InputAction.CallbackContext obj)
-    {
-        if(obj.action.name == _Controls.PlayerControls.Move.name)
-        {
-            OnMove(obj);
-        }
-
-        if (obj.action.name == _Controls.PlayerControls.Interact.name)
-        {
-            OnInteract();
-        }
-
-        if (obj.action.name == _Controls.PlayerControls.Jump.name)
-        {
-            OnJump();
-        }
-        if (obj.action.name == _Controls.PlayerControls.Push.name)
-        {
-            OnPush();
-        }
-    }
     //EVENTS
-    public void OnMove(InputAction.CallbackContext value)
+    public void OnMove(InputValue value)
     {
-        _RotationVector = value.ReadValue<Vector2>();
+        _RotationVector = value.Get<Vector2>();
     }
     public void OnJump()
     {
@@ -103,16 +52,6 @@ public class InputBehaviour : MonoBehaviour
     {
         _StartInteractEvent.Invoke();
     }
-
-    static public void PlayerDied()
-    {
-        --_PlayersAlive;
-        _PlayerDiedEvent.Invoke();
-    }
-
-    static public int PlayersAlive
-    { get { return _PlayersAlive; } }
-
 }
 
 

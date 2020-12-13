@@ -3,11 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
+
+    //static
+    static UnityEvent _PlayerDiedEvent = new UnityEvent();
+    static int _PlayersAlive = 0;
+
+    static public void PlayerDied()
+    {
+        --_PlayersAlive;
+        _PlayerDiedEvent.Invoke();
+    }
+
+    static public int PlayersAlive
+    { get { return _PlayersAlive; } }
+
+    static public UnityEvent PlayerDiedEvent
+    { get { return _PlayerDiedEvent; } }
+
+    //vars
+    private PlayerConfiguration _PlayerConfig;
     InputBehaviour InputBeh;
     public CharacterController CC;
     public Controls Controls;
@@ -64,10 +84,21 @@ public class CharacterControl : MonoBehaviour
     private void Awake()
     {
         CurrentForce = Force;
+    }
+
+    public void InitialiazePlayer(PlayerConfiguration pc)
+    {
+        _PlayerConfig = pc;
+
+        //set correct color
+        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        for (int t = 0; t < meshRenderers.Length; t++)
+        {
+            meshRenderers[t].material = _PlayerConfig.PlayerMaterial;
+        }
 
         //controls
-
-        InputBeh = GetComponent<InputBehaviour>();
+        InputBeh = _PlayerConfig.Input.gameObject.GetComponent<InputBehaviour>();
 
         InputBeh.StartJumpEvent.AddListener(StartJump);
         InputBeh.CancelJumpEvent.AddListener(CancelJump);
@@ -77,8 +108,9 @@ public class CharacterControl : MonoBehaviour
 
         InputBeh.StartInteractEvent.AddListener(StartInteract);
 
+        //
+        ++_PlayersAlive;
     }
-
     public void StartJump()
     {
         _jump = true;

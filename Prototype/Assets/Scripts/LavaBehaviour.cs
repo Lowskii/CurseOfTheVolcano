@@ -12,7 +12,7 @@ public class LavaBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        InputBehaviour.PlayerDiedEvent.AddListener(IncreaseSpeed);
+        CharacterControl.PlayerDiedEvent.AddListener(IncreaseSpeed);
 
         _ActiveRiseSpeed = _riseSpeed;
     }
@@ -36,10 +36,10 @@ public class LavaBehaviour : MonoBehaviour
             Destroy(hit.gameObject);
 
 
-            InputBehaviour.PlayerDied();
+            CharacterControl.PlayerDied();
 
             //check if there is only one player left+
-            if (InputBehaviour.PlayersAlive == 1)
+            if (CharacterControl.PlayersAlive == 1)
             {
                 Application.Quit();
                 UnityEditor.EditorApplication.isPlaying = false;
