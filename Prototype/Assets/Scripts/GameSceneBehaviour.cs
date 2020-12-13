@@ -17,8 +17,11 @@ public class GameSceneBehaviour : MonoBehaviour
         {
             var player = Instantiate(_PlayerPrefab, _SpawnPoints[i].position, _SpawnPoints[i].rotation);          
             player.GetComponent<InputBehaviour>().InitialiazePlayer(playerConfigs[i]);
-            playerConfigs[i].Input.gameObject.GetComponentInChildren<CameraFollow>().Player = player.transform;
-            
-        }      
+            playerConfigs[i].Input.gameObject.GetComponentInChildren<CameraFollow>().Player = player.transform;            
+        }
+
+        //disable joining
+        PlayerInputManager InputManager = PlayerConfigurationManager.Instance.gameObject.GetComponent<PlayerInputManager>();
+        if (InputManager) InputManager.DisableJoining();
     }
 }
