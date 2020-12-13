@@ -32,28 +32,28 @@ public class Curses : MonoBehaviour
         {
             foreach (GameObject item in myList)
             {
-                InverseControls(item);
+                if(item != null) InverseControls(item);
             }
         }
         else if (Curse == CurseType.Paralyse)
         {
             foreach (GameObject item in myList)
             {
-                Paralyse(item);
+                if (item != null) Paralyse(item);
             }
         }
         else if (Curse == CurseType.SpeedDown)
         {
             foreach (GameObject item in myList)
             {
-                SpeedDown(item);
+                if (item != null) SpeedDown(item);
             }
         }
         else if (Curse == CurseType.Bounce)
         {
             foreach (GameObject item in myList)
             {
-                ActivateBounce(item);
+                if (item != null) ActivateBounce(item);
             }
         }
     }
@@ -133,28 +133,28 @@ public class Curses : MonoBehaviour
                 {
                     foreach (GameObject item in myList)
                     {
-                        NormalizeControls(item);
+                        if (item != null) NormalizeControls(item);
                     }
                 }
                 else if (Curse == CurseType.Paralyse)
                 {
                     foreach (GameObject item in myList)
                     {
-                        DeParalyse(item);
+                        if (item != null) DeParalyse(item);
                     }
                 }
                 else if (Curse == CurseType.SpeedDown)
                 {
                     foreach (GameObject item in myList)
                     {
-                        SpeedDownNormalize(item);
+                        if (item != null) SpeedDownNormalize(item);
                     }
                 }
                 else if (Curse == CurseType.Bounce)
                 {
                     foreach (GameObject item in myList)
                     {
-                        DeActivateBounce(item);
+                        if (item != null) DeActivateBounce(item);
                     }
                 }
             }
