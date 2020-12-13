@@ -59,6 +59,7 @@ public class CharacterControl : MonoBehaviour
     public float Force, StrongerForce;
     private float CurrentForce;
     private bool IsForceDoubled = false;
+    private bool _push;
 
     private void Awake()
     {
@@ -70,6 +71,10 @@ public class CharacterControl : MonoBehaviour
 
         InputBeh.StartJumpEvent.AddListener(StartJump);
         InputBeh.CancelJumpEvent.AddListener(CancelJump);
+
+        InputBeh.StartPushEvent.AddListener(StartPush);
+        InputBeh.EndPushEvent.AddListener(StopPush);
+
         InputBeh.StartInteractEvent.AddListener(StartInteract);
 
     }
@@ -77,6 +82,15 @@ public class CharacterControl : MonoBehaviour
     public void StartJump()
     {
         _jump = true;
+    }
+    public void StartPush()
+    {
+        _push = true;
+
+    }
+    public void StopPush()
+    {
+        _push = false;
     }
     public void StartInteract()
     {
@@ -142,6 +156,7 @@ public class CharacterControl : MonoBehaviour
             if (DoubleJumpTime > RunOutTimeDoubleJump)
             {
                 IsDoubleJumpActive = false;
+                DoubleJumpTime = 0;
             }
         }
     }
@@ -155,6 +170,7 @@ public class CharacterControl : MonoBehaviour
             {
                 IsForceDoubled = false;
                 CurrentForce = Force;
+                PushForceTime = 0;
             }
         }
     }
@@ -166,6 +182,19 @@ public class CharacterControl : MonoBehaviour
             if (SpeedUpTime > RunOutTimeSpeedUp)
             {
                 IsSpedUp = false;
+                SpeedUpTime = 0;
+            }
+        }
+    }
+    private void PushTimer()
+    {
+        if (_push)
+        {
+            SpeedUpTime += Time.deltaTime;
+            if (SpeedUpTime > 1)
+            {
+                StopPush();
+                SpeedUpTime = 0;
             }
         }
     }
@@ -331,17 +360,30 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        
         if (other.tag == "Player")
         {
+            
+            PushOtherPlayer(other);
+            PushTimer();
+           
+        }
+    }
+
+    private void PushOtherPlayer(Collider other)
+    {
+        if (_push)
+        {
             Vector3 dir = other.transform.position - transform.position;
-            dir.Normalize();
+            dir = dir.normalized;
 
             //Vector3.Lerp(transform.position, transform.position + dir);
+            //other.transform.position = Vector3.Lerp(transform.position, transform.position - dir * CurrentForce, TurnSmoothTime);
 
             CharacterController CC = other.GetComponent<CharacterController>();
-            CC.Move(dir * CurrentForce);
+            CC.Move(dir * CurrentForce * Time.deltaTime);
         }
     }
 

@@ -12,7 +12,11 @@ public class InputBehaviour : MonoBehaviour
     UnityEvent _StartJumpEvent = new UnityEvent();
     UnityEvent _CancelJumpEvent = new UnityEvent();
     UnityEvent _StartInteractEvent = new UnityEvent();
-   static UnityEvent _PlayerDiedEvent = new UnityEvent();
+    UnityEvent _StartPushEvent = new UnityEvent();
+    UnityEvent _EndPushEvent = new UnityEvent();
+
+
+    static UnityEvent _PlayerDiedEvent = new UnityEvent();
 
     private Controls _Controls;
     private PlayerConfiguration _PlayerConfig;
@@ -21,6 +25,12 @@ public class InputBehaviour : MonoBehaviour
 
     public UnityEvent CancelJumpEvent
     { get { return _CancelJumpEvent; } }
+
+    public UnityEvent StartPushEvent
+    { get { return _StartPushEvent; } }
+
+    public UnityEvent EndPushEvent
+    { get { return _EndPushEvent; } }
 
     public UnityEvent StartInteractEvent
     { get { return _StartInteractEvent; } }
@@ -70,6 +80,10 @@ public class InputBehaviour : MonoBehaviour
         {
             OnJump();
         }
+        if (obj.action.name == _Controls.PlayerControls.Push.name)
+        {
+            OnPush();
+        }
     }
     //EVENTS
     public void OnMove(InputAction.CallbackContext value)
@@ -79,6 +93,10 @@ public class InputBehaviour : MonoBehaviour
     public void OnJump()
     {
         _StartJumpEvent.Invoke();
+    }
+    public void OnPush()
+    {
+        _StartPushEvent.Invoke();
     }
 
     public void OnInteract()
