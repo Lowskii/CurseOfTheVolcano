@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bounce : MonoBehaviour
 {
     [SerializeField]
-    private float _bounceForce;
+    private Vector3 _bounceForce;
     private Transform _player;
     private bool _pushing;
 
@@ -17,7 +17,7 @@ public class Bounce : MonoBehaviour
     {    if (_player != null && _pushing)
         {
             StartCoroutine(PushBack());
-            _player.transform.position -= Vector3.forward * Time.deltaTime * _bounceForce;
+            _player.transform.position += _bounceForce * Time.deltaTime;
         }
     }    
     private void OnTriggerEnter(Collider other)
