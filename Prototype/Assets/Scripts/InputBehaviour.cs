@@ -15,7 +15,6 @@ public class InputBehaviour : MonoBehaviour
     UnityEvent _StartPushEvent = new UnityEvent();
     UnityEvent _EndPushEvent = new UnityEvent();
 
-
     static UnityEvent _PlayerDiedEvent = new UnityEvent();
 
     private Controls _Controls;
@@ -66,7 +65,7 @@ public class InputBehaviour : MonoBehaviour
 
     private void Input_OnActionTriggered(InputAction.CallbackContext obj)
     {
-        if(obj.action.name == _Controls.PlayerControls.Move.name)
+        if (obj.action.name == _Controls.PlayerControls.Move.name)
         {
             OnMove(obj);
         }
