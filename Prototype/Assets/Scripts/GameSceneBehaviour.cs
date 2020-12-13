@@ -16,7 +16,7 @@ public class GameSceneBehaviour : MonoBehaviour
         for (int i = 0; i < playerConfigs.Length; i++)
         {
             var player = Instantiate(_PlayerPrefab, _SpawnPoints[i].position, _SpawnPoints[i].rotation);          
-            player.GetComponent<CharacterControl>().InitialiazePlayer(playerConfigs[i]);
+            player.GetComponent<InputBehaviour>().InitialiazePlayer(playerConfigs[i]);
             playerConfigs[i].Input.gameObject.GetComponentInChildren<CameraFollow>().Player = player.transform;            
         }
 

@@ -11,9 +11,9 @@ public class FinishBehaviour : MonoBehaviour
 
             Destroy(other.gameObject);
 
-            CharacterControl.PlayerDied();
+            InputBehaviour.PlayerDied();
 
-            if (CharacterControl.PlayersAlive == 1)
+            if (InputBehaviour.PlayersAlive == 1)
             {
                 UnityEditor.EditorApplication.isPlaying = false;
                 Application.Quit();
