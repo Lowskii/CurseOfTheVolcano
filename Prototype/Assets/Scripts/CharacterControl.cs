@@ -113,7 +113,7 @@ public class CharacterControl : MonoBehaviour
     }
     public void StartJump()
     {
-        _jump = true;
+        if(CC.isGrounded) _jump = true;
     }
     public void StartPush()
     {
