@@ -63,6 +63,7 @@ public class CharacterControl : MonoBehaviour
 
     public float RunOutTimeDoubleJump = 3;
     public float RunOutTimeSpeedUp = 5;
+    public float RecoverTime = 1.5f;
 
 
     private bool IsSlowedDown = false;
@@ -72,8 +73,9 @@ public class CharacterControl : MonoBehaviour
     private bool IsDoubleJumpActive = false;
     private bool DoubleJumpPossible = false;
     private bool IsInverseControlActive = false;
+    private bool IsAbleToRecover = false;
 
-    private float SpeedUpTime, DoubleJumpTime, PushForceTime;
+    private float SpeedUpTime, DoubleJumpTime, PushForceTime, RecoverFromPushJumpTime;
     private bool _bounce;
 
     public float Force, StrongerForce;
@@ -196,6 +198,7 @@ public class CharacterControl : MonoBehaviour
     {
         if (IsForceDoubled)
         {
+            IsDoubleJumpActive = true;
             CurrentForce = StrongerForce;
             PushForceTime += Time.deltaTime;
             if (PushForceTime > RunOutTimeDoubleJump)
@@ -203,6 +206,20 @@ public class CharacterControl : MonoBehaviour
                 IsForceDoubled = false;
                 CurrentForce = Force;
                 PushForceTime = 0;
+            }
+        }
+    }
+    private void PushRecoverTimer()
+    {
+        if (IsAbleToRecover)
+        {
+            IsDoubleJumpActive = true;
+            RecoverTime += Time.deltaTime;
+            if (RecoverTime > RecoverFromPushJumpTime)
+            {
+                IsAbleToRecover = false;
+                IsDoubleJumpActive = false;
+                RecoverTime = 0;
             }
         }
     }
@@ -237,6 +254,7 @@ public class CharacterControl : MonoBehaviour
         DoubleJumpTimer();
         SpeedUpTimer();
         ForceTimer();
+        PushRecoverTimer();
     }
 
     private void CheckControls()
@@ -391,7 +409,13 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("SafeMechanicTrigger"))
+        {
+            IsAbleToRecover = true;
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         
@@ -408,6 +432,7 @@ public class CharacterControl : MonoBehaviour
     {
         if (_push)
         {
+            IsAbleToRecover = true;
             Vector3 dir = other.transform.position - transform.position;
             dir = dir.normalized;
 
