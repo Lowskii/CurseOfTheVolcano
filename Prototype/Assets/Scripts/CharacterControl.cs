@@ -68,8 +68,7 @@ public class CharacterControl : MonoBehaviour
 
     private bool IsSlowedDown = false;
     private bool IsSpedUp;
-    private bool IsParalaysed = false;
-    private bool IsAlwaysJumping = false;
+    private bool IsParalaysed = false;    
     private bool IsDoubleJumpActive = false;
     private bool DoubleJumpPossible = false;
     private bool IsInverseControlActive = false;
@@ -115,7 +114,7 @@ public class CharacterControl : MonoBehaviour
     }
     public void StartJump()
     {
-        if(CC.isGrounded) _jump = true;
+        if(CC.isGrounded || IsDoubleJumpActive && DoubleJumpPossible) _jump = true;
     }
     public void StartPush()
     {
@@ -399,10 +398,10 @@ public class CharacterControl : MonoBehaviour
         if (_jump && CC.isGrounded)
         {
             _jump = false;
-            DoubleJumpPossible = true;
+            DoubleJumpPossible = true;            
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-        else if (_jump && !CC.isGrounded && IsDoubleJumpActive && DoubleJumpPossible)
+        if (_jump && !CC.isGrounded && IsDoubleJumpActive && DoubleJumpPossible)
         {
             _jump = false;
             DoubleJumpPossible = false;
