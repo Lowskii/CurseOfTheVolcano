@@ -102,25 +102,25 @@
             "actions": [
                 {
                     "name": "Select",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "1fa63b5d-5ae5-4f51-ba36-ad2cc403e125",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "Back",
-                    "type": "Button",
-                    "id": "e2588233-693e-4523-a1c9-a656bc2ff8aa",
-                    "expectedControlType": "Button",
+                    "name": "Selection",
+                    "type": "PassThrough",
+                    "id": "c0fb1228-74b2-47fb-a045-cc081766d66f",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "Selection",
-                    "type": "Value",
-                    "id": "c0fb1228-74b2-47fb-a045-cc081766d66f",
-                    "expectedControlType": "",
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "77391dc7-9cf5-4cf7-901e-d9030183c258",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -139,34 +139,23 @@
                 },
                 {
                     "name": "",
-                    "id": "71478eb1-c7ab-4cc9-98ef-df5b30efe2b3",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Back",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ddeb5839-4bf7-4b89-8e47-a2fdf166918f",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Selection",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f6881743-aa5a-4209-8c92-70aff56d4767",
                     "path": "<Gamepad>/dpad",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Selection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d580fb44-0cfa-4db0-ae8b-5f744f412ec4",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

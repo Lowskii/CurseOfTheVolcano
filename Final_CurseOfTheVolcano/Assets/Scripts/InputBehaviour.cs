@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.UI;
 
 public class InputBehaviour : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class InputBehaviour : MonoBehaviour
     public void SetInputUser(InputUser inputUser)
     {
         m_Controls = (Controls)inputUser.actions;
+
+        InputSystemUIInputModule inputModule = transform.parent.parent.GetComponentInChildren<InputSystemUIInputModule>();
+        MovementBehaviour movementBeh = GetComponent<MovementBehaviour>();
 
         foreach (InputAction action in inputUser.actions)
         {
@@ -25,23 +29,34 @@ public class InputBehaviour : MonoBehaviour
             switch (action.name)
             {
                 case "Selection":
-                    newEvent.AddListener(Selection);
-                    action.performed += newEvent.Invoke;
+   
+                    if (inputModule != null)
+                    {
+                        InputActionReference selectionRef = ScriptableObject.CreateInstance<InputActionReference>();
+                        selectionRef.Set(action);
+
+                        inputModule.move = selectionRef;
+                    }
                     break;
                 case "Select":
                     newEvent.AddListener(Select);
                     action.performed += newEvent.Invoke;
+                    if (inputModule != null)
+                    {
+                        InputActionReference selectRef = ScriptableObject.CreateInstance<InputActionReference>();
+                        selectRef.Set(action);
+
+                        inputModule.submit = selectRef;
+                    }
                     break;
-                case "Back":
-                    newEvent.AddListener(Back);
-                    action.performed += newEvent.Invoke;
+                case "Start":
                     break;
                 case "Movement":
-                    newEvent.AddListener(Movement);
+                    newEvent.AddListener(movementBeh.Movement);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Jump":
-                    newEvent.AddListener(Jump);
+                    newEvent.AddListener(movementBeh.Jump);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Push":
@@ -53,7 +68,7 @@ public class InputBehaviour : MonoBehaviour
                     action.performed += newEvent.Invoke;
                     break;
                 default:
-                    Debug.Log("There is no functionality yet for action: " + action.name + " in action map: " + action.actionMap); 
+                    Debug.Log("There is no functionality yet for action: " + action.name + " in action map: " + action.actionMap);
                     break;
             }
         }
@@ -72,28 +87,13 @@ public class InputBehaviour : MonoBehaviour
     }
 
     //Menu controls
-     void Select(InputAction.CallbackContext value)
+    void Select(InputAction.CallbackContext value)
     {
-         Debug.Log("select");
-    }
-
-     void Back(InputAction.CallbackContext value)
-    {
-        Debug.Log("Back");
-    }
-
-     void Selection(InputAction.CallbackContext value)
-    {
-       // Debug.Log("Selection: " + value.ReadValue<Vector2>());
-    }
+        Debug.Log("select");
+    } 
 
 
     //game controls
-
-    void Jump(InputAction.CallbackContext value)
-    {
-        Debug.Log("Jump");
-    }
 
     void Interact(InputAction.CallbackContext value)
     {
@@ -105,8 +105,5 @@ public class InputBehaviour : MonoBehaviour
         Debug.Log("Push");
     }
 
-    void Movement(InputAction.CallbackContext value)
-    {
-        //Debug.Log("Movement: " + value.ReadValue<Vector2>());
-    }
+
 }

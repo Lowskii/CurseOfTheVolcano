@@ -15,7 +15,7 @@ public class @Controls : IInputActionCollection, IDisposable
     ""name"": ""Controls"",
     ""maps"": [
         {
-            ""name"": ""Game Controls"",
+            ""name"": ""GameControls"",
             ""id"": ""7126f1dd-5fce-4d88-b671-edae3aeb0ff6"",
             ""actions"": [
                 {
@@ -110,30 +110,30 @@ public class @Controls : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""Menu Controls"",
+            ""name"": ""MenuControls"",
             ""id"": ""2acd94c9-b16b-45ab-96aa-61eef6063e9b"",
             ""actions"": [
                 {
                     ""name"": ""Select"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""1fa63b5d-5ae5-4f51-ba36-ad2cc403e125"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Back"",
-                    ""type"": ""Button"",
-                    ""id"": ""e2588233-693e-4523-a1c9-a656bc2ff8aa"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Selection"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c0fb1228-74b2-47fb-a045-cc081766d66f"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Selection"",
-                    ""type"": ""Value"",
-                    ""id"": ""c0fb1228-74b2-47fb-a045-cc081766d66f"",
-                    ""expectedControlType"": """",
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""77391dc7-9cf5-4cf7-901e-d9030183c258"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -152,28 +152,6 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""71478eb1-c7ab-4cc9-98ef-df5b30efe2b3"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Back"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ddeb5839-4bf7-4b89-8e47-a2fdf166918f"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Selection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f6881743-aa5a-4209-8c92-70aff56d4767"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
@@ -182,23 +160,34 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Selection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d580fb44-0cfa-4db0-ae8b-5f744f412ec4"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // Game Controls
-        m_GameControls = asset.FindActionMap("Game Controls", throwIfNotFound: true);
+        // GameControls
+        m_GameControls = asset.FindActionMap("GameControls", throwIfNotFound: true);
         m_GameControls_Movement = m_GameControls.FindAction("Movement", throwIfNotFound: true);
         m_GameControls_Jump = m_GameControls.FindAction("Jump", throwIfNotFound: true);
         m_GameControls_Interact = m_GameControls.FindAction("Interact", throwIfNotFound: true);
         m_GameControls_Push = m_GameControls.FindAction("Push", throwIfNotFound: true);
-        // Menu Controls
-        m_MenuControls = asset.FindActionMap("Menu Controls", throwIfNotFound: true);
+        // MenuControls
+        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
         m_MenuControls_Select = m_MenuControls.FindAction("Select", throwIfNotFound: true);
-        m_MenuControls_Back = m_MenuControls.FindAction("Back", throwIfNotFound: true);
         m_MenuControls_Selection = m_MenuControls.FindAction("Selection", throwIfNotFound: true);
+        m_MenuControls_Start = m_MenuControls.FindAction("Start", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -245,7 +234,7 @@ public class @Controls : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Game Controls
+    // GameControls
     private readonly InputActionMap m_GameControls;
     private IGameControlsActions m_GameControlsActionsCallbackInterface;
     private readonly InputAction m_GameControls_Movement;
@@ -302,19 +291,19 @@ public class @Controls : IInputActionCollection, IDisposable
     }
     public GameControlsActions @GameControls => new GameControlsActions(this);
 
-    // Menu Controls
+    // MenuControls
     private readonly InputActionMap m_MenuControls;
     private IMenuControlsActions m_MenuControlsActionsCallbackInterface;
     private readonly InputAction m_MenuControls_Select;
-    private readonly InputAction m_MenuControls_Back;
     private readonly InputAction m_MenuControls_Selection;
+    private readonly InputAction m_MenuControls_Start;
     public struct MenuControlsActions
     {
         private @Controls m_Wrapper;
         public MenuControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_MenuControls_Select;
-        public InputAction @Back => m_Wrapper.m_MenuControls_Back;
         public InputAction @Selection => m_Wrapper.m_MenuControls_Selection;
+        public InputAction @Start => m_Wrapper.m_MenuControls_Start;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -327,12 +316,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelect;
-                @Back.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnBack;
-                @Back.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnBack;
-                @Back.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnBack;
                 @Selection.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelection;
                 @Selection.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelection;
                 @Selection.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnSelection;
+                @Start.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
+                @Start.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
+                @Start.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
             }
             m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -340,12 +329,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
-                @Back.started += instance.OnBack;
-                @Back.performed += instance.OnBack;
-                @Back.canceled += instance.OnBack;
                 @Selection.started += instance.OnSelection;
                 @Selection.performed += instance.OnSelection;
                 @Selection.canceled += instance.OnSelection;
+                @Start.started += instance.OnStart;
+                @Start.performed += instance.OnStart;
+                @Start.canceled += instance.OnStart;
             }
         }
     }
@@ -360,7 +349,7 @@ public class @Controls : IInputActionCollection, IDisposable
     public interface IMenuControlsActions
     {
         void OnSelect(InputAction.CallbackContext context);
-        void OnBack(InputAction.CallbackContext context);
         void OnSelection(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
     }
 }
