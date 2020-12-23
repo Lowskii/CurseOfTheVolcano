@@ -4607,7 +4607,6 @@ MonoBehaviour:
   - {fileID: 2126291251}
   - {fileID: 174088231}
   - {fileID: 1979845544}
-  m_PlayerPrefab: {fileID: 102058573857987430, guid: d20122d40f5d4864d986bebcebae0731, type: 3}
 --- !u!4 &237026590
 Transform:
   m_ObjectHideFlags: 0
@@ -11721,7 +11720,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Background Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11785,13 +11784,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalRotation: {x: -0.91475564, y: 0.17129917, z: 0.0054814704, w: 0.3658535}
   m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -42.161, y: -188.949, z: 204.669}
 --- !u!1 &964557007
 GameObject:
   m_ObjectHideFlags: 0

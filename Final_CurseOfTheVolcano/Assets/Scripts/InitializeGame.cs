@@ -10,6 +10,7 @@ public class InitializeGame : MonoBehaviour
     {
         InputBehaviour[] inputs = FindObjectsOfType<InputBehaviour>();
 
+
         for (int i = 0; i < inputs.Length; i++)
         {
             //reset mesh transform
@@ -24,12 +25,18 @@ public class InitializeGame : MonoBehaviour
             //switch to game controls
             inputs[i].SwitchToGameActionMapping();
 
-            //setup the camera rects
+            //get the camera of the menu
+            Camera menuCam = inputs[i].gameObject.transform.parent.GetComponentInChildren<Camera>();
 
             //make the player a seperate gameobject 
-            inputs[i].transform.parent = null;            
+            inputs[i].transform.parent = null;
+
+            //setup the camera rects
+            Camera playerCam = inputs[i].GetComponentInChildren<Camera>();
+            playerCam.rect = menuCam.rect;
+
         }
         //cleanup the unwanted objects
-    Destroy(GameObject.Find("MainLayout"));
+        Destroy(GameObject.Find("MainLayout"));
     }
 }
