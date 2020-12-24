@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4470981700319186170}
   - component: {fileID: 4470981700319186171}
   - component: {fileID: 4470981700319186164}
+  - component: {fileID: 5087127198335495736}
   m_Layer: 0
-  m_Name: MovingPlatform
+  m_Name: P_MovingPlatformBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,5 +94,23 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5087127198335495736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470981700319186165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e0656c8de43f84f926e45e69323fbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points:
+  - {fileID: 0}
+  - {fileID: 0}
+  Speed: 4
+  DelayTime: 1
+  Continuous: 1
