@@ -35,6 +35,9 @@ public class InitializeGame : MonoBehaviour
             Camera playerCam = inputs[i].GetComponentInChildren<Camera>();
             playerCam.rect = menuCam.rect;
 
+            //enable movement
+            inputs[i].GetComponentInChildren<CharacterControl>().enabled = true;
+
         }
         //cleanup the unwanted objects
         Destroy(GameObject.Find("MainLayout"));

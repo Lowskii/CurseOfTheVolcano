@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 102058573857987433}
   - component: {fileID: 5849437519655488177}
   m_Layer: 9
-  m_Name: Player
+  m_Name: P_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ CharacterController:
   m_GameObject: {fileID: 1461960388409540016}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461960388409540016}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad4da8455542eee46a53f67c440ac934, type: 3}
   m_Name: 

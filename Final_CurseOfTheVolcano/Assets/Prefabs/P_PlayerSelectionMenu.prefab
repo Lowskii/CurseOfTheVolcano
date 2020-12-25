@@ -847,7 +847,7 @@ GameObject:
   - component: {fileID: 7767043047973270644}
   - component: {fileID: 7767043047973270647}
   m_Layer: 0
-  m_Name: PlayerSelectionMenu
+  m_Name: P_PlayerSelectionMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1808,6 +1808,10 @@ PrefabInstance:
     - target: {fileID: 8601134282722922688, guid: d20122d40f5d4864d986bebcebae0731, type: 3}
       propertyPath: m_LocalPosition.y
       value: 19.096
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827254771639058176, guid: d20122d40f5d4864d986bebcebae0731, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20122d40f5d4864d986bebcebae0731, type: 3}
