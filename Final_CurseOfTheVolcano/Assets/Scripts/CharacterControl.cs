@@ -39,7 +39,7 @@ public class CharacterControl : MonoBehaviour
     public Vector3 _velocity = Vector3.zero;
 
     private Vector2 _movementInput;
-    private float _verticalInput, _horizontalInput, _turnSmoothVelocity;
+    private float m_VerticalInput, m_HorizontalInput, _turnSmoothVelocity;
     private bool IsMovementInversed;
     private bool IsDoubleJUmpPossible;
 
@@ -53,7 +53,6 @@ public class CharacterControl : MonoBehaviour
     private void Update()
     {
         SetVelocity();
-        //CheckJump();
     }
 
     
@@ -72,20 +71,21 @@ public class CharacterControl : MonoBehaviour
         CC.Move(MoveDirection * Time.fixedDeltaTime);
     }
 
-    private void CheckJump()
+
+    public void Jump(InputAction.CallbackContext value)
     {
-        if (CC.isGrounded)
+        if (CC.isGrounded || (!CC.isGrounded && IsDoubleJUmpPossible))
         {
-            Jump();
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-        else if (!CC.isGrounded && IsDoubleJUmpPossible)
-        {
-            Jump();
-        }
-    }
-    private void Jump()
+    }   
+    
+    public void Movement(InputAction.CallbackContext value)
     {
-        MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+        var movement = value.ReadValue<Vector2>();
+
+        m_HorizontalInput = movement.x;
+        m_VerticalInput = movement.y;
     }
     private void ApplyGravity()
     {
@@ -101,8 +101,8 @@ public class CharacterControl : MonoBehaviour
     }
     private void ApplyMovement()
     {
-        float horizontal = _horizontalInput;
-        float vertical = _verticalInput;
+        float horizontal = m_HorizontalInput;
+        float vertical = m_VerticalInput;
 
         if (IsMovementInversed)
         {
