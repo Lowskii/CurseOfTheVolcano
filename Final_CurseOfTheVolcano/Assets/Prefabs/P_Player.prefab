@@ -248,7 +248,7 @@ CharacterController:
   m_GameObject: {fileID: 1461960388409540016}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
@@ -270,11 +270,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CC: {fileID: 8827254771639058176}
-  Input: {fileID: 0}
-  Speed: 0
-  TurnSmoothTime: 0
-  JumpTurnSmoothTime: 0
-  Mass: 0
+  Input: {fileID: 102058573857987433}
+  Speed: 5
+  NormalPushForce: 35
+  StrongPushForce: 60
+  JumpHeight: 2
+  TurnSmoothTime: 0.276
+  JumpTurnSmoothTime: 0.291
+  Mass: 2
   MoveDirection: {x: 0, y: 0, z: 0}
   _velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &7225710562356330440
