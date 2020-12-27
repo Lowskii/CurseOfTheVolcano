@@ -9,7 +9,6 @@ using UnityEngine.Events;
 public class CharacterControl : MonoBehaviour
 {
     public CharacterController CC;
-    public InputBehaviour Input;
 
     [Range(0, 30)]
     public float Speed;
@@ -43,12 +42,7 @@ public class CharacterControl : MonoBehaviour
     private bool IsMovementInversed;
     private bool IsDoubleJUmpPossible;
 
-    private void Start()
-    {
-        //controls
-        Input =gameObject.GetComponent<InputBehaviour>();
 
-    }
 
     private void Update()
     {
@@ -66,9 +60,9 @@ public class CharacterControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        ApplyMovement();
         ApplyGravity();
-        CC.Move(MoveDirection * Time.fixedDeltaTime);
+        ApplyMovement();
+
     }
 
 
@@ -78,14 +72,26 @@ public class CharacterControl : MonoBehaviour
         {
             MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
         }
-    }   
-    
+    }
+
     public void Movement(InputAction.CallbackContext value)
     {
         var movement = value.ReadValue<Vector2>();
 
         m_HorizontalInput = movement.x;
         m_VerticalInput = movement.y;
+
+        CC.Move(MoveDirection * Time.deltaTime * Speed);
+
+
+    }
+    public void Push(InputAction.CallbackContext value)
+    {
+       
+    }
+    public void Interact(InputAction.CallbackContext value)
+    {
+        
     }
     private void ApplyGravity()
     {
@@ -99,6 +105,8 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = -CC.stepOffset * 10;
         }
     }
+
+
     private void ApplyMovement()
     {
         float horizontal = m_HorizontalInput;

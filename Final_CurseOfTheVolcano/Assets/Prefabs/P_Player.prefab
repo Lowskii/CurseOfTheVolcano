@@ -251,20 +251,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461960388409540016}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad4da8455542eee46a53f67c440ac934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CC: {fileID: 8827254771639058176}
-  Input: {fileID: 102058573857987433}
-  Speed: 5
+  Speed: 10
   NormalPushForce: 35
   StrongPushForce: 60
   JumpHeight: 2
-  TurnSmoothTime: 0.276
-  JumpTurnSmoothTime: 0.291
-  Mass: 2
+  TurnSmoothTime: 0.1
+  JumpTurnSmoothTime: 0.15
+  Mass: 5
   MoveDirection: {x: 0, y: 0, z: 0}
   _velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &7225710562356330440
