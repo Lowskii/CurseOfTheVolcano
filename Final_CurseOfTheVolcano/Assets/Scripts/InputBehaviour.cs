@@ -14,7 +14,8 @@ public class InputBehaviour : MonoBehaviour
         m_Controls = (Controls)inputUser.actions;
 
         InputSystemUIInputModule inputModule = transform.parent.parent.GetComponentInChildren<InputSystemUIInputModule>();
-        MovementBehaviour movementBeh = GetComponent<MovementBehaviour>();
+
+        CharacterControl characterControl = GetComponentInChildren<CharacterControl>();
 
         foreach (InputAction action in inputUser.actions)
         {
@@ -52,11 +53,11 @@ public class InputBehaviour : MonoBehaviour
                 case "Start":
                     break;
                 case "Movement":
-                    newEvent.AddListener(movementBeh.Movement);
+                    newEvent.AddListener(characterControl.Movement);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Jump":
-                    newEvent.AddListener(movementBeh.Jump);
+                    newEvent.AddListener(characterControl.Jump);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Push":

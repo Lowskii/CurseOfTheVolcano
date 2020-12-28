@@ -1,16 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
     public CharacterController CC;
-    public InputBehaviour Input;
 
     [Range(0, 30)]
     public float Speed;
+
+    [Range(0, 100)]
+    public float NormalPushForce;
+    [Range(0, 200)]
+    public float StrongPushForce;
+    private float CurrentPushForce;
+
+    [Range(0, 5)]
+    public float JumpHeight;
 
     [Tooltip("How smooth the character turns")]
     [Range(0, 1)]
@@ -28,17 +38,18 @@ public class CharacterControl : MonoBehaviour
     public Vector3 _velocity = Vector3.zero;
 
     private Vector2 _movementInput;
-    private float _verticalInput, _horizontalInput, _turnSmoothVelocity;
+    private float m_VerticalInput, m_HorizontalInput, _turnSmoothVelocity;
     private bool IsMovementInversed;
+    private bool IsDoubleJUmpPossible;
+
+
 
     private void Update()
     {
         SetVelocity();
-        //if (Input.)
-        //{
-
-        //}
     }
+
+    
     private void SetVelocity()
     {
         //Saves the player velocity before he jumps
@@ -49,9 +60,38 @@ public class CharacterControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        ApplyMovement();
         ApplyGravity();
-        CC.Move(MoveDirection * Time.fixedDeltaTime);
+        ApplyMovement();
+
+    }
+
+
+    public void Jump(InputAction.CallbackContext value)
+    {
+        if (CC.isGrounded || (!CC.isGrounded && IsDoubleJUmpPossible))
+        {
+            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+        }
+    }
+
+    public void Movement(InputAction.CallbackContext value)
+    {
+        var movement = value.ReadValue<Vector2>();
+
+        m_HorizontalInput = movement.x;
+        m_VerticalInput = movement.y;
+
+        CC.Move(MoveDirection * Time.deltaTime * Speed);
+
+
+    }
+    public void Push(InputAction.CallbackContext value)
+    {
+       
+    }
+    public void Interact(InputAction.CallbackContext value)
+    {
+        
     }
     private void ApplyGravity()
     {
@@ -65,10 +105,12 @@ public class CharacterControl : MonoBehaviour
             MoveDirection.y = -CC.stepOffset * 10;
         }
     }
+
+
     private void ApplyMovement()
     {
-        float horizontal = _horizontalInput;
-        float vertical = _verticalInput;
+        float horizontal = m_HorizontalInput;
+        float vertical = m_VerticalInput;
 
         if (IsMovementInversed)
         {
@@ -101,5 +143,25 @@ public class CharacterControl : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
             }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer==LayerMask.GetMask("Player"))
+        {
+            TriggerPush(other);
+        }
+    }
+
+    private void TriggerPush(Collider col)
+    {
+        Vector3 dir = col.transform.position - transform.position;
+        dir = dir.normalized;
+
+        //Vector3.Lerp(transform.position, transform.position + dir);
+        //other.transform.position = Vector3.Lerp(transform.position, transform.position - dir * CurrentForce, TurnSmoothTime);
+
+        CharacterController CC = col.GetComponent<CharacterController>();
+        CC.Move(dir * CurrentPushForce * Time.deltaTime);
     }
 }
