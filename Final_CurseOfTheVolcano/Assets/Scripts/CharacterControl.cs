@@ -8,10 +8,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
-    public CharacterController CC;
+    public CharacterController m_CharacterController;
 
     [Range(0, 30)]
-    public float Speed;
+    public float m_MovementSpeed;
 
     [Range(0, 100)]
     public float NormalPushForce;
@@ -32,46 +32,70 @@ public class CharacterControl : MonoBehaviour
 
     [Tooltip("Multiplies with gravity")]
     [Range(0, 100)]
-    public float Mass;
+    public float m_Mass;
 
-    public Vector3 MoveDirection = Vector3.zero;
-    public Vector3 _velocity = Vector3.zero;
+    [SerializeField] private float m_Jumpspeed = 3.5f;
 
-    private Vector2 _movementInput;
-    private float m_VerticalInput, m_HorizontalInput, _turnSmoothVelocity;
-    private bool IsMovementInversed;
-    private bool IsDoubleJUmpPossible;
+    private Vector3 m_MoveDirection = Vector3.zero;
 
 
+    private float m_VerticalInput, m_HorizontalInput;
+    private bool m_IsMovementInversed;
+    private bool m_IsDoubleJumpPossible = false;
+    private bool m_IsDoubleJumpEnabled = false;
+
+    /*
+     * clean up the code
+     * rotation
+     * camera
+     */
 
     private void Update()
     {
-        SetVelocity();
-    }
-
-    
-    private void SetVelocity()
-    {
-        //Saves the player velocity before he jumps
-        if (CC.isGrounded)
+        if (m_CharacterController.isGrounded)
         {
-            _velocity = MoveDirection.normalized * Speed;
-        }
-    }
-    private void FixedUpdate()
-    {
-        ApplyGravity();
-        ApplyMovement();
+            if (m_MoveDirection.y < 0)
+            {
+                //reset y movement down when landing
+                m_MoveDirection.y = -0.1f;
+            }
+            if (m_IsDoubleJumpPossible == false)
+            {
+                m_IsDoubleJumpPossible = true;
+            }
 
+        }
+        else
+        {
+            //apply gravity
+            m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * m_Mass;
+        }
+
+        Vector3 velocity = m_MoveDirection;
+
+        if (m_IsMovementInversed)
+        {
+            velocity.x = -velocity.x;
+            velocity.z = -velocity.z;
+        }
+
+        m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
     }
+
+
 
 
     public void Jump(InputAction.CallbackContext value)
     {
-        if (CC.isGrounded || (!CC.isGrounded && IsDoubleJUmpPossible))
+        if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled))
         {
-            MoveDirection.y = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * JumpHeight);
+            m_MoveDirection.y = m_Jumpspeed;
+            if (m_IsDoubleJumpPossible && !m_CharacterController.isGrounded)
+            {
+                m_IsDoubleJumpPossible = false;
+            }
         }
+
     }
 
     public void Movement(InputAction.CallbackContext value)
@@ -81,73 +105,67 @@ public class CharacterControl : MonoBehaviour
         m_HorizontalInput = movement.x;
         m_VerticalInput = movement.y;
 
-        CC.Move(MoveDirection * Time.deltaTime * Speed);
+        float yDir = m_MoveDirection.y;
+        m_MoveDirection = new Vector3(m_HorizontalInput, 0, m_VerticalInput);
 
-
+        m_MoveDirection.Normalize();
+        m_MoveDirection.y = yDir;
     }
     public void Push(InputAction.CallbackContext value)
     {
-       
+
     }
     public void Interact(InputAction.CallbackContext value)
     {
-        
+
     }
     private void ApplyGravity()
     {
-        if (!CC.isGrounded)
-        {
-            MoveDirection.y += Physics.gravity.y * Mass * Time.fixedDeltaTime;
-        }
 
-        if (CC.isGrounded)
-        {
-            MoveDirection.y = -CC.stepOffset * 10;
-        }
     }
 
 
     private void ApplyMovement()
     {
-        float horizontal = m_HorizontalInput;
-        float vertical = m_VerticalInput;
+        //float horizontal = m_HorizontalInput;
+        //float vertical = m_VerticalInput;
 
-        if (IsMovementInversed)
-        {
-            horizontal *= -1;
-            vertical *= -1;
-        }
+        //if (IsMovementInversed)
+        //{
+        //    horizontal *= -1;
+        //    vertical *= -1;
+        //}
 
-        if (CC.isGrounded)
-        {
-            MoveDirection.x = horizontal * Speed;
-            MoveDirection.z = vertical * Speed;
+        //if (m_CharacterController.isGrounded)
+        //{
+        //    MoveDirection.x = horizontal * Speed;
+        //    MoveDirection.z = vertical * Speed;
 
-            if (new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 3)
-            {
-                float targetAngle = Mathf.Atan2(MoveDirection.x, MoveDirection.z) * Mathf.Rad2Deg;
-                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
-                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-            }
-        }
+        //    if (new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 3)
+        //    {
+        //        float targetAngle = Mathf.Atan2(MoveDirection.x, MoveDirection.z) * Mathf.Rad2Deg;
+        //        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
+        //        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        //    }
+        //}
 
-        if (!CC.isGrounded)
-        {
-            if (new Vector2(horizontal, vertical).magnitude > .1f)
-            {
-                float y = MoveDirection.y;
-                MoveDirection = transform.forward * Speed;
-                MoveDirection.y = y;
-                float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
-                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
-                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-            }
-        }
+        //if (!m_CharacterController.isGrounded)
+        //{
+        //    if (new Vector2(horizontal, vertical).magnitude > .1f)
+        //    {
+        //        float y = MoveDirection.y;
+        //        MoveDirection = transform.forward * Speed;
+        //        MoveDirection.y = y;
+        //        float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
+        //        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
+        //        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        //    }
+        //}
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer==LayerMask.GetMask("Player"))
+        if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
             TriggerPush(other);
         }

@@ -54,7 +54,9 @@ public class InputBehaviour : MonoBehaviour
                     break;
                 case "Movement":
                     newEvent.AddListener(characterControl.Movement);
+                    action.started += newEvent.Invoke;
                     action.performed += newEvent.Invoke;
+                    action.canceled += newEvent.Invoke;
                     break;
                 case "Jump":
                     newEvent.AddListener(characterControl.Jump);
