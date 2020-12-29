@@ -78,10 +78,6 @@ public class CharacterControl : MonoBehaviour
         ApplyKnockBack();
     }
 
-    private void FixedUpdate()
-    {
-
-    }
 
     private void ApplyMovement()
     {
@@ -217,7 +213,7 @@ public class CharacterControl : MonoBehaviour
         direction.y = 0; //we don't want people getting knocked up or down
         direction.Normalize();
 
-        m_Inpact = direction * m_NormalPushForce;
+        m_Inpact = direction * m_CurrentPushForce;
         m_CurrentInpact = m_Inpact;
 
         m_KnockBackTimer = 0f;
