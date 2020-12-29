@@ -7,7 +7,7 @@ public class SpinningPlatformBehaviour : MonoBehaviour
     [SerializeField] private float m_TurnSpeed;
     public bool IsSpinning;
   
-    void Update()
+    void FixedUpdate()
     {
         if (IsSpinning) this.transform.Rotate(Vector3.up * m_TurnSpeed * Time.deltaTime);
     }

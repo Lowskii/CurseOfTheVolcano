@@ -29265,6 +29265,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1502112710339096244, guid: 6e0474b5245790d468b4012e70cebe93, type: 3}
+      propertyPath: m_TurnSpeed
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 1502112710339096247, guid: 6e0474b5245790d468b4012e70cebe93, type: 3}
       propertyPath: m_RootOrder
       value: 4
