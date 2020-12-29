@@ -41,7 +41,7 @@ public class CharacterControl : MonoBehaviour
     private bool m_IsPushPossible;
     public bool m_IsPushActivated;
 
-    private float PushTimer;
+    private float m_PushTimer,m_DelayTimer;
     private Vector3 m_Inpact = Vector3.zero;
 
 
@@ -54,6 +54,7 @@ public class CharacterControl : MonoBehaviour
 
     private bool m_IsDoubleJumpPossible = false;
     private bool m_IsDoubleJumpEnabled = false;
+    public bool IsInteractPressed = false;
 
     /*
      * clean up the code
@@ -65,18 +66,20 @@ public class CharacterControl : MonoBehaviour
     {
         ApplyMovement();
         ApplyPush();
+        StartDelayTimer();
+        Debug.Log(IsInteractPressed);
     }
 
     private void ApplyPush()
     {
         if (m_IsPushActivated)
         {
-            PushTimer += Time.deltaTime;
+            m_PushTimer += Time.deltaTime;
             ApplyKNockBack();
-            if (PushTimer >= 3 == false)
+            if (m_PushTimer >= 3 == false)
             {
                 m_IsPushActivated = false;
-                PushTimer = 0;
+                m_PushTimer = 0;
             }
         }
     }
@@ -158,15 +161,25 @@ public class CharacterControl : MonoBehaviour
     public void Push(InputAction.CallbackContext value)
     {
         m_IsPushPossible = true;
-
     }
     public void Interact(InputAction.CallbackContext value)
     {
-
+        IsInteractPressed = true;
     }
-   
 
-
+    private void StartDelayTimer()
+    {       
+        if (IsInteractPressed)
+        {            
+            float resetDelay = .1f;
+            m_DelayTimer += Time.deltaTime;
+            if (m_DelayTimer > resetDelay)
+            {
+                IsInteractPressed = false;
+                m_DelayTimer -= resetDelay;
+            }
+        }
+    }
     
     private void OnTriggerStay(Collider other)
     {

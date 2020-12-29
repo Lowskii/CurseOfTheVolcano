@@ -100,7 +100,13 @@ MonoBehaviour:
   TurnSmoothTime: 0.1
   JumpTurnSmoothTime: 0.15
   m_Mass: 0.5
-  m_Jumpspeed: 2.5
+  m_Jumpspeed: 2
+  m_IsPushActivated: 0
+  m_IsMovementInversed: 0
+  m_IsSpeedDown: 0
+  m_IsBouncing: 0
+  m_Paralyse: 0
+  IsInteractPressed: 0
 --- !u!1 &1352891265505613348
 GameObject:
   m_ObjectHideFlags: 0

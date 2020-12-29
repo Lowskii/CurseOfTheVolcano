@@ -67,8 +67,8 @@ public class InputBehaviour : MonoBehaviour
                     action.performed += newEvent.Invoke;
                     break;
                 case "Interact":
-                    newEvent.AddListener(Interact);
-                    action.performed += newEvent.Invoke;
+                    newEvent.AddListener(characterControl.Interact);
+                    action.performed += newEvent.Invoke;                    
                     break;
                 default:
                     Debug.Log("There is no functionality yet for action: " + action.name + " in action map: " + action.actionMap);

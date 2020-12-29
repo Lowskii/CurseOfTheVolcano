@@ -11,6 +11,7 @@ public class BridgeControlBehaviour : MonoBehaviour
     private float m_DelayTimer;
     private Vector3 m_StartPosition;
     private Quaternion m_StartRotation;
+    private CharacterControl m_Player;
 
 
     void Start()
@@ -59,23 +60,32 @@ public class BridgeControlBehaviour : MonoBehaviour
         }
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<CharacterControl>() != null && m_Player == null)
+        {
+            m_Player = other.gameObject.GetComponent<CharacterControl>();            
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
-        //if (other.gameObject.GetComponent<CharacterControl>() != null)
-        //{
-        //    _player = other.gameObject.GetComponent<CharacterControl>();
-        //    if (_player.Interact)
-        //    {
-        //        m_IsBridgeActivated = true;
-        //    }
-        //}
+        if (m_Player != null)
+        {
+            m_Player = other.gameObject.GetComponent<CharacterControl>();
+            if (m_Player.IsInteractPressed)
+            {               
+                m_IsBridgeActivated = true;
+            }
+        }
+        else
+            m_Player = other.gameObject.GetComponent<CharacterControl>();
     }
     private void OnTriggerExit(Collider other)
     {
-        //if (_player != null)
-        //{
-        //    _player.Interact = false;
-        //    _player = null;
-        //}
+        if (m_Player != null)
+        {           
+            m_Player = null;
+        }
     }
 }

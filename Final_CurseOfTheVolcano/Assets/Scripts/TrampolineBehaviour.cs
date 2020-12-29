@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TrampolineBehaviour : MonoBehaviour
 {
@@ -9,11 +10,10 @@ public class TrampolineBehaviour : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<CharacterControl>() != null)
-        {
-            //Start Player Jump
-            //m_JumpHeight = other.gameObject.GetComponent<CharacterControl>().JumpHeight;
-            //other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_TrampolineForce;
-            //other.gameObject.GetComponent<CharacterControl>().StartJump();
+        {            
+            m_JumpHeight = other.gameObject.GetComponent<CharacterControl>().JumpHeight;
+            other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_TrampolineForce;
+            //other.gameObject.GetComponent<CharacterControl>().Jump(InputAction.CallbackContext value);
         }
         else
             return;
@@ -22,7 +22,7 @@ public class TrampolineBehaviour : MonoBehaviour
     {
         if (other.gameObject.GetComponent<CharacterControl>() != null)
         {
-           // other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_JumpHeight;
+           other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_JumpHeight;
         }
     }
 }
