@@ -38,9 +38,20 @@ public class CharacterControl : MonoBehaviour
 
     private Vector3 m_MoveDirection = Vector3.zero;
 
+    private bool m_IsPushPossible;
+    public bool m_IsPushActivated;
+
+    private float PushTimer;
+    private Vector3 m_Inpact = Vector3.zero;
+
 
     private float m_VerticalInput, m_HorizontalInput;
-    private bool m_IsMovementInversed;
+    public bool m_IsMovementInversed=true;
+    public  bool m_IsSpeedDown=false;
+    public bool m_IsBouncing = false;
+    public bool m_Paralyse = false;
+
+
     private bool m_IsDoubleJumpPossible = false;
     private bool m_IsDoubleJumpEnabled = false;
 
@@ -51,6 +62,39 @@ public class CharacterControl : MonoBehaviour
      */
 
     private void Update()
+    {
+        ApplyMovement();
+        ApplyPush();
+    }
+
+    private void ApplyPush()
+    {
+        if (m_IsPushActivated)
+        {
+            PushTimer += Time.deltaTime;
+            ApplyKNockBack();
+            if (PushTimer >= 3 == false)
+            {
+                m_IsPushActivated = false;
+                PushTimer = 0;
+            }
+        }
+    }
+
+    public void KnockBack(Vector3 Direction, float Force)
+    {
+        Direction.Normalize();
+        if (Direction.y < 0) Direction.y = -Direction.y; // reflect down force on the ground
+        m_Inpact += Direction.normalized * Force / m_Mass;
+
+    }
+    public void ApplyKNockBack()
+    {
+        if (m_Inpact.magnitude > 0.2) m_CharacterController.Move(m_Inpact * Time.deltaTime*CurrentPushForce);
+        // consumes the impact energy each cycle:
+        m_Inpact = Vector3.Lerp(m_Inpact, Vector3.zero, 5*Time.deltaTime);
+    }
+    private void ApplyMovement()
     {
         if (m_CharacterController.isGrounded)
         {
@@ -78,12 +122,12 @@ public class CharacterControl : MonoBehaviour
             velocity.x = -velocity.x;
             velocity.z = -velocity.z;
         }
-
+        if (m_IsSpeedDown)
+        {
+            m_MovementSpeed = m_MovementSpeed / 2;
+        }
         m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
     }
-
-
-
 
     public void Jump(InputAction.CallbackContext value)
     {
@@ -113,73 +157,34 @@ public class CharacterControl : MonoBehaviour
     }
     public void Push(InputAction.CallbackContext value)
     {
+        m_IsPushPossible = true;
 
     }
     public void Interact(InputAction.CallbackContext value)
     {
 
     }
-    private void ApplyGravity()
-    {
-
-    }
+   
 
 
-    private void ApplyMovement()
-    {
-        //float horizontal = m_HorizontalInput;
-        //float vertical = m_VerticalInput;
-
-        //if (IsMovementInversed)
-        //{
-        //    horizontal *= -1;
-        //    vertical *= -1;
-        //}
-
-        //if (m_CharacterController.isGrounded)
-        //{
-        //    MoveDirection.x = horizontal * Speed;
-        //    MoveDirection.z = vertical * Speed;
-
-        //    if (new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 3)
-        //    {
-        //        float targetAngle = Mathf.Atan2(MoveDirection.x, MoveDirection.z) * Mathf.Rad2Deg;
-        //        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
-        //        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        //    }
-        //}
-
-        //if (!m_CharacterController.isGrounded)
-        //{
-        //    if (new Vector2(horizontal, vertical).magnitude > .1f)
-        //    {
-        //        float y = MoveDirection.y;
-        //        MoveDirection = transform.forward * Speed;
-        //        MoveDirection.y = y;
-        //        float targetAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
-        //        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, JumpTurnSmoothTime);
-        //        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        //    }
-        //}
-    }
-
+    
     private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.GetMask("Player")&&m_IsPushPossible)
+        {
+            GameObject Player = other.gameObject;
+            Player.GetComponent<CharacterControl>().KnockBack(m_MoveDirection, CurrentPushForce);
+            Player.GetComponent<CharacterControl>().m_IsPushActivated = true;
+            m_IsPushPossible = false;
+        }
+    }
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
-            TriggerPush(other);
+            m_IsPushPossible = false;
+
         }
     }
-
-    private void TriggerPush(Collider col)
-    {
-        Vector3 dir = col.transform.position - transform.position;
-        dir = dir.normalized;
-
-        //Vector3.Lerp(transform.position, transform.position + dir);
-        //other.transform.position = Vector3.Lerp(transform.position, transform.position - dir * CurrentForce, TurnSmoothTime);
-
-        CharacterController CC = col.GetComponent<CharacterController>();
-        CC.Move(dir * CurrentPushForce * Time.deltaTime);
-    }
+ 
 }
