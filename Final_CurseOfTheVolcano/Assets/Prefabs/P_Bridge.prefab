@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5395843028442950849}
   - component: {fileID: 5395843028442950850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 1328163939357535855}
   - component: {fileID: 3092341150446085202}
   - component: {fileID: 920501585943189835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformMovement : MonoBehaviour
+public class MovingObstacleBehaviour : MonoBehaviour
 {
     public GameObject[] Points;
     public float Speed;
-    public float DelayTime;
-    public bool Continuous;
+    public float DelayTime;    
 
     private Vector3 m_CurrentTarget;
     private int m_PointsIndex;
@@ -29,7 +28,7 @@ public class PlatformMovement : MonoBehaviour
     void Update()
     {
         if (this.transform.position != m_CurrentTarget) MovePlatform();
-        else if (Continuous) UpdateTarget();
+        else UpdateTarget();
     }
 
     private void MovePlatform()
@@ -60,18 +59,5 @@ public class PlatformMovement : MonoBehaviour
         if (m_PointsIndex >= Points.Length) m_PointsIndex = 0;
 
         m_CurrentTarget = Points[m_PointsIndex].transform.position;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            other.transform.parent = this.transform;
-        }        
-        if (!Continuous && !m_Moving) NextPlatform();
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        other.transform.parent = null;
-    }
+    }    
 }

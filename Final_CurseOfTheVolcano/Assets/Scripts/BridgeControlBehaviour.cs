@@ -23,7 +23,7 @@ public class BridgeControlBehaviour : MonoBehaviour
     void Update()
     {
         if (m_IsBridgeActivated) DropBridge();
-        else ResetBridge();
+        else ResetBridge();        
     }
 
     private void DropBridge()

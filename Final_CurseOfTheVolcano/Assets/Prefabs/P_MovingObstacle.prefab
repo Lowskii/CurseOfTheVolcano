@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6182505619345144315}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: End
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2275938220273672358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_MovingObstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3736512153099269196}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -106,9 +106,9 @@ GameObject:
   - component: {fileID: 834697464187351456}
   - component: {fileID: 8402599363735280061}
   - component: {fileID: 8024355500322341765}
-  - component: {fileID: 6476560945246289079}
   - component: {fileID: 1426892676084598266}
-  m_Layer: 0
+  - component: {fileID: 4227676611758332279}
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,26 +202,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.9, z: 0.05}
-  m_Center: {x: 0, y: 0, z: -0.5}
---- !u!114 &6476560945246289079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8114489857350027815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71e0656c8de43f84f926e45e69323fbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Points:
-  - {fileID: 4961381630799284318}
-  - {fileID: 3915710695909604045}
-  Speed: 20
-  DelayTime: 1
-  Continuous: 1
+  m_Size: {x: 0.90000004, y: 0.8999999, z: 0.16037817}
+  m_Center: {x: 0, y: 0, z: -0.5551892}
 --- !u!114 &1426892676084598266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,4 +216,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43b812b823cc1b4d891a2dbaedd7957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BounceForce: {x: 0, y: 0, z: 0}
+  m_BounceForce: {x: 0, y: 0, z: -50}
+--- !u!114 &4227676611758332279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114489857350027815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82529303d40408142924211421ab0c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points:
+  - {fileID: 4961381630799284318}
+  - {fileID: 3915710695909604045}
+  Speed: 20
+  DelayTime: 1

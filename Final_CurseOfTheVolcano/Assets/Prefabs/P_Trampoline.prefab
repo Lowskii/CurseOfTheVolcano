@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6593084772662743834}
   - component: {fileID: 223103021154576820}
   - component: {fileID: -9128751218722497379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Trampoline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

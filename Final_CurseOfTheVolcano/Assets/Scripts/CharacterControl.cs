@@ -67,8 +67,7 @@ public class CharacterControl : MonoBehaviour
     {
         ApplyMovement();
         ApplyPush();
-        StartDelayTimer();
-        Debug.Log(IsInteractPressed);
+        StartDelayTimer();        
     }
 
     private void ApplyPush()

@@ -9,25 +9,27 @@ public class BounceBehaviour : MonoBehaviour
     private Transform m_Player;
     private bool m_IsPushing;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        PushPlayers();
+        PushPlayers();       
     }
+
     private void PushPlayers()
     {
         if (m_Player != null && m_IsPushing)
-        {
+        {           
             StartCoroutine(PushBack());
-            m_Player.transform.position += m_BounceForce * Time.deltaTime;
+            m_Player.transform.position += m_BounceForce * Time.fixedDeltaTime;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (GetComponent<PlatformMovement>().IsMoving)
+        if (GetComponent<MovingObstacleBehaviour>().IsMoving)
         {
             m_Player = other.gameObject.transform;
             m_IsPushing = true;
         }
+              
     }
     IEnumerator PushBack()
     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2932134540360496554}
   - component: {fileID: 2932134540360496557}
   - component: {fileID: 2932134540360496555}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: P_BridgeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 7874725672590053787}
   - component: {fileID: 8389341609067073439}
   - component: {fileID: 1740244694449012668}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

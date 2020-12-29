@@ -15,9 +15,9 @@ TagManager:
   - 
   - Platform
   - Player
-  - 
-  - 
-  - 
+  - Ground
+  - Interactible
+  - Lava
   - 
   - 
   - 
