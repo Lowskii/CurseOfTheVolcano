@@ -62,6 +62,7 @@ public class InputBehaviour : MonoBehaviour
                     action.performed += newEvent.Invoke;
                     break;
                 case "Push":
+                    newEvent.AddListener(characterControl.Push);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Interact":

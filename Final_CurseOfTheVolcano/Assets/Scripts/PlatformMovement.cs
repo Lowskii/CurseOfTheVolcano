@@ -26,7 +26,7 @@ public class PlatformMovement : MonoBehaviour
         m_Moving = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (this.transform.position != m_CurrentTarget) MovePlatform();
         else if (Continuous) UpdateTarget();
@@ -62,7 +62,7 @@ public class PlatformMovement : MonoBehaviour
         m_CurrentTarget = Points[m_PointsIndex].transform.position;
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {        
         other.transform.parent = this.transform;               
         if (!Continuous && !m_Moving) NextPlatform();

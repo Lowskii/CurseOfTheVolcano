@@ -18,6 +18,7 @@ public class CharacterControl : MonoBehaviour
     [Range(0, 200)]
     public float StrongPushForce;
     private float CurrentPushForce;
+    private float m_TurnSmoothVelocity;
 
     [Range(0, 5)]
     public float JumpHeight;
@@ -57,11 +58,7 @@ public class CharacterControl : MonoBehaviour
     private bool m_IsDoubleJumpEnabled = false;
     public bool IsInteractPressed = false;    
 
-    /*
-     * clean up the code
-     * rotation
-     * camera
-     */
+
 
     private void Update()
     {
@@ -84,19 +81,7 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
-    public void KnockBack(Vector3 Direction, float Force)
-    {
-        Direction.Normalize();
-        if (Direction.y < 0) Direction.y = -Direction.y; // reflect down force on the ground
-        m_Inpact += Direction.normalized * Force / m_Mass;
 
-    }
-    public void ApplyKNockBack()
-    {
-        if (m_Inpact.magnitude > 0.2) m_CharacterController.Move(m_Inpact * Time.deltaTime*CurrentPushForce);
-        // consumes the impact energy each cycle:
-        m_Inpact = Vector3.Lerp(m_Inpact, Vector3.zero, 5*Time.deltaTime);
-    }
     private void ApplyMovement()
     {
         if(!m_HasMoved) return;
@@ -118,6 +103,14 @@ public class CharacterControl : MonoBehaviour
         {
             //apply gravity
             m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * m_Mass;
+        }
+
+        //rotation
+        if (new Vector2(m_MoveDirection.x, m_MoveDirection.z).magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(m_MoveDirection.x, m_MoveDirection.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref m_TurnSmoothVelocity, TurnSmoothTime);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
         }
 
         Vector3 velocity = m_MoveDirection;
@@ -163,8 +156,24 @@ public class CharacterControl : MonoBehaviour
     }
     public void Push(InputAction.CallbackContext value)
     {
+        m_IsPushActivated = true;
         m_IsPushPossible = true;
     }
+
+    public void KnockBack(Vector3 Direction, float Force)
+    {
+        Direction.Normalize();
+        if (Direction.y < 0) Direction.y = -Direction.y; // reflect down force on the ground
+        m_Inpact += Direction.normalized * Force / m_Mass;
+
+    }
+    public void ApplyKNockBack()
+    {
+        if (m_Inpact.magnitude > 0.2) m_CharacterController.Move(m_Inpact * Time.deltaTime * CurrentPushForce);
+        // consumes the impact energy each cycle:
+        m_Inpact = Vector3.Lerp(transform.position,transform.position + m_Inpact, 5 * Time.deltaTime);
+    }
+
     public void Interact(InputAction.CallbackContext value)
     {
         IsInteractPressed = true;
@@ -186,7 +195,7 @@ public class CharacterControl : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.GetMask("Player")&&m_IsPushPossible)
+        if (other.gameObject.layer == LayerMask.GetMask("Player")&& m_IsPushPossible)
         {
             GameObject Player = other.gameObject;
             Player.GetComponent<CharacterControl>().KnockBack(m_MoveDirection, CurrentPushForce);
