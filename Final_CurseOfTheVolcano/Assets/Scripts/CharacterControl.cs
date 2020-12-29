@@ -36,7 +36,7 @@ public class CharacterControl : MonoBehaviour
 
     [SerializeField] private float m_Jumpspeed = 3.5f;
 
-    private Vector3 m_MoveDirection = Vector3.zero;
+    public Vector3 m_MoveDirection = Vector3.zero;
 
     private bool m_IsPushPossible;
     public bool m_IsPushActivated;
@@ -55,7 +55,7 @@ public class CharacterControl : MonoBehaviour
     private bool m_HasMoved = false;
     private bool m_IsDoubleJumpPossible = false;
     private bool m_IsDoubleJumpEnabled = false;
-    public bool IsInteractPressed = false;
+    public bool IsInteractPressed = false;    
 
     /*
      * clean up the code
@@ -144,7 +144,6 @@ public class CharacterControl : MonoBehaviour
                 m_IsDoubleJumpPossible = false;
             }
         }
-
     }
 
     public void Movement(InputAction.CallbackContext value)

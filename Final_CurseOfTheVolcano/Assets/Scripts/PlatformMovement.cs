@@ -62,12 +62,9 @@ public class PlatformMovement : MonoBehaviour
         m_CurrentTarget = Points[m_PointsIndex].transform.position;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            other.transform.parent = this.transform;
-        }        
+    private void OnTriggerStay(Collider other)
+    {        
+        other.transform.parent = this.transform;               
         if (!Continuous && !m_Moving) NextPlatform();
     }
     private void OnTriggerExit(Collider other)

@@ -5,24 +5,15 @@ using UnityEngine.InputSystem;
 
 public class TrampolineBehaviour : MonoBehaviour
 {
-    [SerializeField] private float m_TrampolineForce;
-    private float m_JumpHeight;
+    [SerializeField] private float m_TrampolineForce;        
     private void OnTriggerEnter(Collider other)
-    {
+    {        
         if (other.gameObject.GetComponent<CharacterControl>() != null)
-        {            
-            m_JumpHeight = other.gameObject.GetComponent<CharacterControl>().JumpHeight;
-            other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_TrampolineForce;
-            //other.gameObject.GetComponent<CharacterControl>().Jump(InputAction.CallbackContext value);
+        {                        
+             other.gameObject.GetComponent<CharacterControl>().m_MoveDirection.y = m_TrampolineForce;
         }
         else
             return;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.GetComponent<CharacterControl>() != null)
-        {
-           other.gameObject.GetComponent<CharacterControl>().JumpHeight = m_JumpHeight;
-        }
-    }
+    }   
 }
+

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlatformControlBehaviour : MonoBehaviour
 {
-    [SerializeField] private SpinningPlatformBehaviour[] m_platforms;
-    [SerializeField] private bool m_IsPlatformActivated;
+    [SerializeField] private SpinningPlatformBehaviour[] m_platforms;    
     [SerializeField] private float m_ResetDelay;
 
+    private bool m_IsPlatformActivated;
     private float m_DelayTimer;    
     private CharacterControl m_Player;   
 
