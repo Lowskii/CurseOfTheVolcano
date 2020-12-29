@@ -52,6 +52,7 @@ public class CharacterControl : MonoBehaviour
     public bool m_Paralyse = false;
 
 
+    private bool m_HasMoved = false;
     private bool m_IsDoubleJumpPossible = false;
     private bool m_IsDoubleJumpEnabled = false;
     public bool IsInteractPressed = false;
@@ -99,6 +100,8 @@ public class CharacterControl : MonoBehaviour
     }
     private void ApplyMovement()
     {
+        if(!m_HasMoved) return;
+
         if (m_CharacterController.isGrounded)
         {
             if (m_MoveDirection.y < 0)
@@ -147,6 +150,8 @@ public class CharacterControl : MonoBehaviour
 
     public void Movement(InputAction.CallbackContext value)
     {
+        m_HasMoved = true;
+
         var movement = value.ReadValue<Vector2>();
 
         m_HorizontalInput = movement.x;

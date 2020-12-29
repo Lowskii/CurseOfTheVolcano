@@ -31,12 +31,16 @@ public class InitializeGame : MonoBehaviour
             //make the player a seperate gameobject 
             inputs[i].transform.parent = null;
 
-            //setup the camera rects
+            //setup the camera rects 
             Camera playerCam = inputs[i].GetComponentInChildren<Camera>();
             playerCam.rect = menuCam.rect;
+            playerCam.transform.parent = null;
+
+            playerCam.GetComponent<CameraFollow>().enabled = true;
 
             //enable movement
             inputs[i].GetComponentInChildren<CharacterControl>().enabled = true;
+
 
         }
         //cleanup the unwanted objects
