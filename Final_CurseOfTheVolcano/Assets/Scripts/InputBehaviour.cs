@@ -40,7 +40,6 @@ public class InputBehaviour : MonoBehaviour
                     }
                     break;
                 case "Select":
-                    newEvent.AddListener(Select);
                     action.performed += newEvent.Invoke;
                     if (inputModule != null)
                     {
@@ -63,7 +62,6 @@ public class InputBehaviour : MonoBehaviour
                     action.performed += newEvent.Invoke;
                     break;
                 case "Push":
-                    newEvent.AddListener(Push);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Interact":
@@ -88,25 +86,4 @@ public class InputBehaviour : MonoBehaviour
         m_Controls.GameControls.Disable();
         m_Controls.MenuControls.Enable();
     }
-
-    //Menu controls
-    void Select(InputAction.CallbackContext value)
-    {
-        Debug.Log("select");
-    } 
-
-
-    //game controls
-
-    void Interact(InputAction.CallbackContext value)
-    {
-        Debug.Log("Interact");
-    }
-
-    void Push(InputAction.CallbackContext value)
-    {
-        Debug.Log("Push");
-    }
-
-
 }
