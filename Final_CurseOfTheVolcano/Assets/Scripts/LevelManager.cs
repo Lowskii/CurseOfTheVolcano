@@ -1,18 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<Player> Players = new List<Player>();
+    private List<Player> m_LivePlayers = new List<Player>();
+    private int m_PlayerCount = 0;
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(this.gameObject);
+        if(SceneManager.GetActiveScene().name == "L1_Name")
+        m_PlayerCount = FindObjectsOfType<CharacterControl>().Length;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
+    {         
+
+        if (SceneManager.GetActiveScene().name == "L1_Name")
+        {            
+            if (Players.Count == m_PlayerCount)
+            {
+                SceneManager.LoadScene("EndScreen");
+                foreach (var player in FindObjectsOfType<CharacterControl>())
+                {
+                    Destroy(player.gameObject);
+                }
+                foreach (var cam in FindObjectsOfType<Camera>())
+                {
+                    Destroy(cam.gameObject);
+                }
+            }
+        }            
+    }
+   
+    private void OnTriggerEnter(Collider other)
     {
-        
+        Player player = new Player(other.GetComponent<CharacterControl>().PlayerId, m_LivePlayers.Count + 1, other.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial.color, true);
+        m_LivePlayers.Add(player);
+        Players.Add(player);
+    }
+}
+
+public class Player
+{
+    public bool IsVictorious;
+    public int PlayerID;
+    public int VictoryPosition;
+    public Color PlayerColor;
+
+    public Player (int playerID, int victoryPosition, Color playerColor, bool isVictorious)
+    {
+        PlayerID = playerID;
+        VictoryPosition = victoryPosition;
+        IsVictorious = isVictorious;
+        PlayerColor = playerColor;
     }
 }

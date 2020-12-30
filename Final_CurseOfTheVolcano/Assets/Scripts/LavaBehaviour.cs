@@ -8,8 +8,7 @@ public class LavaBehaviour : MonoBehaviour
     [SerializeField] private float m_MaxHeight;
     [SerializeField] private float m_RiseSpeedMultiplier = 0.25f;
 
-    private float m_ActiveRiseSpeed;
-
+    private float m_ActiveRiseSpeed;    
     private void Start()
     {
         //CharacterControl.PlayerDiedEvent.AddListener(IncreaseSpeed);
@@ -35,7 +34,10 @@ public class LavaBehaviour : MonoBehaviour
     {
         if (hit.gameObject.tag == "Player")
         {
-            Destroy(hit.gameObject);
+            //Destroy(hit.gameObject);
+            hit.gameObject.GetComponent<CharacterControl>().enabled = false;
+            FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
+                0, hit.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial.color, false));
 
             //CharacterControl.PlayerDied();
 
