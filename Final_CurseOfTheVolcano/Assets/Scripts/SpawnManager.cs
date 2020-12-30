@@ -9,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject m_SelectionMenu;
     [SerializeField] GameObject m_MainLayout;
 
+    [SerializeField] GameObject m_HelpText;
+
 
     private List<int> m_ControllerIds = new List<int>();
     private List<CharacterSelection> m_PlayerSelections = new List<CharacterSelection>();
@@ -90,8 +92,10 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("Player " + m_PlayerId + "joinend!");
             }
         }
-
-
+        if (m_PlayerId == 4)
+        {
+            m_HelpText.active = false;
+        }
     }
 
     void SetupCameras()

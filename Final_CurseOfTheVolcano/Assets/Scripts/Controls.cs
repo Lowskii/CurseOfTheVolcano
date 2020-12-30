@@ -136,6 +136,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""f6b2542a-c294-4826-8aaa-6064ded44a77"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -171,6 +179,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73b81e0f-e409-4ce4-8f78-23ee1db5dd54"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -188,6 +207,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_MenuControls_Select = m_MenuControls.FindAction("Select", throwIfNotFound: true);
         m_MenuControls_Selection = m_MenuControls.FindAction("Selection", throwIfNotFound: true);
         m_MenuControls_Start = m_MenuControls.FindAction("Start", throwIfNotFound: true);
+        m_MenuControls_Rotate = m_MenuControls.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -297,6 +317,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_MenuControls_Select;
     private readonly InputAction m_MenuControls_Selection;
     private readonly InputAction m_MenuControls_Start;
+    private readonly InputAction m_MenuControls_Rotate;
     public struct MenuControlsActions
     {
         private @Controls m_Wrapper;
@@ -304,6 +325,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Select => m_Wrapper.m_MenuControls_Select;
         public InputAction @Selection => m_Wrapper.m_MenuControls_Selection;
         public InputAction @Start => m_Wrapper.m_MenuControls_Start;
+        public InputAction @Rotate => m_Wrapper.m_MenuControls_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,6 +344,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Start.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
                 @Start.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
                 @Start.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnStart;
+                @Rotate.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -335,6 +360,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Start.started += instance.OnStart;
                 @Start.performed += instance.OnStart;
                 @Start.canceled += instance.OnStart;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -351,5 +379,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnSelection(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }

@@ -9,13 +9,15 @@ using UnityEngine.InputSystem.UI;
 public class InputBehaviour : MonoBehaviour
 {
     Controls m_Controls;
+    CharacterControl m_CharacterControl;
+
     public void SetInputUser(InputUser inputUser)
     {
         m_Controls = (Controls)inputUser.actions;
 
         InputSystemUIInputModule inputModule = transform.parent.parent.GetComponentInChildren<InputSystemUIInputModule>();
 
-        CharacterControl characterControl = GetComponentInChildren<CharacterControl>();
+        m_CharacterControl = GetComponentInChildren<CharacterControl>();
 
         foreach (InputAction action in inputUser.actions)
         {
@@ -51,22 +53,28 @@ public class InputBehaviour : MonoBehaviour
                     break;
                 case "Start":
                     break;
+                case "Rotate":
+                    newEvent.AddListener(Rotate);
+                    action.started += newEvent.Invoke;
+                    action.performed += newEvent.Invoke;
+                    action.canceled += newEvent.Invoke;
+                    break;
                 case "Movement":
-                    newEvent.AddListener(characterControl.Movement);
+                    newEvent.AddListener(m_CharacterControl.Movement);
                     action.started += newEvent.Invoke;
                     action.performed += newEvent.Invoke;
                     action.canceled += newEvent.Invoke;
                     break;
                 case "Jump":
-                    newEvent.AddListener(characterControl.Jump);
+                    newEvent.AddListener(m_CharacterControl.Jump);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Push":
-                    newEvent.AddListener(characterControl.Push);
+                    newEvent.AddListener(m_CharacterControl.Push);
                     action.performed += newEvent.Invoke;
                     break;
                 case "Interact":
-                    newEvent.AddListener(characterControl.Interact);
+                    newEvent.AddListener(m_CharacterControl.Interact);
                     action.performed += newEvent.Invoke;                    
                     break;
                 default:
@@ -87,4 +95,10 @@ public class InputBehaviour : MonoBehaviour
         m_Controls.GameControls.Disable();
         m_Controls.MenuControls.Enable();
     }
+
+    private void Rotate(InputAction.CallbackContext value)
+    {
+        m_CharacterControl.ApplyRotation(value.ReadValue<Vector2>());
+    }
+
 }

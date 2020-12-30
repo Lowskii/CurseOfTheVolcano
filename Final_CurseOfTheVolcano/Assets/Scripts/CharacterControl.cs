@@ -22,13 +22,8 @@ public class CharacterControl : MonoBehaviour
     private float m_CurrentPushForce;
     private float m_TurnSmoothVelocity;
 
-    [Tooltip("How smooth the character turns")]
-    [Range(0, 1)]
-    public float TurnSmoothTime;
+    [SerializeField] float m_TurnSmoothTime = 0.1f;
 
-    [Tooltip("How smooth the character turns while jumping")]
-    [Range(0, 1)]
-    public float JumpTurnSmoothTime;
 
     [Tooltip("Multiplies with gravity")]
     [Range(0, 100)]
@@ -108,6 +103,15 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    public void ApplyRotation(Vector3 direction)
+    {
+        if (new Vector2(direction.x, direction.z).magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        }
+    }
     private void ApplyMovement()
     {
 
@@ -129,13 +133,7 @@ public class CharacterControl : MonoBehaviour
             m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * m_Mass;
         }
 
-        //rotation
-        if (new Vector2(m_MoveDirection.x, m_MoveDirection.z).magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(m_MoveDirection.x, m_MoveDirection.z) * Mathf.Rad2Deg;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref m_TurnSmoothVelocity, TurnSmoothTime);
-            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        }
+        ApplyRotation(m_MoveDirection);
 
         Vector3 velocity = m_MoveDirection;
 
