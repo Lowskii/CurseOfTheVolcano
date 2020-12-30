@@ -61,17 +61,18 @@ public class Curse : MonoBehaviour
 
         if (m_IsWorking)
         {
-            m__ElapsedTime += Time.deltaTime;
+            m__ElapsedTime += Time.deltaTime;     
 
-            if (m__RunTime < m__ElapsedTime)
-            {
-                DeactivateCurseEffect();
-
-            }else if (m__RespawnTime < m__ElapsedTime)
+            if (m__RespawnTime < m__ElapsedTime)
             {
                 CreateRandomCurse();
                 m_IsWorking = false;
                 m__ElapsedTime = 0;
+
+            }
+            else if (m__RunTime > m__ElapsedTime)
+            {
+                DeactivateCurseEffect();
 
             }
 

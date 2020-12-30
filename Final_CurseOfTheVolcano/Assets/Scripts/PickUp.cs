@@ -55,17 +55,18 @@ public class PickUp : MonoBehaviour
         {
 
             m__ElapsedTime += Time.deltaTime;
-            Debug.Log(m__ElapsedTime);
-            if (m__RunTime < m__ElapsedTime)
-            {
 
-                DeactivatePickUpEffect();
-            }
-             else if (m__RespawnTime < m__ElapsedTime)
+            
+
+            if (m__RespawnTime < m__ElapsedTime)
             {
                 CreateRandomPickUp();
                 m__ElapsedTime = 0;
                 m_IsWorking = false;
+            } else if (m__RunTime < m__ElapsedTime)
+            {
+
+                DeactivatePickUpEffect();
             }
 
         }
