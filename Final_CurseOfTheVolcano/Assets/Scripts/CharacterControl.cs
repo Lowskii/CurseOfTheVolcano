@@ -43,6 +43,9 @@ public class CharacterControl : MonoBehaviour
     private bool m_IsPushPossible = false;
     private float m_PushTimer = 0f;
     private float m_PushedSlowFactor = 3f;
+    private float m_SlowSpeedFactor = 1.5f;
+    private float m_SpeedupSpeedFactor = 1.5f;
+
     private float m_KnockBackTimer = 1f;
     [SerializeField] float m_PushDelay = 2.5f;
     bool m_GettingPushed = false;
@@ -57,14 +60,20 @@ public class CharacterControl : MonoBehaviour
 
 
     private float m_VerticalInput, m_HorizontalInput;
-    public bool m_IsMovementInversed = true;
+
+    public bool m_IsDoubleJumpEnabled = false;
+    public bool m_IsSpedUp = false;
+    public bool m_IsStrongerPush = false;
+
+
     public bool m_IsSpeedDown = false;
     public bool m_IsBouncing = false;
     public bool m_Paralyse = false;
+    public bool m_IsMovementInversed = false;
+
 
 
     private bool m_IsDoubleJumpPossible = false;
-    private bool m_IsDoubleJumpEnabled = false;
     public bool IsInteractPressed = false;
 
     public int PlayerId
@@ -79,12 +88,25 @@ public class CharacterControl : MonoBehaviour
     }
     private void Update()
     {
+        CheckPushForce();
         ApplyMovement();
         ApplyPush();
         StartDelayTimer();
         ApplyKnockBack();
     }
 
+    private void CheckPushForce()
+    {
+        if (m_IsStrongerPush)
+        {
+            m_CurrentPushForce = m_StrongPushForce;
+        }
+        else
+        {
+            m_CurrentPushForce = m_NormalPushForce;
+
+        }
+    }
 
     private void ApplyMovement()
     {
@@ -132,13 +154,27 @@ public class CharacterControl : MonoBehaviour
 
         if (m_IsSpeedDown)
         {
-            m_MovementSpeed = m_MovementSpeed / 2;
+            velocity.x /= m_SlowSpeedFactor;
+            velocity.z /= m_SlowSpeedFactor;
         }
-
+        if (m_IsSpedUp)
+        {
+            velocity.x *= m_SpeedupSpeedFactor;
+            velocity.z *= m_SpeedupSpeedFactor;
+        }
 
         if (velocity.magnitude > 0.1f)
         {
-            m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
+            if (m_Paralyse)
+            {
+                m_CharacterController.Move(Vector3.zero);
+
+            }
+            else
+            {
+                m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
+
+            }
         }
     }
 
