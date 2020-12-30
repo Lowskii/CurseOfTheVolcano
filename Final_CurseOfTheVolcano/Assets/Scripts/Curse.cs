@@ -15,7 +15,10 @@ public class Curse : MonoBehaviour
 
     private bool m_IsWorking;
     private float m__ElapsedTime=0;
+    private float m__ElapsedTime2 = 0;
+
     private float m__RunTime;
+
 
     [SerializeField] float m__RespawnTime;
 
@@ -61,16 +64,20 @@ public class Curse : MonoBehaviour
 
         if (m_IsWorking)
         {
-            m__ElapsedTime += Time.deltaTime;     
+            m__ElapsedTime += Time.deltaTime;
+            m__ElapsedTime2 += Time.deltaTime;
+
 
             if (m__RespawnTime < m__ElapsedTime)
             {
                 CreateRandomCurse();
-                m_IsWorking = false;
                 m__ElapsedTime = 0;
+                m__ElapsedTime2 = 0;
+
+                m_IsWorking = false;
 
             }
-            else if (m__RunTime > m__ElapsedTime)
+            if (m__RunTime > m__ElapsedTime2)
             {
                 DeactivateCurseEffect();
 

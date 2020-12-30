@@ -9,6 +9,8 @@ public class PickUp : MonoBehaviour
     private float RandomNumber;
 
     private float m__ElapsedTime=0;
+    private float m__ElapsedTime2 = 0;
+
     private float m__RunTime = 2;
 
     private GameObject Player;
@@ -53,24 +55,29 @@ public class PickUp : MonoBehaviour
     {
         if (m_IsWorking)
         {
-
+            Debug.Log(m__ElapsedTime);
             m__ElapsedTime += Time.deltaTime;
+            m__ElapsedTime2 += Time.deltaTime;
 
-            
 
             if (m__RespawnTime < m__ElapsedTime)
             {
                 CreateRandomPickUp();
+
                 m__ElapsedTime = 0;
+                m__ElapsedTime2 = 0;
+
                 m_IsWorking = false;
-            } else if (m__RunTime < m__ElapsedTime)
+
+            } else if (m__RunTime < m__ElapsedTime2)
             {
 
                 DeactivatePickUpEffect();
             }
 
         }
-       
+
+
     }
 
     private void CreateRandomPickUp()
