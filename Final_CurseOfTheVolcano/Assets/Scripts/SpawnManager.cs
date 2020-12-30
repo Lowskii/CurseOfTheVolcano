@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject m_SelectionMenu;
     [SerializeField] GameObject m_MainLayout;
 
+
     private List<int> m_ControllerIds = new List<int>();
     private List<CharacterSelection> m_PlayerSelections = new List<CharacterSelection>();
 
@@ -73,6 +74,9 @@ public class SpawnManager : MonoBehaviour
                     m_PlayerSelections.Add(characterSelection);
                 }
 
+                //set player id to the charactercontrol
+                inputBeh.gameObject.GetComponent<CharacterControl>().PlayerId = m_PlayerId;
+
 
                 //save the camera
                 m_Cameras[m_PlayerId] = menu.GetComponentInChildren<Camera>();
@@ -86,6 +90,8 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("Player " + m_PlayerId + "joinend!");
             }
         }
+
+
     }
 
     void SetupCameras()

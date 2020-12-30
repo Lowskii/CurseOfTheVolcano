@@ -8,6 +8,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
+    int m_PlayerId;
+
     public CharacterController m_CharacterController;
 
     [Range(0, 30)]
@@ -65,6 +67,11 @@ public class CharacterControl : MonoBehaviour
     private bool m_IsDoubleJumpEnabled = false;
     public bool IsInteractPressed = false;
 
+    public int PlayerId
+    {
+        get { return m_PlayerId; }
+        set { m_PlayerId = value; }
+    }
 
     private void Awake()
     {
