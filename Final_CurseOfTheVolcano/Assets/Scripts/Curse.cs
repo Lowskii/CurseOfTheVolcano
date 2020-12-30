@@ -14,7 +14,7 @@ public class Curse : MonoBehaviour
     public AudioSource m_AudioSource;
 
     private bool m_IsWorking;
-    private float m__ElapsedTime;
+    private float m__ElapsedTime=0;
     private float m__RunTime;
 
     [SerializeField] float m__RespawnTime;
@@ -58,20 +58,21 @@ public class Curse : MonoBehaviour
     }
     private void CheckIfTimeRunsOut()
     {
+
         if (m_IsWorking)
         {
             m__ElapsedTime += Time.deltaTime;
 
             if (m__RunTime < m__ElapsedTime)
             {
-
                 DeactivateCurseEffect();
 
             }else if (m__RespawnTime < m__ElapsedTime)
             {
                 CreateRandomCurse();
-                m__ElapsedTime = 0;
                 m_IsWorking = false;
+                m__ElapsedTime = 0;
+
             }
 
         }
@@ -112,8 +113,8 @@ public class Curse : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.gameObject.layer == LayerMask.GetMask("Player"))
-        //{
+        if (/*other.gameObject.layer == LayerMask.GetMask("Player")*/other.gameObject.tag == "Player")
+        {
 
             m_AudioSource.Play();
 
@@ -126,6 +127,8 @@ public class Curse : MonoBehaviour
                 {
                     if (item != null) SpeedDownPlayers(item);
                 }
+                m_IsWorking = true;
+
             }
             else if (m_CurrentCurseType == CurseType.InverseControls)
             {
@@ -133,6 +136,8 @@ public class Curse : MonoBehaviour
                 {
                     if (item != null) InverseControlsPlayers(item);
                 }
+                m_IsWorking = true;
+
             }
             else if (m_CurrentCurseType == CurseType.Paralyse)
             {
@@ -140,6 +145,8 @@ public class Curse : MonoBehaviour
                 {
                     if (item != null) ParalysePlayers(item);
                 }
+                m_IsWorking = true;
+
             }
             else if (m_CurrentCurseType == CurseType.Bounce)
             {
@@ -148,7 +155,9 @@ public class Curse : MonoBehaviour
                     if (item != null) LetPlayersBounce(item);
                 }
             }
-        //}
+            m_IsWorking = true;
+
+        }
     }
 
     private void DeactivateVisuals()
