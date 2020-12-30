@@ -239,6 +239,6 @@ public class Curse : MonoBehaviour
                 myList.Add(bject);
             }
         }
-        myList.Remove(other.gameObject.layer);
+        myList.Remove(other.gameObject);
     }
 }
