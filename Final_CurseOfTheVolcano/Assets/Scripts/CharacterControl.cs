@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(UnityEngine.CharacterController))]
+[RequireComponent(typeof(CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
     public CharacterController m_CharacterController;
@@ -49,9 +49,9 @@ public class CharacterControl : MonoBehaviour
     bool m_IsSaveJumpAvailable = false;
     float m_SaveTime = 1.6f;
 
-    private float m_DelayTimer;
+    private float m_DelayTimer;    
     private Vector3 m_Inpact = Vector3.zero;
-    private Vector3 m_CurrentInpact = Vector3.zero;
+    private Vector3 m_CurrentInpact = Vector3.zero;    
 
 
     private float m_VerticalInput, m_HorizontalInput;
@@ -63,19 +63,20 @@ public class CharacterControl : MonoBehaviour
 
     private bool m_IsDoubleJumpPossible = false;
     private bool m_IsDoubleJumpEnabled = false;
-    public bool IsInteractPressed = false;
+    public bool IsInteractPressed = false;     
+    
 
-
+    
     private void Awake()
     {
-        m_CurrentPushForce = m_NormalPushForce;
+        m_CurrentPushForce = m_NormalPushForce;        
     }
     private void Update()
     {
         ApplyMovement();
         ApplyPush();
         StartDelayTimer();
-        ApplyKnockBack();
+        ApplyKnockBack();        
     }
 
 
@@ -164,7 +165,7 @@ public class CharacterControl : MonoBehaviour
 
         m_MoveDirection.Normalize();
         m_MoveDirection.y = yDir;
-    }
+    }    
 
     public void Interact(InputAction.CallbackContext value)
     {
@@ -199,7 +200,7 @@ public class CharacterControl : MonoBehaviour
             Player.GetComponent<CharacterControl>().KnockBack(dir);
         }
         m_IsPushActivated = false;
-    }
+    }    
 
     public void Push(InputAction.CallbackContext value)
     {
@@ -257,7 +258,7 @@ public class CharacterControl : MonoBehaviour
                 m_PushTimer = 0;
             }
         }
-    }
+    }    
 
     void DisablePushActivated()
     {
@@ -267,4 +268,6 @@ public class CharacterControl : MonoBehaviour
     {
         m_IsSaveJumpAvailable = false;
     }
+
+    
 }
