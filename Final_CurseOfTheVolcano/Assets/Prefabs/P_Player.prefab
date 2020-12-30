@@ -102,10 +102,13 @@ MonoBehaviour:
   m_Jumpspeed: 2.1
   m_MoveDirection: {x: 0, y: 0, z: 0}
   m_PushDelay: 2.5
-  m_IsMovementInversed: 0
+  m_IsDoubleJumpEnabled: 0
+  m_IsSpedUp: 0
+  m_IsStrongerPush: 0
   m_IsSpeedDown: 0
   m_IsBouncing: 0
   m_Paralyse: 0
+  m_IsMovementInversed: 0
   IsInteractPressed: 0
 --- !u!1 &1352891265505613348
 GameObject:

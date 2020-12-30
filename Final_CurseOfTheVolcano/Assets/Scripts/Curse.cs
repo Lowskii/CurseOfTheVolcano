@@ -11,6 +11,8 @@ public class Curse : MonoBehaviour
     private ArrayList myList = new ArrayList();
     public Material[] myMaterials = new Material[4];
 
+    public AudioSource m_AudioSource;
+
     private bool m_IsWorking;
     private float m__ElapsedTime;
     private float m__RunTime;
@@ -64,15 +66,16 @@ public class Curse : MonoBehaviour
             {
 
                 DeactivateCurseEffect();
+
+            }else if (m__RespawnTime < m__ElapsedTime)
+            {
+                CreateRandomCurse();
+                m__ElapsedTime = 0;
+                m_IsWorking = false;
             }
 
         }
-        if (m__RespawnTime < m__ElapsedTime)
-        {
-            CreateRandomCurse();
-            m__ElapsedTime = 0;
-
-        }
+        
     }
 
     private void DeactivateCurseEffect()
@@ -109,9 +112,10 @@ public class Curse : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.GetMask("Player"))
-        {
-            Debug.Log("D0");
+        //if (other.gameObject.layer == LayerMask.GetMask("Player"))
+        //{
+
+            m_AudioSource.Play();
 
             FindAllEffectedPlayers(other);
             DeactivateVisuals();
@@ -144,7 +148,7 @@ public class Curse : MonoBehaviour
                     if (item != null) LetPlayersBounce(item);
                 }
             }
-        }
+        //}
     }
 
     private void DeactivateVisuals()

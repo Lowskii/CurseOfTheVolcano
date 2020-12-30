@@ -83,11 +83,21 @@ public class CharacterControl : MonoBehaviour
     }
     private void Update()
     {
+        BounceWhenNeeded();
         CheckPushForce();
         ApplyMovement();
         ApplyPush();
         StartDelayTimer();
         ApplyKnockBack();
+    }
+
+    private void BounceWhenNeeded()
+    {
+        if (m_IsBouncing && m_CharacterController.isGrounded)
+        {
+            m_MoveDirection.y = m_Jumpspeed;
+
+        }
     }
 
     private void CheckPushForce()

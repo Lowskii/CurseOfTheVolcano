@@ -16,6 +16,7 @@ public class PickUp : MonoBehaviour
 
     [SerializeField] float m__RespawnTime;
     public Material[] myMaterials = new Material[3];
+    public AudioSource m_AudioSource;
 
 
     private void Start()
@@ -33,21 +34,18 @@ public class PickUp : MonoBehaviour
     {
         if (PickUpType.DoubleJump == m_PickUpType)
         {
-          
+     
             Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
-            m_IsWorking = false;
 
         }
         else if (PickUpType.SpedUp == m_PickUpType)
         {
             Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
-            m_IsWorking = false;
 
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
             Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
-            m_IsWorking = false;
 
         }
     }
@@ -55,6 +53,7 @@ public class PickUp : MonoBehaviour
     {
         if (m_IsWorking)
         {
+
             m__ElapsedTime += Time.deltaTime;
 
             if (m__RunTime < m__ElapsedTime)
@@ -62,14 +61,15 @@ public class PickUp : MonoBehaviour
 
                 DeactivatePickUpEffect();
             }
-            
-        }
-        if (m__RespawnTime < m__ElapsedTime)
-        {
-            CreateRandomPickUp();
-            m__ElapsedTime = 0;
+             if (m__RespawnTime < m__ElapsedTime)
+            {
+                CreateRandomPickUp();
+                m__ElapsedTime = 0;
+                m_IsWorking = false;
+            }
 
         }
+       
     }
 
     private void CreateRandomPickUp()
@@ -99,9 +99,11 @@ public class PickUp : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.GetMask("Player"))
-        {
-            if (PickUpType.DoubleJump==m_PickUpType)
+        //if (other.gameObject.layer == LayerMask.GetMask("Player"))
+        //{
+        m_AudioSource.Play();
+
+        if (PickUpType.DoubleJump==m_PickUpType)
             {
                 Player = other.gameObject;
                 Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
@@ -127,7 +129,7 @@ public class PickUp : MonoBehaviour
                 DeactivateVisuals();
 
             }
-        }
+        //}
     }
 
     private void DeactivateVisuals()
