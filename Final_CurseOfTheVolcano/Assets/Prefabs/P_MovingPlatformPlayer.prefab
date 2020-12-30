@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4470981700319186165, guid: e942808cbf4bc404c8c94d2ec54a998f, type: 3}
       propertyPath: m_Name
-      value: P_MovingPlatformPlayer
+      value: P_MovingPlatformBase
       objectReference: {fileID: 0}
     - target: {fileID: 4470981700319186169, guid: e942808cbf4bc404c8c94d2ec54a998f, type: 3}
       propertyPath: m_RootOrder
@@ -59,10 +59,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 07d6a297512de8245b73b52accf542b9, type: 2}
-    - target: {fileID: 5087127198335495736, guid: e942808cbf4bc404c8c94d2ec54a998f, type: 3}
-      propertyPath: Speed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5087127198335495736, guid: e942808cbf4bc404c8c94d2ec54a998f, type: 3}
       propertyPath: Continuous
       value: 0
