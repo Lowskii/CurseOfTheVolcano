@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class BounceBehaviour : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (GetComponent<MovingObstacleBehaviour>().IsMoving)
+        if (GetComponent<MovingObstacleBehaviour>().IsMoving && !other.isTrigger)
         {
             m_Player = other.gameObject.transform;
             m_IsPushing = true;
