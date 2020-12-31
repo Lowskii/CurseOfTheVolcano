@@ -9,7 +9,7 @@ public class EndScreenManager : MonoBehaviour
     [SerializeField] private GameObject m_Model;    
 
     private List<Player> m_Players;    
-    private LevelManager m_LevelManager;
+    private LevelManager m_LevelManager;    
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class EndScreenManager : MonoBehaviour
             Vector3 position = m_Positions[i].position;
             Quaternion rotation = m_Positions[i].rotation;
             var player = Instantiate(m_Model, position, rotation);
+            player.GetComponent<Animator>().SetBool("IsVictorious", m_Players[i].IsVictorious);
             foreach (var renderer in player.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>())
             {
                 renderer.material.color = m_Players[i].PlayerColor;
