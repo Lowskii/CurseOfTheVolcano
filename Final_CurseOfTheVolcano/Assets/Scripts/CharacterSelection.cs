@@ -13,7 +13,7 @@ public class CharacterSelection : MonoBehaviour
 
     static List<Material> m_SelectedMaterials = new List<Material>();
     [SerializeField] private Material[] m_PlayerSelectionMaterials;
-    [SerializeField] private MeshRenderer m_MeshCharacter;
+    [SerializeField] private SkinnedMeshRenderer m_MeshCharacter;
 
     [SerializeField] private TextMeshProUGUI m_TitleText;
     [SerializeField] private Camera m_Camera;
@@ -30,7 +30,7 @@ public class CharacterSelection : MonoBehaviour
     public void SetPlayerIndex(int index)
     {
         m_CurrentSelectedMaterial = m_PlayerIndex = index;
-
+        m_MeshCharacter.GetComponentInParent<Animator>().SetBool("IsGrounded", true);
         m_TitleText.SetText("Player " + (index + 1).ToString());
     }
     private void Start()
@@ -42,7 +42,7 @@ public class CharacterSelection : MonoBehaviour
 
     void SetMaterial()
     {
-        m_MeshCharacter.material = m_PlayerSelectionMaterials[m_CurrentSelectedMaterial];
+        m_MeshCharacter.sharedMaterial = m_PlayerSelectionMaterials[m_CurrentSelectedMaterial];
         m_Camera.backgroundColor = m_PlayerSelectionMaterials[m_CurrentSelectedMaterial].color;
     }
     public void NextCharacter()

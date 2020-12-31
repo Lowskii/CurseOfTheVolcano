@@ -66,7 +66,7 @@ public class CharacterControl : MonoBehaviour
     public bool m_Paralyse = false;
     public bool m_IsMovementInversed = false;
 
-
+    private Animator m_Anim;
 
     private bool m_IsDoubleJumpPossible = false;
     public bool IsInteractPressed = false;
@@ -80,6 +80,7 @@ public class CharacterControl : MonoBehaviour
     private void Awake()
     {
         m_CurrentPushForce = m_NormalPushForce;
+        m_Anim = this.gameObject.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -88,7 +89,7 @@ public class CharacterControl : MonoBehaviour
         ApplyMovement();
         ApplyPush();
         StartDelayTimer();
-        ApplyKnockBack();
+        ApplyKnockBack();        
     }
 
     private void BounceWhenNeeded()
@@ -123,7 +124,7 @@ public class CharacterControl : MonoBehaviour
         }
     }
     private void ApplyMovement()
-    {
+    {   
 
         if (m_CharacterController.isGrounded)
         {
@@ -145,7 +146,7 @@ public class CharacterControl : MonoBehaviour
 
         ApplyRotation(m_MoveDirection);
 
-        Vector3 velocity = m_MoveDirection;
+        Vector3 velocity = m_MoveDirection;        
 
         //while getting pushed your movement is very limited
         if (m_GettingPushed)
@@ -172,26 +173,25 @@ public class CharacterControl : MonoBehaviour
         }
 
         if (velocity.magnitude > 0.1f)
-        {
+        {            
             if (m_Paralyse)
             {
-                m_CharacterController.Move(Vector3.zero);
-
+                m_CharacterController.Move(Vector3.zero);                
             }
             else
-            {
+            {                
                 m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
-
             }
         }
+        m_Anim.SetFloat("Velocity", velocity.magnitude);
+        m_Anim.SetBool("IsGrounded", m_CharacterController.isGrounded);
     }
 
     public void Jump(InputAction.CallbackContext value)
     {
         if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
         {
-            m_MoveDirection.y = m_Jumpspeed;
-
+            m_MoveDirection.y = m_Jumpspeed;           
             if (!m_CharacterController.isGrounded)
             {
                 m_IsSaveJumpAvailable = false;
@@ -200,7 +200,7 @@ public class CharacterControl : MonoBehaviour
             {
                 m_IsDoubleJumpPossible = false;
             }
-        }
+        }            
     }
 
     public void Movement(InputAction.CallbackContext value)

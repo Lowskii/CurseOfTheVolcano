@@ -14,7 +14,7 @@ public class InitializeGame : MonoBehaviour
         for (int i = 0; i < inputs.Length; i++)
         {
             //reset mesh transform
-            GameObject mesh = inputs[i].GetComponentInChildren<MeshRenderer>().gameObject;
+            GameObject mesh = inputs[i].gameObject;
             mesh.transform.localScale = new Vector3(1, 1, 1);
             mesh.transform.localPosition = new Vector3(0, 0, 0);
 

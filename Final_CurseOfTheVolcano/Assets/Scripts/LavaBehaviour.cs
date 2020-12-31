@@ -37,7 +37,7 @@ public class LavaBehaviour : MonoBehaviour
             //Destroy(hit.gameObject);
             hit.gameObject.GetComponent<CharacterControl>().enabled = false;
             FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
-                0, hit.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial.color, false));
+                0, hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, false));
 
             //CharacterControl.PlayerDied();
 

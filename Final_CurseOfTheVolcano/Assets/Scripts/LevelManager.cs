@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        Player player = new Player(other.GetComponent<CharacterControl>().PlayerId, m_LivePlayers.Count + 1, other.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial.color, true);
+        Player player = new Player(other.GetComponent<CharacterControl>().PlayerId, m_LivePlayers.Count + 1, other.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, true);
         m_LivePlayers.Add(player);
         Players.Add(player);
     }
