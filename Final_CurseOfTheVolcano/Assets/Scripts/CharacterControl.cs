@@ -53,9 +53,6 @@ public class CharacterControl : MonoBehaviour
     private Vector3 m_Inpact = Vector3.zero;
     private Vector3 m_CurrentInpact = Vector3.zero;
 
-
-    private float m_VerticalInput, m_HorizontalInput;
-
     public bool m_IsDoubleJumpEnabled = false;
     public bool m_IsSpedUp = false;
     public bool m_IsStrongerPush = false;
@@ -207,11 +204,8 @@ public class CharacterControl : MonoBehaviour
     {
         var movement = value.ReadValue<Vector2>();
 
-        m_HorizontalInput = movement.x;
-        m_VerticalInput = movement.y;
-
         float yDir = m_MoveDirection.y;
-        m_MoveDirection = new Vector3(m_HorizontalInput, 0, m_VerticalInput);
+        m_MoveDirection = new Vector3(movement.x, 0, movement.y);
 
         m_MoveDirection.Normalize();
         m_MoveDirection.y = yDir;
