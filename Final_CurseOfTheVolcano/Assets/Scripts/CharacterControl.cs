@@ -89,7 +89,7 @@ public class CharacterControl : MonoBehaviour
         ApplyMovement();
         ApplyPush();
         StartDelayTimer();
-        ApplyKnockBack();        
+        ApplyKnockBack();
     }
 
     private void BounceWhenNeeded()
@@ -124,15 +124,15 @@ public class CharacterControl : MonoBehaviour
         }
     }
     private void ApplyMovement()
-    {   
+    {
 
         if (m_CharacterController.isGrounded)
         {
-            if (m_MoveDirection.y < 0)
+            if (m_MoveDirection.y < 0)//reset y movement down when landing
             {
-                //reset y movement down when landing
-                m_MoveDirection.y = -0.1f;
+                m_MoveDirection.y = -0.5f;
             }
+
             if (m_IsDoubleJumpPossible == false)
             {
                 m_IsDoubleJumpPossible = true;
@@ -146,7 +146,7 @@ public class CharacterControl : MonoBehaviour
 
         ApplyRotation(m_MoveDirection);
 
-        Vector3 velocity = m_MoveDirection;        
+        Vector3 velocity = m_MoveDirection;
 
         //while getting pushed your movement is very limited
         if (m_GettingPushed)
@@ -173,13 +173,13 @@ public class CharacterControl : MonoBehaviour
         }
 
         if (velocity.magnitude > 0.1f)
-        {            
+        {
             if (m_Paralyse)
             {
-                m_CharacterController.Move(Vector3.zero);                
+                m_CharacterController.Move(Vector3.zero);
             }
             else
-            {                
+            {
                 m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
             }
         }
@@ -191,7 +191,7 @@ public class CharacterControl : MonoBehaviour
     {
         if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
         {
-            m_MoveDirection.y = m_Jumpspeed;           
+            m_MoveDirection.y = m_Jumpspeed;
             if (!m_CharacterController.isGrounded)
             {
                 m_IsSaveJumpAvailable = false;
@@ -200,7 +200,7 @@ public class CharacterControl : MonoBehaviour
             {
                 m_IsDoubleJumpPossible = false;
             }
-        }            
+        }
     }
 
     public void Movement(InputAction.CallbackContext value)
