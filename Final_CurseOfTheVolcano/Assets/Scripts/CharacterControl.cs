@@ -53,6 +53,7 @@ public class CharacterControl : MonoBehaviour
     private Vector3 m_Inpact = Vector3.zero;
     private Vector3 m_CurrentInpact = Vector3.zero;
 
+    private bool m_JustJumped = false;
     public bool m_IsDoubleJumpEnabled = false;
     public bool m_IsSpedUp = false;
     public bool m_IsStrongerPush = false;
@@ -125,7 +126,8 @@ public class CharacterControl : MonoBehaviour
 
         if (m_CharacterController.isGrounded)
         {
-            if (m_MoveDirection.y < 0)//reset y movement down when landing
+            //keep a small motion down when the player is not jumping
+            if (!(Math.Abs(m_MoveDirection.y - m_Jumpspeed) <  0.0001f))
             {
                 m_MoveDirection.y = -0.5f;
             }
