@@ -10,7 +10,7 @@ public class InputBehaviour : MonoBehaviour
 {
     Controls m_Controls;
     CharacterControl m_CharacterControl;
-
+    Vector3 m_Rotation;
     public void SetInputUser(InputUser inputUser)
     {
         m_Controls = (Controls)inputUser.actions;
@@ -32,7 +32,7 @@ public class InputBehaviour : MonoBehaviour
             switch (action.name)
             {
                 case "Selection":
-   
+
                     if (inputModule != null)
                     {
                         InputActionReference selectionRef = ScriptableObject.CreateInstance<InputActionReference>();
@@ -75,7 +75,7 @@ public class InputBehaviour : MonoBehaviour
                     break;
                 case "Interact":
                     newEvent.AddListener(m_CharacterControl.Interact);
-                    action.performed += newEvent.Invoke;                    
+                    action.performed += newEvent.Invoke;
                     break;
                 default:
                     Debug.Log("There is no functionality yet for action: " + action.name + " in action map: " + action.actionMap);
@@ -84,6 +84,14 @@ public class InputBehaviour : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //we want to be able to rotate the character in the selection screen but not when we are in the actual game
+        if (m_CharacterControl.enabled == false)
+        {
+            m_CharacterControl.ApplyRotation(m_Rotation);
+        }
+    }
     public void SwitchToGameActionMapping()
     {
         m_Controls.GameControls.Enable();
@@ -98,7 +106,11 @@ public class InputBehaviour : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext value)
     {
-        m_CharacterControl.ApplyRotation(value.ReadValue<Vector2>());
+        Vector2 rotation = value.ReadValue<Vector2>();
+
+        m_Rotation = new Vector3(rotation.x, 0, rotation.y);
+
+        m_Rotation.Normalize();
     }
 
 }
