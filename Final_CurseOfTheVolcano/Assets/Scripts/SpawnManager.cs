@@ -94,7 +94,7 @@ public class SpawnManager : MonoBehaviour
         }
         if (m_PlayerId == 4)
         {
-            m_HelpText.active = false;
+            m_HelpText.SetActive(false);
         }
     }
 
