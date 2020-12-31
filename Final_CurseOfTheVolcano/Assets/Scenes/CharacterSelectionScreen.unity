@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1462343351}
   - component: {fileID: 1462343350}
+  - component: {fileID: 1462343352}
   m_Layer: 0
   m_Name: Background Cam
   m_TagString: Untagged
@@ -494,6 +495,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -38.324, y: -154.205, z: -10.289}
+--- !u!81 &1462343352
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462343349}
+  m_Enabled: 1
 --- !u!1 &2112295846
 GameObject:
   m_ObjectHideFlags: 0
