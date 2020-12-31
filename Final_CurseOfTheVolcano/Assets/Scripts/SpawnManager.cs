@@ -54,7 +54,8 @@ public class SpawnManager : MonoBehaviour
             //add a player
             else
             {
-                m_ControllerIds.Add(m_GameInputControls.MenuControls.Start.activeControl.device.deviceId);
+                InputDevice controller = m_GameInputControls.MenuControls.Start.activeControl.device;
+                m_ControllerIds.Add(controller.deviceId);
 
                 //setup the controls and user
                 Controls gameInputControls = new Controls();
@@ -67,7 +68,7 @@ public class SpawnManager : MonoBehaviour
                 GameObject menu = Instantiate(m_SelectionMenu, m_MainLayout.transform);
 
                 InputBehaviour inputBeh = menu.GetComponentInChildren<InputBehaviour>();
-                if (inputBeh != null) inputBeh.SetInputUser(user);
+                if (inputBeh != null) inputBeh.SetInputUser(user, controller);
 
                 CharacterSelection characterSelection = menu.GetComponentInChildren<CharacterSelection>();
                 if (characterSelection != null)
