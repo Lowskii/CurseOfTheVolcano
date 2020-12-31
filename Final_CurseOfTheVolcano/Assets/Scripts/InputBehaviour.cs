@@ -12,14 +12,14 @@ public class InputBehaviour : MonoBehaviour
     CharacterControl m_CharacterControl;
     Vector3 m_Rotation;
 
-    Gamepad m_CurrentController; 
-    
+    Gamepad m_CurrentController;
+
     public void SetInputUser(InputUser inputUser, InputDevice controller)
     {
         m_CurrentController = (Gamepad)controller;
 
         m_Controls = (Controls)inputUser.actions;
-        
+
         InputSystemUIInputModule inputModule = transform.parent.parent.GetComponentInChildren<InputSystemUIInputModule>();
 
         m_CharacterControl = GetComponentInChildren<CharacterControl>();
@@ -127,11 +127,14 @@ public class InputBehaviour : MonoBehaviour
             StartCoroutine(StopRumble(length));
         }
     }
-
+    public void StopRumbleImmideately()
+    {
+        m_CurrentController.SetMotorSpeeds(0f, 0f);
+    }
     IEnumerator StopRumble(float time)
     {
         yield return new WaitForSecondsRealtime(time);
 
-        m_CurrentController.SetMotorSpeeds(0f, 0f);
+        StopRumbleImmideately();
     }
 }

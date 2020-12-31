@@ -35,10 +35,12 @@ public class LavaBehaviour : MonoBehaviour
         if (hit.gameObject.tag == "Player")
         {
             //Destroy(hit.gameObject);
+            hit.gameObject.GetComponent<InputBehaviour>().RumbleController(0.8f,1.5f);
             hit.gameObject.GetComponent<CharacterControl>().enabled = false;
             FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
                 0, hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, false));
 
+            IncreaseSpeed();
             //CharacterControl.PlayerDied();
 
             //TODO: Find alternative for ending it so abruptly 

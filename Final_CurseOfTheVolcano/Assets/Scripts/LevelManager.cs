@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour
                 SceneManager.LoadScene("EndScreen");
                 foreach (var player in FindObjectsOfType<CharacterControl>())
                 {
+                    player.GetComponent<InputBehaviour>().StopRumbleImmideately();
                     Destroy(player.gameObject);
                 }
                 foreach (var cam in FindObjectsOfType<Camera>())

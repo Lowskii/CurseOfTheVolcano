@@ -68,7 +68,11 @@ public class SpawnManager : MonoBehaviour
                 GameObject menu = Instantiate(m_SelectionMenu, m_MainLayout.transform);
 
                 InputBehaviour inputBeh = menu.GetComponentInChildren<InputBehaviour>();
-                if (inputBeh != null) inputBeh.SetInputUser(user, controller);
+                if (inputBeh != null)
+                {
+                    inputBeh.SetInputUser(user, controller);
+                    inputBeh.RumbleController(0.8f, 0.66f);
+                }
 
                 CharacterSelection characterSelection = menu.GetComponentInChildren<CharacterSelection>();
                 if (characterSelection != null)

@@ -25,7 +25,7 @@ public class Curse : MonoBehaviour
     {
         m_RandomNumer = Random.Range(0, 3);
 
-        switch (m_RandomNumer)
+        switch (2)
         {
             case 0:
                 m_CurrentCurseType = CurseType.Bounce;
@@ -187,6 +187,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
+            item.GetComponent<InputBehaviour>().RumbleController(0.5f, m__RunTime);
             item.GetComponent<CharacterControl>().m_Paralyse = true;
         }
     }

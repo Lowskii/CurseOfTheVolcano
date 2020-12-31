@@ -28,6 +28,7 @@ public class BounceBehaviour : MonoBehaviour
         if (GetComponent<MovingObstacleBehaviour>().IsMoving && !other.isTrigger)
         {
             m_Player = other.gameObject.transform;
+            m_Player.GetComponent<InputBehaviour>().RumbleController(0.7f, 0.3f);
             m_IsPushing = true;
         }
               
