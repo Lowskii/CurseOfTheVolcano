@@ -6,18 +6,11 @@ public enum PickUpType { SpedUp, DoubleJump, StrongerPush }
 public class PickUp : MonoBehaviour
 {
     private PickUpType m_PickUpType;
-    private float RandomNumber;
-
-    private float m__ElapsedTime=0;
-    private float m__ElapsedTime2 = 0;
-
+    private float m_RandomNumber;
+    private GameObject m_Player;
     private float m__RunTime = 2;
-
-    private GameObject Player;
-    private bool m_IsWorking=false;
-
     [SerializeField] float m__RespawnTime;
-    public Material[] myMaterials = new Material[3];
+    public Material[] m_ListOfMaterials = new Material[3];
     public AudioSource m_AudioSource;
 
 
@@ -27,84 +20,67 @@ public class PickUp : MonoBehaviour
 
     }
 
-    private void Update()
+   
+    private IEnumerator CheckPickupTime()
     {
-        CheckIfTimeRunsOut();
-    }
+        yield return new WaitForSeconds(m__RunTime);
+        DeactivatePickUpEffect();
 
+        yield return new WaitForSeconds(m__RespawnTime);
+        CreateRandomPickUp();
+    }
     private void DeactivatePickUpEffect()
     {
         if (PickUpType.DoubleJump == m_PickUpType)
         {
      
-            Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
+            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
 
         }
         else if (PickUpType.SpedUp == m_PickUpType)
         {
-            Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
+            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
 
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
-            Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
+            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
 
         }
     }
-    private void CheckIfTimeRunsOut()
-    {
-        if (m_IsWorking)
-        {
-            Debug.Log(m__ElapsedTime);
-            m__ElapsedTime += Time.deltaTime;
-            m__ElapsedTime2 += Time.deltaTime;
-
-
-            if (m__RespawnTime < m__ElapsedTime)
-            {
-                CreateRandomPickUp();
-
-                m__ElapsedTime = 0;
-                m__ElapsedTime2 = 0;
-
-                m_IsWorking = false;
-
-            } else if (m__RunTime < m__ElapsedTime2)
-            {
-
-                DeactivatePickUpEffect();
-            }
-
-        }
-
-
-    }
+    
 
     private void CreateRandomPickUp()
     {
-        RandomNumber = Random.Range(0, 2);
+        m_RandomNumber = Random.Range(0, 2);
 
-        switch (RandomNumber)
+        switch (m_RandomNumber)
         {
             case 0:
                 m_PickUpType = PickUpType.SpedUp;
-                GetComponent<Renderer>().material = myMaterials[0];
+                GetComponent<Renderer>().material = m_ListOfMaterials[0];
                 break;
             case 1:
                 m_PickUpType = PickUpType.DoubleJump;
-                GetComponent<Renderer>().material = myMaterials[1];
+                GetComponent<Renderer>().material = m_ListOfMaterials[1];
                 break;
             case 2:
                 m_PickUpType = PickUpType.DoubleJump;
-                GetComponent<Renderer>().material = myMaterials[2];
+                GetComponent<Renderer>().material = m_ListOfMaterials[2];
                 break;
             default:
                 break;
         }
 
+        EnableVisuals();
+    }
+
+    private void EnableVisuals()
+    {
         this.GetComponent<MeshRenderer>().enabled = true;
         this.GetComponent<SphereCollider>().enabled = true;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         //if (other.gameObject.layer == LayerMask.GetMask("Player"))
@@ -113,30 +89,26 @@ public class PickUp : MonoBehaviour
 
         if (PickUpType.DoubleJump==m_PickUpType)
             {
-                Player = other.gameObject;
-                Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
+                m_Player = other.gameObject;
+                m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
 
-                m_IsWorking = true;
-                DeactivateVisuals();
             }
-            else if (PickUpType.SpedUp == m_PickUpType)
+        else if (PickUpType.SpedUp == m_PickUpType)
             {
-                Player = other.gameObject;
-                Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+                m_Player = other.gameObject;
+                m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
 
-                m_IsWorking = true;
-                DeactivateVisuals();
 
             }
-            else if (PickUpType.StrongerPush == m_PickUpType)
+        else if (PickUpType.StrongerPush == m_PickUpType)
             {
-                Player = other.gameObject;
-                Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+                m_Player = other.gameObject;
+                m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
 
-                m_IsWorking = true;
-                DeactivateVisuals();
 
             }
+        DeactivateVisuals();
+        CheckPickupTime();
         //}
     }
 

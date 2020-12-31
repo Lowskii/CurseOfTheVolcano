@@ -8,8 +8,8 @@ public class Curse : MonoBehaviour
     private CurseType m_CurrentCurseType;
     private int m_RandomNumer;
 
-    private ArrayList myList = new ArrayList();
-    public Material[] myMaterials = new Material[4];
+    private ArrayList m_CurrentPlayerList = new ArrayList();
+    public Material[] m_ListOfMaterials = new Material[4];
 
     public AudioSource m_AudioSource;
 
@@ -25,23 +25,23 @@ public class Curse : MonoBehaviour
     {
         m_RandomNumer = Random.Range(0, 3);
 
-        switch (2)
+        switch (m_RandomNumer)
         {
             case 0:
                 m_CurrentCurseType = CurseType.Bounce;
-                GetComponent<Renderer>().material = myMaterials[0];
+                GetComponent<Renderer>().material = m_ListOfMaterials[0];
                 break;
             case 1:
                 m_CurrentCurseType = CurseType.InverseControls;
-                GetComponent<Renderer>().material = myMaterials[1];
+                GetComponent<Renderer>().material = m_ListOfMaterials[1];
                 break;
             case 2:
                 m_CurrentCurseType = CurseType.Paralyse;
-                GetComponent<Renderer>().material = myMaterials[2];
+                GetComponent<Renderer>().material = m_ListOfMaterials[2];
                 break;
             case 3:
                 m_CurrentCurseType = CurseType.SpeedDown;
-                GetComponent<Renderer>().material = myMaterials[3];
+                GetComponent<Renderer>().material = m_ListOfMaterials[3];
                 break;
             default:
                 break;
@@ -66,28 +66,28 @@ public class Curse : MonoBehaviour
     {
         if (m_CurrentCurseType == CurseType.SpeedDown)
         {
-            foreach (GameObject item in myList)
+            foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) NormalizeSpeedDownPlayers(item);
             }
         }
         else if (m_CurrentCurseType == CurseType.InverseControls)
         {
-            foreach (GameObject item in myList)
+            foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) NormalizeControlsPlayers(item);
             }
         }
         else if (m_CurrentCurseType == CurseType.Paralyse)
         {
-            foreach (GameObject item in myList)
+            foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) DeParalysePlayers(item);
             }
         }
         else if (m_CurrentCurseType == CurseType.Bounce)
         {
-            foreach (GameObject item in myList)
+            foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) LetPlayersStopBouncing(item);
             }
@@ -106,7 +106,7 @@ public class Curse : MonoBehaviour
 
             if (m_CurrentCurseType == CurseType.SpeedDown)
             {
-                foreach (GameObject item in myList)
+                foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) SpeedDownPlayers(item);
                 }
@@ -114,7 +114,7 @@ public class Curse : MonoBehaviour
             }
             else if (m_CurrentCurseType == CurseType.InverseControls)
             {
-                foreach (GameObject item in myList)
+                foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) InverseControlsPlayers(item);
                 }
@@ -122,14 +122,14 @@ public class Curse : MonoBehaviour
             }
             else if (m_CurrentCurseType == CurseType.Paralyse)
             {
-                foreach (GameObject item in myList)
+                foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) ParalysePlayers(item);
                 }
             }
             else if (m_CurrentCurseType == CurseType.Bounce)
             {
-                foreach (GameObject item in myList)
+                foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) LetPlayersBounce(item);
                 }
@@ -213,11 +213,11 @@ public class Curse : MonoBehaviour
         GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Player");
         foreach (object bject in allObjects)
         {
-            if (myList.Contains(bject) == false)
+            if (m_CurrentPlayerList.Contains(bject) == false)
             {
-                myList.Add(bject);
+                m_CurrentPlayerList.Add(bject);
             }
         }
-        myList.Remove(other.gameObject);
+        m_CurrentPlayerList.Remove(other.gameObject);
     }
 }
