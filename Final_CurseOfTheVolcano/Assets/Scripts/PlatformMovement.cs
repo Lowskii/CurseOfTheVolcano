@@ -28,7 +28,7 @@ public class PlatformMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (this.transform.position != m_CurrentTarget) MovePlatform();
+        if ((this.transform.position - m_CurrentTarget).magnitude > Speed * Time.deltaTime) MovePlatform();
         else if (Continuous) UpdateTarget();
     }
 

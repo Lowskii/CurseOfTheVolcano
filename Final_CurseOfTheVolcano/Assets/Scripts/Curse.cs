@@ -6,7 +6,7 @@ public enum CurseType { Paralyse, SpeedDown, InverseControls, Bounce }
 public class Curse : MonoBehaviour
 {
     private CurseType m_CurrentCurseType;
-    private int m_RandomNumer; 
+    private int m_RandomNumer;
 
     private ArrayList myList = new ArrayList();
     public Material[] myMaterials = new Material[4];
@@ -14,10 +14,10 @@ public class Curse : MonoBehaviour
     public AudioSource m_AudioSource;
 
     private bool m_IsWorking;
-    private float m__ElapsedTime=0;
+    private float m__ElapsedTime = 0;
     private float m__ElapsedTime2 = 0;
 
-    private float m__RunTime;
+    private float m__RunTime = 5;
 
 
     [SerializeField] float m__RespawnTime;
@@ -41,7 +41,7 @@ public class Curse : MonoBehaviour
                 GetComponent<Renderer>().material = myMaterials[1];
                 break;
             case 2:
-                m_CurrentCurseType = CurseType.Paralyse; 
+                m_CurrentCurseType = CurseType.Paralyse;
                 GetComponent<Renderer>().material = myMaterials[2];
                 break;
             case 3:
@@ -55,37 +55,17 @@ public class Curse : MonoBehaviour
         this.GetComponent<MeshRenderer>().enabled = true;
         this.GetComponent<SphereCollider>().enabled = true;
     }
-    private void Update()
+
+
+    private IEnumerator ActivateCurse()
     {
-        CheckIfTimeRunsOut();
+        yield return new WaitForSeconds(m__RunTime);
+        DeactivateCurseEffect();
+
+        yield return new WaitForSeconds(m__RespawnTime);
+        CreateRandomCurse();
     }
-    private void CheckIfTimeRunsOut()
-    {
 
-        if (m_IsWorking)
-        {
-            m__ElapsedTime += Time.deltaTime;
-            m__ElapsedTime2 += Time.deltaTime;
-
-
-            if (m__RespawnTime < m__ElapsedTime)
-            {
-                CreateRandomCurse();
-                m__ElapsedTime = 0;
-                m__ElapsedTime2 = 0;
-
-                m_IsWorking = false;
-
-            }
-            if (m__RunTime > m__ElapsedTime2)
-            {
-                DeactivateCurseEffect();
-
-            }
-
-        }
-        
-    }
 
     private void DeactivateCurseEffect()
     {
@@ -164,7 +144,7 @@ public class Curse : MonoBehaviour
                 }
             }
             m_IsWorking = true;
-
+            StartCoroutine(ActivateCurse());
         }
     }
 
@@ -209,7 +189,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().m_IsBouncing=true;
+            item.GetComponent<CharacterControl>().m_IsBouncing = true;
         }
     }
 

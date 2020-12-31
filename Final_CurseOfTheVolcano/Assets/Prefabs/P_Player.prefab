@@ -443,4 +443,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Player: {fileID: 102058573857987435}
   m_SmoothSpeed: 10
-  m_Offset: {x: 0, y: 5, z: -6}
+  m_Offset: {x: 0, y: 7, z: -10}
