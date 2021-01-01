@@ -141,10 +141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m__RespawnTime: 5
-  myMaterials:
-  - {fileID: 2100000, guid: d044304e03465f745a11892740c8d865, type: 2}
-  - {fileID: 2100000, guid: 4079e4c3b0d30f44fa6b7561f447cd1e, type: 2}
-  - {fileID: 2100000, guid: e48c193052bb2e24ca6423baa1a7470b, type: 2}
+  m_ListOfMaterials:
+  - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
+  - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
+  - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   m_AudioSource: {fileID: 6148878528307231330}
 --- !u!82 &6148878528307231330
 AudioSource:

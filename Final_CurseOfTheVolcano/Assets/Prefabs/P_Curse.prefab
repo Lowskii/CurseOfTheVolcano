@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7328558933162786369}
   - component: {fileID: 4065837281273595290}
   m_Layer: 0
-  m_Name: Curse
+  m_Name: P_Curse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,12 +109,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e796d32c3d30b834cbc6b678285bdae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMaterials:
-  - {fileID: 2100000, guid: cb23c04af1d75f44e965692c70d8b96b, type: 2}
-  - {fileID: 2100000, guid: ec9a03b9f1906bc4fa19ceb2c5432056, type: 2}
-  - {fileID: 2100000, guid: bd372325ae048194fb9250f77f6a31af, type: 2}
-  - {fileID: 2100000, guid: d4f37691282d4504f927251eaef9a058, type: 2}
+  m_ListOfMaterials:
+  - {fileID: 2100000, guid: bef7e011eca3c1b4f8864772e7e34fe5, type: 2}
+  - {fileID: 2100000, guid: bef7e011eca3c1b4f8864772e7e34fe5, type: 2}
+  - {fileID: 2100000, guid: bef7e011eca3c1b4f8864772e7e34fe5, type: 2}
+  - {fileID: 2100000, guid: bef7e011eca3c1b4f8864772e7e34fe5, type: 2}
   m_AudioSource: {fileID: 4065837281273595290}
+  m__RunTime: 5
   m__RespawnTime: 5
 --- !u!82 &4065837281273595290
 AudioSource:
