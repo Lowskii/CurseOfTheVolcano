@@ -127,7 +127,7 @@ public class CharacterControl : MonoBehaviour
         if (m_CharacterController.isGrounded)
         {
             //keep a small motion down when the player is not jumping
-            if (!(Math.Abs(m_MoveDirection.y - m_Jumpspeed) <  0.0001f))
+            if (!(Math.Abs(m_MoveDirection.y - m_Jumpspeed) < 0.0001f))
             {
                 m_MoveDirection.y = -0.5f;
             }
@@ -182,7 +182,8 @@ public class CharacterControl : MonoBehaviour
                 m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
             }
         }
-        m_Anim.SetFloat("Velocity", velocity.magnitude);
+        float moveVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
+        m_Anim.SetFloat("Velocity", moveVelocity);
         m_Anim.SetBool("IsGrounded", m_CharacterController.isGrounded);
     }
 
