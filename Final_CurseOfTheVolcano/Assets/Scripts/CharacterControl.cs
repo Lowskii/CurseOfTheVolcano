@@ -97,7 +97,7 @@ public class CharacterControl : MonoBehaviour
         if (m_IsBouncing && m_CharacterController.isGrounded)
         {
             m_MoveDirection.y = m_Jumpspeed;
-
+            m_JustJumped = true;
         }
     }
 
