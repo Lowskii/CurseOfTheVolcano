@@ -57,7 +57,7 @@ public class PickUp : MonoBehaviour
 
     private void CreateRandomPickUp()
     {
-        m_RandomNumber = Random.Range(0, 2);
+        m_RandomNumber = Random.Range(0, 3);
 
         switch (m_RandomNumber)
         {

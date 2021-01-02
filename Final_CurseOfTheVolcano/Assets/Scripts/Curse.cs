@@ -25,7 +25,7 @@ public class Curse : MonoBehaviour
     }
     private void CreateRandomCurse()
     {
-        m_RandomNumer = Random.Range(0, 3);
+        m_RandomNumer = Random.Range(0, 4);
 
         switch (m_RandomNumer)
         {
