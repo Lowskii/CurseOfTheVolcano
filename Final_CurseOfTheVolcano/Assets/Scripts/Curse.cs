@@ -17,7 +17,7 @@ public class Curse : MonoBehaviour
 
     [SerializeField] private float m_RunTime = 5;
     [SerializeField] float m_RespawnTime;
-    [SerializeField] private GameObject m_Text;
+    [SerializeField] private GameObject m_Text;   
 
     private void Start()
     {

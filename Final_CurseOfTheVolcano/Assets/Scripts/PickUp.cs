@@ -15,7 +15,8 @@ public class PickUp : MonoBehaviour
     [SerializeField] float m_RespawnTime;
     public Material[] m_ListOfMaterials = new Material[3];
     public AudioSource m_AudioSource;
-    [SerializeField] private GameObject m_Text;
+    [SerializeField] private GameObject m_UILoader;
+    [SerializeField] private Sprite m_Fist, m_DoubleJump, m_Speed;
 
 
     private void Start()
@@ -96,9 +97,12 @@ public class PickUp : MonoBehaviour
             m_Player = other.gameObject;
             m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
-            GameObject text = Instantiate(m_Text, grid.transform);
-            text.GetComponent<Text>().text = "Double Jump";
-            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            GameObject loader = Instantiate(m_UILoader, grid.transform);
+            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeDoubleJump;
+            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_DoubleJump;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
             StartCoroutine(CheckPickupTime(m_RunTimeDoubleJump));
 
         }
@@ -107,9 +111,12 @@ public class PickUp : MonoBehaviour
             m_Player = other.gameObject;
             m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
-            GameObject text = Instantiate(m_Text, grid.transform);
-            text.GetComponent<Text>().text = "Speed Up";
-            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            GameObject loader = Instantiate(m_UILoader, grid.transform);
+            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedUp;
+            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Speed;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
             StartCoroutine(CheckPickupTime(m_RunTimeSpeedUp));
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
@@ -117,9 +124,12 @@ public class PickUp : MonoBehaviour
             m_Player = other.gameObject;
             m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
-            GameObject text = Instantiate(m_Text, grid.transform);
-            text.GetComponent<Text>().text = "Super Push";
-            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            GameObject loader = Instantiate(m_UILoader, grid.transform);
+            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeStrongerPush;
+            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Fist;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
             StartCoroutine(CheckPickupTime(m_RunTimeStrongerPush));
         }
         DeactivateVisuals();

@@ -140,13 +140,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7e4781b7d555742bfdc1ee6ff96795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_RunTimeDoubleJump: 5
+  m_RunTimeSpeedUp: 3
+  m_RunTimeStrongerPush: 10
   m_RespawnTime: 0
   m_ListOfMaterials:
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   m_AudioSource: {fileID: 6148878528307231330}
-  m_Text: {fileID: 4525056466502417921, guid: a7090fffe3b363b4da546e4b8cef6440, type: 3}
+  m_UILoader: {fileID: 4863959125124470649, guid: 4a5ac3b2e379d944784ec8c10ee63bf7, type: 3}
+  m_Fist: {fileID: 9172218040497504479, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
+  m_DoubleJump: {fileID: -7800770147787917465, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
+  m_Speed: {fileID: 386723114487877664, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
 --- !u!82 &6148878528307231330
 AudioSource:
   m_ObjectHideFlags: 0
