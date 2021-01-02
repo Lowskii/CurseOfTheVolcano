@@ -122,7 +122,7 @@ public class PickUp : MonoBehaviour
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeStrongerPush;
