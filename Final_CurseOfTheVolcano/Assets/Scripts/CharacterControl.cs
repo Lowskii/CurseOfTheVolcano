@@ -32,7 +32,7 @@ public class CharacterControl : MonoBehaviour
 
     [SerializeField] private float m_Jumpspeed = 3.5f;
 
-    public Vector3 m_MoveDirection = Vector3.zero;
+    Vector3 m_MoveDirection = Vector3.zero;
 
     //pushing
     private bool m_IsPushActivated = false;
@@ -129,15 +129,12 @@ public class CharacterControl : MonoBehaviour
         if (m_CharacterController.isGrounded)
         {
             //keep a small motion down when the player is not jumping
-            if (!(Math.Abs(m_MoveDirection.y - m_Jumpspeed) < 0.0001f))
+            if (!m_JustJumped)
             {
                 m_MoveDirection.y = -0.5f;
             }
-
-            if (m_IsDoubleJumpPossible == false)
-            {
-                m_IsDoubleJumpPossible = true;
-            }
+            m_JustJumped = false;
+            m_IsDoubleJumpPossible = true;
         }
         else
         {
@@ -189,11 +186,18 @@ public class CharacterControl : MonoBehaviour
         m_Anim.SetBool("IsGrounded", m_CharacterController.isGrounded);
     }
 
+    public void ApplyJumpForce(float jumpForce)
+    {
+        m_MoveDirection.y = jumpForce;
+        m_JustJumped = true;
+    }
     public void Jump(InputAction.CallbackContext value)
     {
         if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
         {
             m_MoveDirection.y = m_Jumpspeed;
+            m_JustJumped = true;
+
             if (!m_CharacterController.isGrounded)
             {
                 m_UITexture.SetActive(false);

@@ -10,7 +10,7 @@ public class TrampolineBehaviour : MonoBehaviour
     {        
         if (other.tag == "Player")
         {                        
-             other.gameObject.GetComponent<CharacterControl>().m_MoveDirection.y = m_TrampolineForce;
+             other.gameObject.GetComponent<CharacterControl>().ApplyJumpForce(m_TrampolineForce);
              other.gameObject.GetComponent<InputBehaviour>().RumbleController(0.45f,0.25f);
         }
         else
