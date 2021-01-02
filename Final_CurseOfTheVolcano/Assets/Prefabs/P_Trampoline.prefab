@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6593084772662743831}
   - component: {fileID: 223103021154576820}
   - component: {fileID: -9128751218722497379}
+  - component: {fileID: 6030497277308378916}
   m_Layer: 8
   m_Name: P_Trampoline
   m_TagString: Untagged
@@ -59,20 +60,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrampolineForce: 4
---- !u!64 &948505642477986994
-MeshCollider:
+--- !u!65 &6030497277308378916
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7103841862265750014}
+  m_GameObject: {fileID: 6593084772662743835}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.02, y: 3, z: 1.02}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &7950123659701222575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,11 +146,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0d6ea5080978c9f40a71dabf86786278, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d2120fb4076f334f9cfd9d985ca6dd3, type: 3}
---- !u!1 &7103841862265750014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d2120fb4076f334f9cfd9d985ca6dd3, type: 3}
-  m_PrefabInstance: {fileID: 7950123659701222575}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7628598752325278532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d2120fb4076f334f9cfd9d985ca6dd3, type: 3}
