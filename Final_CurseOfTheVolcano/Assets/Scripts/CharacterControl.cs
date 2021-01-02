@@ -23,6 +23,7 @@ public class CharacterControl : MonoBehaviour
     private float m_TurnSmoothVelocity;
 
     [SerializeField] float m_TurnSmoothTime = 0.1f;
+    [SerializeField] private GameObject m_UITexture;
 
 
     [Tooltip("Multiplies with gravity")]
@@ -77,6 +78,7 @@ public class CharacterControl : MonoBehaviour
 
     private void Awake()
     {
+        m_UITexture.SetActive(false);
         m_CurrentPushForce = m_NormalPushForce;
         m_Anim = this.gameObject.GetComponent<Animator>();
     }
@@ -194,6 +196,7 @@ public class CharacterControl : MonoBehaviour
             m_MoveDirection.y = m_Jumpspeed;
             if (!m_CharacterController.isGrounded)
             {
+                m_UITexture.SetActive(false);
                 m_IsSaveJumpAvailable = false;
             }
             if (m_IsDoubleJumpPossible && !m_CharacterController.isGrounded)
@@ -268,6 +271,7 @@ public class CharacterControl : MonoBehaviour
         m_GettingPushed = true;
 
         m_IsSaveJumpAvailable = true;
+        m_UITexture.SetActive(true);
         Invoke("DisableSaveJump", m_SaveTime);
     }
     public void ApplyKnockBack()
@@ -313,6 +317,7 @@ public class CharacterControl : MonoBehaviour
     }
     void DisableSaveJump()
     {
+        m_UITexture.SetActive(false);
         m_IsSaveJumpAvailable = false;
     }
 }

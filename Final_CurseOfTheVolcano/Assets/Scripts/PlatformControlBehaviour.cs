@@ -6,6 +6,7 @@ public class PlatformControlBehaviour : MonoBehaviour
 {
     [SerializeField] private SpinningPlatformBehaviour[] m_platforms;    
     [SerializeField] private float m_ResetDelay;
+    [SerializeField] private GameObject m_UITexture;
 
     private bool m_IsPlatformActivated;
     private float m_DelayTimer;    
@@ -52,13 +53,15 @@ public class PlatformControlBehaviour : MonoBehaviour
     {
         if (other.gameObject.GetComponent<CharacterControl>() != null && m_Player == null)
         {
+            m_UITexture.SetActive(true);
             m_Player = other.gameObject.GetComponent<CharacterControl>();            
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (m_Player != null)
-        {            
+        {
+            m_UITexture.SetActive(true);
             if (m_Player.IsInteractPressed)
             {                
                 m_IsPlatformActivated = true;
@@ -70,7 +73,8 @@ public class PlatformControlBehaviour : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (m_Player != null)
-        {            
+        {
+            m_UITexture.SetActive(false);
             m_Player = null;
         }
     }

@@ -7,6 +7,7 @@ public class BridgeControlBehaviour : MonoBehaviour
     [SerializeField] private GameObject m_Bridge;
     [SerializeField] private bool m_IsBridgeActivated;
     [SerializeField] private float m_ResetDelay;
+    [SerializeField] private GameObject m_UITexture;
 
     private float m_DelayTimer;
     private Vector3 m_StartPosition;
@@ -65,6 +66,7 @@ public class BridgeControlBehaviour : MonoBehaviour
     {
         if (other.gameObject.GetComponent<CharacterControl>() != null && m_Player == null)
         {
+            m_UITexture.SetActive(true);
             m_Player = other.gameObject.GetComponent<CharacterControl>();            
         }
     }
@@ -72,6 +74,7 @@ public class BridgeControlBehaviour : MonoBehaviour
     {
         if (m_Player != null)
         {
+            m_UITexture.SetActive(true);
             m_Player = other.gameObject.GetComponent<CharacterControl>();
             if (m_Player.IsInteractPressed)
             {               
@@ -84,7 +87,8 @@ public class BridgeControlBehaviour : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (m_Player != null)
-        {           
+        {
+            m_UITexture.SetActive(false);
             m_Player = null;
         }
     }

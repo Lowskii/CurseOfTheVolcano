@@ -21,8 +21,7 @@ public class LevelManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "L1_Name")
         {            
             if (Players.Count == m_PlayerCount)
-            {
-                SceneManager.LoadScene("EndScreen");
+            {                
                 foreach (var player in FindObjectsOfType<CharacterControl>())
                 {
                     player.GetComponent<InputBehaviour>().StopRumbleImmideately();
@@ -32,6 +31,7 @@ public class LevelManager : MonoBehaviour
                 {
                     Destroy(cam.gameObject);
                 }
+                SceneManager.LoadScene("EndScreen");
             }
         }            
     }
