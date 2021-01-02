@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LavaBehaviour : MonoBehaviour
 {
@@ -40,7 +41,11 @@ public class LavaBehaviour : MonoBehaviour
             FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
                 0, hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, false));
 
-            hit.gameObject.SetActive(false);
+           
+            hit.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
+            hit.gameObject.transform.Find("Canvas").transform.Find("Dead").gameObject.SetActive(true);
+            hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+
             IncreaseSpeed();
             //CharacterControl.PlayerDied();
 

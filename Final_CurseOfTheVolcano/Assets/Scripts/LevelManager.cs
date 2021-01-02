@@ -49,6 +49,8 @@ public class LevelManager : MonoBehaviour
             other.transform.position = m_PlacementTransforms[m_LivePlayers.Count].position;
             other.transform.rotation = m_PlacementTransforms[m_LivePlayers.Count].rotation;
             other.gameObject.GetComponent<Animator>().SetBool("HasWon", true);
+            other.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
+            other.gameObject.transform.Find("Canvas").transform.Find("Victory").gameObject.SetActive(true);
         }
 
 
