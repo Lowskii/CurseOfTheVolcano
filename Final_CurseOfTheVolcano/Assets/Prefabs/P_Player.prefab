@@ -104,7 +104,6 @@ MonoBehaviour:
   m_UITexture: {fileID: 178405062683607080}
   m_Mass: 0.5
   m_Jumpspeed: 2.1
-  m_MoveDirection: {x: 0, y: 0, z: 0}
   m_PushDelay: 2.5
   m_IsDoubleJumpEnabled: 0
   m_IsSpedUp: 0
@@ -353,7 +352,7 @@ RectTransform:
   m_Father: {fileID: 2466386751403380343}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.63241535, y: 0}
+  m_AnchorMin: {x: 0.82920766, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -375,10 +374,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 2
   m_StartCorner: 1
   m_StartAxis: 1
-  m_CellSize: {x: 230, y: 60}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
