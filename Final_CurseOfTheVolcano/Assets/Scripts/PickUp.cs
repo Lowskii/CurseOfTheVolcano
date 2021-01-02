@@ -9,7 +9,9 @@ public class PickUp : MonoBehaviour
     private PickUpType m_PickUpType;
     private float m_RandomNumber;
     private GameObject m_Player;
-    private float m_RunTime = 2;
+    [SerializeField] private float m_RunTimeDoubleJump = 5;
+    [SerializeField] private float m_RunTimeSpeedUp = 3;
+    [SerializeField] private float m_RunTimeStrongerPush = 10;
     [SerializeField] float m_RespawnTime;
     public Material[] m_ListOfMaterials = new Material[3];
     public AudioSource m_AudioSource;
@@ -22,10 +24,10 @@ public class PickUp : MonoBehaviour
 
     }
 
-   
-    private IEnumerator CheckPickupTime()
+
+    private IEnumerator CheckPickupTime(float runtime)
     {
-        yield return new WaitForSeconds(m_RunTime);
+        yield return new WaitForSeconds(runtime);
         DeactivatePickUpEffect();
 
         yield return new WaitForSeconds(m_RespawnTime);
@@ -35,7 +37,7 @@ public class PickUp : MonoBehaviour
     {
         if (PickUpType.DoubleJump == m_PickUpType)
         {
-     
+
             m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
@@ -50,7 +52,7 @@ public class PickUp : MonoBehaviour
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
     }
-    
+
 
     private void CreateRandomPickUp()
     {
@@ -89,36 +91,38 @@ public class PickUp : MonoBehaviour
         //{
         m_AudioSource.Play();
 
-        if (PickUpType.DoubleJump==m_PickUpType)
-            {
-                m_Player = other.gameObject;
-                m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
-                GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
-                GameObject text = Instantiate(m_Text, grid.transform);
-                text.GetComponent<Text>().text = "Double Jump";
-                text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        if (PickUpType.DoubleJump == m_PickUpType)
+        {
+            m_Player = other.gameObject;
+            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
+            GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
+            GameObject text = Instantiate(m_Text, grid.transform);
+            text.GetComponent<Text>().text = "Double Jump";
+            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(CheckPickupTime(m_RunTimeDoubleJump));
 
         }
         else if (PickUpType.SpedUp == m_PickUpType)
-            {
-                m_Player = other.gameObject;
-                m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+        {
+            m_Player = other.gameObject;
+            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject text = Instantiate(m_Text, grid.transform);
             text.GetComponent<Text>().text = "Speed Up";
             text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(CheckPickupTime(m_RunTimeSpeedUp));
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
-            {
-                m_Player = other.gameObject;
-                m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+        {
+            m_Player = other.gameObject;
+            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject text = Instantiate(m_Text, grid.transform);
             text.GetComponent<Text>().text = "Super Push";
             text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(CheckPickupTime(m_RunTimeStrongerPush));
         }
         DeactivateVisuals();
-        CheckPickupTime();
         //}
     }
 

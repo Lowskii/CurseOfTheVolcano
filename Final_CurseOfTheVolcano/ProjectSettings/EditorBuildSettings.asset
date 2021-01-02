@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelectionScreen.unity
     guid: b184cfa995af300489a136cdce9edd24
   - enabled: 1
-    path: Assets/Scenes/L1_Name.unity
+    path: Assets/Scenes/L2_Kilimanjaro.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/L1_Vesuvius.unity
+    guid: 1e5ae9e79289f2f4fb90f800a7c690a1
   - enabled: 1
     path: Assets/Scenes/EndScreen.unity
     guid: c091dad1898e43a47a11122747bff0d2
