@@ -186,7 +186,7 @@ public class SpawnManager : MonoBehaviour
         if (m_PlayerSelections.TrueForAll(p => p.IsReady) && m_PlayerSelections.Count >= 1)
         {
             Debug.Log("this needs to change to m_MinPlayers for final build");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("L2_Kilimanjaro");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.m_LevelName);
         }
     }
 }
