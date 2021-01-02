@@ -40,6 +40,7 @@ public class LavaBehaviour : MonoBehaviour
             FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
                 0, hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, false));
 
+            hit.gameObject.SetActive(false);
             IncreaseSpeed();
             //CharacterControl.PlayerDied();
 
