@@ -70,7 +70,7 @@ public class PickUp : MonoBehaviour
                 GetComponent<Renderer>().material = m_ListOfMaterials[1];
                 break;
             case 2:
-                m_PickUpType = PickUpType.DoubleJump;
+                m_PickUpType = PickUpType.StrongerPush;
                 GetComponent<Renderer>().material = m_ListOfMaterials[2];
                 break;
             default:
