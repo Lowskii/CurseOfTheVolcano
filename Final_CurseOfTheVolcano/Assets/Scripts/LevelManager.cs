@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameObject LevelCanvas;
     public List<Player> Players = new List<Player>();
     private List<Player> m_LivePlayers = new List<Player>();
     private int m_PlayerCount = 0;

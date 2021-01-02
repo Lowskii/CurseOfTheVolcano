@@ -140,12 +140,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7e4781b7d555742bfdc1ee6ff96795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m__RespawnTime: 5
+  m_RespawnTime: 0
   m_ListOfMaterials:
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   - {fileID: 2100000, guid: f95fc16e4e8ebca4d8a2894f2f343b41, type: 2}
   m_AudioSource: {fileID: 6148878528307231330}
+  m_Text: {fileID: 4525056466502417921, guid: a7090fffe3b363b4da546e4b8cef6440, type: 3}
 --- !u!82 &6148878528307231330
 AudioSource:
   m_ObjectHideFlags: 0

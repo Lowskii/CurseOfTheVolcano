@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum CurseType { Paralyse, SpeedDown, InverseControls, Bounce }
 public class Curse : MonoBehaviour
@@ -14,8 +15,9 @@ public class Curse : MonoBehaviour
     public AudioSource m_AudioSource;
 
 
-    [SerializeField] private float m__RunTime = 5;
-    [SerializeField] float m__RespawnTime;
+    [SerializeField] private float m_RunTime = 5;
+    [SerializeField] float m_RespawnTime;
+    [SerializeField] private GameObject m_Text;
 
     private void Start()
     {
@@ -54,10 +56,10 @@ public class Curse : MonoBehaviour
 
     private IEnumerator ActivateCurse()
     {
-        yield return new WaitForSeconds(m__RunTime);
+        yield return new WaitForSeconds(m_RunTime);
         DeactivateCurseEffect();
 
-        yield return new WaitForSeconds(m__RespawnTime);
+        yield return new WaitForSeconds(m_RespawnTime);
         CreateRandomCurse();
     }
 
@@ -67,8 +69,9 @@ public class Curse : MonoBehaviour
         if (m_CurrentCurseType == CurseType.SpeedDown)
         {
             foreach (GameObject item in m_CurrentPlayerList)
-            {
+            {                
                 if (item != null) NormalizeSpeedDownPlayers(item);
+                Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
             }
         }
         else if (m_CurrentCurseType == CurseType.InverseControls)
@@ -76,6 +79,7 @@ public class Curse : MonoBehaviour
             foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) NormalizeControlsPlayers(item);
+                Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
             }
         }
         else if (m_CurrentCurseType == CurseType.Paralyse)
@@ -83,6 +87,7 @@ public class Curse : MonoBehaviour
             foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) DeParalysePlayers(item);
+                Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
             }
         }
         else if (m_CurrentCurseType == CurseType.Bounce)
@@ -90,6 +95,7 @@ public class Curse : MonoBehaviour
             foreach (GameObject item in m_CurrentPlayerList)
             {
                 if (item != null) LetPlayersStopBouncing(item);
+                Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
             }
         }
     }
@@ -98,7 +104,7 @@ public class Curse : MonoBehaviour
     {
         if (/*other.gameObject.layer == LayerMask.GetMask("Player")*/other.gameObject.tag == "Player")
         {
-
+            FindObjectOfType<LevelManager>().LevelCanvas.GetComponent<Animator>().SetTrigger("ActivateCurse");            
             m_AudioSource.Play();
 
             FindAllEffectedPlayers(other);
@@ -109,6 +115,11 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) SpeedDownPlayers(item);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+                    GameObject text = Instantiate(m_Text, grid.transform);
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
+                    text.GetComponent<Text>().text = "Speed Down";
+                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
                 }
 
             }
@@ -117,6 +128,11 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) InverseControlsPlayers(item);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+                    GameObject text = Instantiate(m_Text, grid.transform);
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
+                    text.GetComponent<Text>().text = "Inverse";
+                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
                 }
 
             }
@@ -125,6 +141,11 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) ParalysePlayers(item);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+                    GameObject text = Instantiate(m_Text, grid.transform);
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
+                    text.GetComponent<Text>().text = "Stun";
+                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
                 }
             }
             else if (m_CurrentCurseType == CurseType.Bounce)
@@ -132,6 +153,11 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) LetPlayersBounce(item);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+                    GameObject text = Instantiate(m_Text, grid.transform);
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
+                    text.GetComponent<Text>().text = "Bounce";
+                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
                 }
             }
             StartCoroutine(ActivateCurse());
@@ -139,7 +165,7 @@ public class Curse : MonoBehaviour
     }
 
     private void DeactivateVisuals()
-    {
+    {       
         this.GetComponent<MeshRenderer>().enabled = false;
         this.GetComponent<SphereCollider>().enabled = false;
     }
@@ -187,7 +213,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<InputBehaviour>().RumbleController(0.5f, m__RunTime);
+            item.GetComponent<InputBehaviour>().RumbleController(0.5f, m_RunTime);
             item.GetComponent<CharacterControl>().m_Paralyse = true;
         }
     }

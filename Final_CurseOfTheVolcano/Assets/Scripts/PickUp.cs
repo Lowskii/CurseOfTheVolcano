@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public enum PickUpType { SpedUp, DoubleJump, StrongerPush }
 
 public class PickUp : MonoBehaviour
@@ -8,10 +9,11 @@ public class PickUp : MonoBehaviour
     private PickUpType m_PickUpType;
     private float m_RandomNumber;
     private GameObject m_Player;
-    private float m__RunTime = 2;
-    [SerializeField] float m__RespawnTime;
+    private float m_RunTime = 2;
+    [SerializeField] float m_RespawnTime;
     public Material[] m_ListOfMaterials = new Material[3];
     public AudioSource m_AudioSource;
+    [SerializeField] private GameObject m_Text;
 
 
     private void Start()
@@ -23,10 +25,10 @@ public class PickUp : MonoBehaviour
    
     private IEnumerator CheckPickupTime()
     {
-        yield return new WaitForSeconds(m__RunTime);
+        yield return new WaitForSeconds(m_RunTime);
         DeactivatePickUpEffect();
 
-        yield return new WaitForSeconds(m__RespawnTime);
+        yield return new WaitForSeconds(m_RespawnTime);
         CreateRandomPickUp();
     }
     private void DeactivatePickUpEffect()
@@ -35,17 +37,17 @@ public class PickUp : MonoBehaviour
         {
      
             m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
-
+            Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.SpedUp == m_PickUpType)
         {
             m_Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
-
+            Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
             m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
-
+            Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
     }
     
@@ -91,22 +93,30 @@ public class PickUp : MonoBehaviour
             {
                 m_Player = other.gameObject;
                 m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
+                GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
+                GameObject text = Instantiate(m_Text, grid.transform);
+                text.GetComponent<Text>().text = "Double Jump";
+                text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
 
-            }
+        }
         else if (PickUpType.SpedUp == m_PickUpType)
             {
                 m_Player = other.gameObject;
                 m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
-
-
-            }
+            GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
+            GameObject text = Instantiate(m_Text, grid.transform);
+            text.GetComponent<Text>().text = "Speed Up";
+            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        }
         else if (PickUpType.StrongerPush == m_PickUpType)
             {
                 m_Player = other.gameObject;
                 m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
-
-
-            }
+            GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
+            GameObject text = Instantiate(m_Text, grid.transform);
+            text.GetComponent<Text>().text = "Super Push";
+            text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        }
         DeactivateVisuals();
         CheckPickupTime();
         //}
