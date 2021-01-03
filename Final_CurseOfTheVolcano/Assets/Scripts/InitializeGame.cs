@@ -21,6 +21,7 @@ public class InitializeGame : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(InputBehaviour.SkipEvents.Count);
         //add the skip function to the event
         foreach (PlayerInput.ActionEvent skipEvent in InputBehaviour.SkipEvents)
         {
@@ -78,13 +79,13 @@ public class InitializeGame : MonoBehaviour
     private void StartGame()
     {
         m_LavaBeh.enabled = true;
+        InputBehaviour.ResetSkipEvents();
 
         //enable movement
         foreach (GameObject player in m_Players)
         {
             player.GetComponentInChildren<CharacterControl>().enabled = true;
         }
-
         Destroy(this.gameObject);
     }
 

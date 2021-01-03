@@ -91,9 +91,9 @@ public class InputBehaviour : MonoBehaviour
         }
     }
 
-    private void Awake()
+    static public void ResetSkipEvents()
     {
-     if(m_SkipEvents.Count != 0)  m_SkipEvents.Clear();//clear the events from previous sessions
+        m_SkipEvents.Clear();
     }
     private void Update()
     {
