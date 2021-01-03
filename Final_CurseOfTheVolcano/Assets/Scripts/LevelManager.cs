@@ -11,9 +11,10 @@ public class LevelManager : MonoBehaviour
     private int m_PlayerCount = 0;
 
     [SerializeField] Transform[] m_PlacementTransforms = new Transform[3];
+    [SerializeField] AudioSource m_AudioSource;
     private void Awake()
     {        
-            DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
         if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro")
             m_PlayerCount = FindObjectsOfType<CharacterControl>().Length;
     }
@@ -47,17 +48,19 @@ public class LevelManager : MonoBehaviour
         if (m_LivePlayers.Count < 3) //only 3 spots on tribune
         {
             other.transform.position = m_PlacementTransforms[m_LivePlayers.Count].position;
-            other.transform.rotation = m_PlacementTransforms[m_LivePlayers.Count].rotation;
-            other.gameObject.GetComponent<Animator>().SetBool("HasWon", true);
-            other.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
-            other.gameObject.transform.Find("Canvas").transform.Find("Victory").gameObject.SetActive(true);
+            other.transform.rotation = m_PlacementTransforms[m_LivePlayers.Count].rotation;           
         }
-
+        other.gameObject.GetComponent<Animator>().SetBool("HasWon", true);
+        other.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
+        other.gameObject.transform.Find("Canvas").transform.Find("Victory").gameObject.SetActive(true);
+        other.GetComponent<CharacterControl>().enabled = false;
 
         m_LivePlayers.Add(player);
         Players.Add(player);
-
-        other.GetComponent<CharacterControl>().enabled = false;
+        
+        //Avoids playing this sound when in endscreen.
+        if (Players.Count < m_PlayerCount)
+            m_AudioSource.Play();        
     }
 }
 
