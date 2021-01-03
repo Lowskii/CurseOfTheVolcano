@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class EndScreenManager : MonoBehaviour
 {
     [SerializeField] private Transform[] m_Positions = new Transform[4];
     [SerializeField] private GameObject[] m_UI = new GameObject[4];
-    [SerializeField] private GameObject m_Model;    
+    [SerializeField] private GameObject m_Model;
+    private Controls m_GameInputControls;
 
     private List<Player> m_Players;    
     private LevelManager m_LevelManager;    
 
     private void Awake()
     {
+        m_GameInputControls = new Controls();
+        m_GameInputControls.MenuControls.Enable();
+
+        PlayerInput.ActionEvent startEvent = new PlayerInput.ActionEvent(m_GameInputControls.MenuControls.Start);
+
+        m_GameInputControls.MenuControls.Start.performed += startEvent.Invoke;
         m_LevelManager = FindObjectOfType<LevelManager>();
         m_Players = m_LevelManager.Players;       
         SetPlayerPosition();

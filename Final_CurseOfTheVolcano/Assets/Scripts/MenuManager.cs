@@ -28,4 +28,16 @@ public class MenuManager : MonoBehaviour
 
         SceneManager.LoadScene(m_SceneName);
     }
+
+    public void ReplayLevel()
+    {
+        SceneManager.LoadScene(m_SceneName);
+        Destroy(FindObjectOfType<LevelManager>().gameObject);
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+        Destroy(FindObjectOfType<LevelManager>().gameObject);
+    }
 }

@@ -1,31 +1,49 @@
 fileFormatVersion: 2
-guid: 351ceffac27e8dc41bf3aee0ae66b497
+guid: e9e4418b2a19d0247ad97bb6e480f41b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 749016954098168235
-    second: _I_0
+      213: 4130348097350910267
+    second: T_UIMenu_0
   - first:
-      213: 8541603040258034014
-    second: _I_1
+      213: 7487607099706277069
+    second: T_UIMenu_1
   - first:
-      213: -8679373679550223671
-    second: _I_2
+      213: 3926353028824675175
+    second: T_UIMenu_2
   - first:
-      213: -6125685031711193707
-    second: _I_3
+      213: -8323222794133965980
+    second: T_UIMenu_3
   - first:
-      213: -3150733839570161943
-    second: _I_4
+      213: -1398732365317554304
+    second: T_UIMenu_4
   - first:
-      213: -8682885684130656196
-    second: _I_5
+      213: -2077017429787346053
+    second: T_UIMenu_5
   - first:
-      213: -6921052670540665184
-    second: _I_6
+      213: 1550912691315984743
+    second: T_UIMenu_6
   - first:
-      213: 434092197683558375
-    second: _I_7
+      213: -4753036771735231749
+    second: T_UIMenu_7
+  - first:
+      213: 2289242625828730675
+    second: T_UIMenu_8
+  - first:
+      213: -2946010713895116530
+    second: T_UIMenu_9
+  - first:
+      213: -3849631457301888449
+    second: T_UIMenu_10
+  - first:
+      213: 2289727938469673010
+    second: T_UIMenu_11
+  - first:
+      213: 9180517565519974212
+    second: T_UIMenu_12
+  - first:
+      213: 1930555131112288254
+    second: T_UIMenu_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -149,7 +167,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _I_0
+      name: T_UIMenu_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1020
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b31cf4506b1f15930800000000000000
+      internalID: 4130348097350910267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_1
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1020
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcc7fa37cf259e760800000000000000
+      internalID: 7487607099706277069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 850
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 763bfd9e6453d7630800000000000000
+      internalID: 3926353028824675175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_3
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 850
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463f53197f8fd7c80800000000000000
+      internalID: -8323222794133965980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 680
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08fb7651354b69ce0800000000000000
+      internalID: -1398732365317554304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_5
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 680
+        width: 900
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7bfa31f6a3fc23e0800000000000000
+      internalID: -2077017429787346053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_UIMenu_6
       rect:
         serializedVersion: 2
         x: 0
@@ -163,14 +307,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba134c783fa056a00800000000000000
-      internalID: 749016954098168235
+      spriteID: 769c88b20e2f58510800000000000000
+      internalID: 1550912691315984743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_1
+      name: T_UIMenu_7
       rect:
         serializedVersion: 2
         x: 900
@@ -184,14 +328,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e590af2b5bed98670800000000000000
-      internalID: 8541603040258034014
+      spriteID: bf22a502d32d90eb0800000000000000
+      internalID: -4753036771735231749
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_2
+      name: T_UIMenu_8
       rect:
         serializedVersion: 2
         x: 0
@@ -205,14 +349,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9caa88daf9bac8780800000000000000
-      internalID: -8679373679550223671
+      spriteID: 337343d0a0605cf10800000000000000
+      internalID: 2289242625828730675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_3
+      name: T_UIMenu_9
       rect:
         serializedVersion: 2
         x: 900
@@ -226,14 +370,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5954dee3be13dfaa0800000000000000
-      internalID: -6125685031711193707
+      spriteID: e0169c54ddaad17d0800000000000000
+      internalID: -2946010713895116530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_4
+      name: T_UIMenu_10
       rect:
         serializedVersion: 2
         x: 0
@@ -247,14 +391,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ee2e9624485644d0800000000000000
-      internalID: -3150733839570161943
+      spriteID: f320a57f59c539ac0800000000000000
+      internalID: -3849631457301888449
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_5
+      name: T_UIMenu_11
       rect:
         serializedVersion: 2
         x: 900
@@ -268,14 +412,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3051146971308780800000000000000
-      internalID: -8682885684130656196
+      spriteID: 238b5c4bd6fb6cf10800000000000000
+      internalID: 2289727938469673010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_6
+      name: T_UIMenu_12
       rect:
         serializedVersion: 2
         x: 0
@@ -289,14 +433,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0aea7a4f34b73ff90800000000000000
-      internalID: -6921052670540665184
+      spriteID: 44f4d0bd510c76f70800000000000000
+      internalID: 9180517565519974212
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _I_7
+      name: T_UIMenu_13
       rect:
         serializedVersion: 2
         x: 900
@@ -310,8 +454,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e772bacd84360600800000000000000
-      internalID: 434092197683558375
+      spriteID: eff6149c9a5baca10800000000000000
+      internalID: 1930555131112288254
       vertices: []
       indices: 
       edges: []
@@ -319,7 +463,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 11f9e507f72d0784f92d9225dfa65e7f
+    spriteID: 7b3f5c49beac09a41aa05c784a11bb54
     internalID: 0
     vertices: []
     indices: 

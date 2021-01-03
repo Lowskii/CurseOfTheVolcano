@@ -24,7 +24,9 @@ public class SpawnManager : MonoBehaviour
     private void Awake()
     {
         //we don't wanne destroy this since it will cary our players overs
-        DontDestroyOnLoad(m_MainLayout);
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "EndScreen")
+            DontDestroyOnLoad(m_MainLayout);
+
 
         //create controls so that we can start listening for the start command
         m_GameInputControls = new Controls();

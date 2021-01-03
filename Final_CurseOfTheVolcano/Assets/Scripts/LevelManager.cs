@@ -12,8 +12,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] Transform[] m_PlacementTransforms = new Transform[3];
     private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
+    {        
+            DontDestroyOnLoad(this.gameObject);
         if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro")
             m_PlayerCount = FindObjectsOfType<CharacterControl>().Length;
     }
