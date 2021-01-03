@@ -54,6 +54,7 @@ public class LavaBehaviour : MonoBehaviour
 
             hit.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
             hit.gameObject.transform.Find("Canvas").transform.Find("Dead").gameObject.SetActive(true);
+            hit.gameObject.transform.Find("Canvas").transform.Find("Red").gameObject.SetActive(true);
             hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
 
             StartCoroutine(PlaySound());

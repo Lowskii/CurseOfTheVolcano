@@ -120,7 +120,11 @@ MonoBehaviour:
   m_RunTimeParalyse: 10
   m_RunTimeSpeedDown: 5
   m_RespawnTime: 10
-  m_Text: {fileID: 4525056466502417921, guid: a7090fffe3b363b4da546e4b8cef6440, type: 3}
+  m_UILoader: {fileID: 4863959125124470649, guid: 4a5ac3b2e379d944784ec8c10ee63bf7, type: 3}
+  m_Bounce: {fileID: -6437563139557507525, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
+  m_Stun: {fileID: -1197292468167241137, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
+  m_Speed: {fileID: 386723114487877664, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
+  m_Inverse: {fileID: 6113540006960811051, guid: 172801e2983082d4481b60b5bc09e9f1, type: 3}
 --- !u!82 &4065837281273595290
 AudioSource:
   m_ObjectHideFlags: 0

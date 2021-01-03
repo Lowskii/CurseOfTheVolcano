@@ -22,7 +22,8 @@ public class Curse : MonoBehaviour
     private float m_RunTime = 10;
 
     [SerializeField] float m_RespawnTime;
-    [SerializeField] private GameObject m_Text;
+    [SerializeField] private GameObject m_UILoader;
+    [SerializeField] private Sprite m_Bounce, m_Stun, m_Speed,m_Inverse;
 
     private void Start()
     {
@@ -127,10 +128,13 @@ public class Curse : MonoBehaviour
                 {
                     if (item != null) SpeedDownPlayers(item);
                     GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                    GameObject text = Instantiate(m_Text, grid.transform);
                     FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
-                    text.GetComponent<Text>().text = "Speed Down";
-                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    GameObject loader = Instantiate(m_UILoader, grid.transform);
+                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedDown;
+                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Speed;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
                 }
 
             }
@@ -139,11 +143,14 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) InverseControlsPlayers(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                    GameObject text = Instantiate(m_Text, grid.transform);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                   
                     FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
-                    text.GetComponent<Text>().text = "Inverse";
-                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    GameObject loader = Instantiate(m_UILoader, grid.transform);
+                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
+                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Inverse;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
                 }
 
             }
@@ -152,11 +159,14 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) ParalysePlayers(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                    GameObject text = Instantiate(m_Text, grid.transform);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                    
                     FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
-                    text.GetComponent<Text>().text = "Stun";
-                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    GameObject loader = Instantiate(m_UILoader, grid.transform);
+                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeParalyse;
+                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Stun;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
                     item.GetComponent<Animator>().SetBool("IsStunned", true);
                     item.transform.Find("StunParticles").gameObject.SetActive(true);
                 }
@@ -166,11 +176,14 @@ public class Curse : MonoBehaviour
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
                     if (item != null) LetPlayersBounce(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                    GameObject text = Instantiate(m_Text, grid.transform);
+                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                    
                     FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
-                    text.GetComponent<Text>().text = "Bounce";
-                    text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    GameObject loader = Instantiate(m_UILoader, grid.transform);
+                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeBounce;
+                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Bounce;
+                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
                 }
             }
             StartCoroutine(ActivateCurse());
