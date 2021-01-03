@@ -1,22 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class InitializeGame : MonoBehaviour
 {
     [SerializeField] Transform[] m_SpawnPoints = new Transform[4];
+    [SerializeField] LavaBehaviour m_LavaBeh;
 
+    [SerializeField] List<GameObject> m_Players = new List<GameObject>();
+    [SerializeField] GameObject m_IntroductionObjects;
+
+    private const float m_AnimationStayDuration = 1.5f; //the time the camera stays at the end point of the dolly track
     private void Start()
     {
-        InputBehaviour[] inputs = FindObjectsOfType<InputBehaviour>();
+        double startDuration = FindObjectOfType<PlayableDirector>().playableAsset.duration;
+        Invoke("StartCountDown", (float)startDuration + m_AnimationStayDuration);
 
+        InputBehaviour[] inputs = FindObjectsOfType<InputBehaviour>();
 
         for (int i = 0; i < inputs.Length; i++)
         {
             //reset mesh transform
-            GameObject mesh = inputs[i].gameObject;
-            mesh.transform.localScale = new Vector3(1, 1, 1);
-            mesh.transform.localPosition = new Vector3(0, 0, 0);
+            m_Players.Add(inputs[i].gameObject);
+            m_Players[m_Players.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            m_Players[m_Players.Count - 1].transform.localPosition = new Vector3(0, 0, 0);
 
             //set player to his new position
             inputs[i].transform.position = m_SpawnPoints[i].position;
@@ -37,13 +45,26 @@ public class InitializeGame : MonoBehaviour
             playerCam.transform.parent = null;
 
             playerCam.GetComponent<CameraFollow>().enabled = true;
-
-            //enable movement
-            inputs[i].GetComponentInChildren<CharacterControl>().enabled = true;
-
-
         }
         //cleanup the unwanted objects
         Destroy(GameObject.Find("MainLayout"));
     }
+
+    private void StartCountDown()
+    {
+        Destroy(m_IntroductionObjects);
+
+        Invoke("StartGame", 3f);
+    }
+    private void StartGame()
+    {
+        m_LavaBeh.enabled = true;
+
+        //enable movement
+        foreach (GameObject player in m_Players)
+        {
+            player.GetComponentInChildren<CharacterControl>().enabled = true;
+        }
+    }
+
 }
