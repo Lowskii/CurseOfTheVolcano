@@ -33,6 +33,11 @@ public class CharacterSelection : MonoBehaviour
         m_MeshCharacter.GetComponentInParent<Animator>().SetBool("IsGrounded", true);
         m_TitleText.SetText("Player " + (index + 1).ToString());
     }
+
+    static public void ResetCharacterSelection()
+    {
+        m_SelectedMaterials.Clear();
+    }
     private void Start()
     {
         SetMaterial();

@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
     private void Awake()
     {
         //we don't wanne destroy this since it will cary our players overs
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "EndScreen")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "EndScreen")
             DontDestroyOnLoad(m_MainLayout);
 
 
@@ -188,6 +188,7 @@ public class SpawnManager : MonoBehaviour
         if (m_PlayerSelections.TrueForAll(p => p.IsReady) && m_PlayerSelections.Count >= 1)
         {
             Debug.Log("this needs to change to m_MinPlayers for final build");
+            CharacterSelection.ResetCharacterSelection();
             UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.m_LevelName);
         }
     }
