@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Players: []
   m_IntroductionObjects: {fileID: 1282571128}
   m_CountDownText: {fileID: 1531507008}
-  m_StartCountdown: 3
+  m_StartCountdown: 3.5
 --- !u!4 &237026590
 Transform:
   m_ObjectHideFlags: 0
