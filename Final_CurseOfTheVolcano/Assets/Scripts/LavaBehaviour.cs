@@ -9,7 +9,10 @@ public class LavaBehaviour : MonoBehaviour
     [SerializeField] private float m_MaxHeight;
     [SerializeField] private float m_RiseSpeedMultiplier = 0.25f;
 
-    private float m_ActiveRiseSpeed;    
+    [SerializeField] private AudioSource m_LavaSound;
+    [SerializeField] private AudioSource m_ScreamSound;
+
+    private float m_ActiveRiseSpeed;
     private void Start()
     {
         //CharacterControl.PlayerDiedEvent.AddListener(IncreaseSpeed);
@@ -30,21 +33,30 @@ public class LavaBehaviour : MonoBehaviour
     {
         m_ActiveRiseSpeed += m_RiseSpeed * m_RiseSpeedMultiplier;
     }
+    private IEnumerator PlaySound()
+    {
+        m_LavaSound.Play();
+        yield return new WaitForSeconds(0.5f);
+        m_ScreamSound.Play();
 
+
+    }
     private void OnTriggerEnter(Collider hit)
     {
         if (hit.gameObject.tag == "Player")
         {
             //Destroy(hit.gameObject);
-            hit.gameObject.GetComponent<InputBehaviour>().RumbleController(0.8f,1.5f);
+            hit.gameObject.GetComponent<InputBehaviour>().RumbleController(0.8f, 1.5f);
             hit.gameObject.GetComponent<CharacterControl>().enabled = false;
-            FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId, 
+            FindObjectOfType<LevelManager>().Players.Add(new Player(hit.GetComponent<CharacterControl>().PlayerId,
                 0, hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, false));
 
-           
+
             hit.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
             hit.gameObject.transform.Find("Canvas").transform.Find("Dead").gameObject.SetActive(true);
             hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+
+            StartCoroutine(PlaySound());
 
             IncreaseSpeed();
             //CharacterControl.PlayerDied();

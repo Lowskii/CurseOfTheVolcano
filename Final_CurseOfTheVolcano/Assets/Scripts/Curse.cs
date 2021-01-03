@@ -14,10 +14,15 @@ public class Curse : MonoBehaviour
 
     public AudioSource m_AudioSource;
 
+    [SerializeField] private float m_RunTimeBounce = 5;
+    [SerializeField] private float m_RunTimeInverseControl = 3;
+    [SerializeField] private float m_RunTimeParalyse = 10;
+    [SerializeField] private float m_RunTimeSpeedDown = 5;
 
-    [SerializeField] private float m_RunTime = 5;
+    private float m_RunTime = 10;
+
     [SerializeField] float m_RespawnTime;
-    [SerializeField] private GameObject m_Text;   
+    [SerializeField] private GameObject m_Text;
 
     private void Start()
     {
@@ -32,18 +37,22 @@ public class Curse : MonoBehaviour
             case 0:
                 m_CurrentCurseType = CurseType.Bounce;
                 GetComponent<Renderer>().material = m_ListOfMaterials[0];
+                m_RunTime = m_RunTimeBounce;
                 break;
             case 1:
                 m_CurrentCurseType = CurseType.InverseControls;
                 GetComponent<Renderer>().material = m_ListOfMaterials[1];
+                m_RunTime = m_RunTimeInverseControl;
                 break;
             case 2:
                 m_CurrentCurseType = CurseType.Paralyse;
                 GetComponent<Renderer>().material = m_ListOfMaterials[2];
+                m_RunTime = m_RunTimeParalyse;
                 break;
             case 3:
                 m_CurrentCurseType = CurseType.SpeedDown;
                 GetComponent<Renderer>().material = m_ListOfMaterials[3];
+                m_RunTime = m_RunTimeSpeedDown;
                 break;
             default:
                 break;
@@ -69,7 +78,7 @@ public class Curse : MonoBehaviour
         if (m_CurrentCurseType == CurseType.SpeedDown)
         {
             foreach (GameObject item in m_CurrentPlayerList)
-            {                
+            {
                 if (item != null) NormalizeSpeedDownPlayers(item);
                 Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
             }
@@ -106,7 +115,7 @@ public class Curse : MonoBehaviour
     {
         if (/*other.gameObject.layer == LayerMask.GetMask("Player")*/other.gameObject.tag == "Player")
         {
-            FindObjectOfType<LevelManager>().LevelCanvas.GetComponent<Animator>().SetTrigger("ActivateCurse");            
+            FindObjectOfType<LevelManager>().LevelCanvas.GetComponent<Animator>().SetTrigger("ActivateCurse");
             m_AudioSource.Play();
 
             FindAllEffectedPlayers(other);
@@ -169,7 +178,7 @@ public class Curse : MonoBehaviour
     }
 
     private void DeactivateVisuals()
-    {       
+    {
         this.GetComponent<MeshRenderer>().enabled = false;
         this.GetComponent<SphereCollider>().enabled = false;
     }
