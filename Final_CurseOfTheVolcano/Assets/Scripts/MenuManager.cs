@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private string m_SceneName;
 
-    public static string m_LevelName;
+    public static string m_LevelName = "";
 
     public void QuitGame()
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
@@ -13,13 +14,18 @@ public class InitializeGame : MonoBehaviour
     [SerializeField] GameObject m_IntroductionObjects;
 
     private const float m_AnimationStayDuration = 1.5f; //the time the camera stays at the end point of the dolly track
+
+    [SerializeField] TextMeshProUGUI m_CountDownText;
+    [SerializeField] float m_StartCountdown = 3.5f;
+    bool m_IsCountdownActive = false;
+
     private void Start()
     {
         //add the skip function to the event
         foreach (PlayerInput.ActionEvent skipEvent in InputBehaviour.SkipEvents)
         {
             skipEvent.AddListener(Skip);
-        } 
+        }
 
         //invoke the start of the game countdown (when the intro animation is done)
         double startDuration = FindObjectOfType<PlayableDirector>().playableAsset.duration;
@@ -67,7 +73,7 @@ public class InitializeGame : MonoBehaviour
     {
         Destroy(m_IntroductionObjects);
 
-        Invoke("StartGame", 3f);
+        m_IsCountdownActive = true;
     }
     private void StartGame()
     {
@@ -78,6 +84,19 @@ public class InitializeGame : MonoBehaviour
         {
             player.GetComponentInChildren<CharacterControl>().enabled = true;
         }
+
+        Destroy(this.gameObject);
     }
 
+    private void Update()
+    {
+        if (m_IsCountdownActive)
+        {
+            m_StartCountdown -= Time.deltaTime;
+            m_CountDownText.text = m_StartCountdown.ToString("0");
+
+            if (m_StartCountdown <= 0) StartGame();
+        }
+    }
 }
+

@@ -189,7 +189,17 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.Log("this needs to change to m_MinPlayers for final build");
             CharacterSelection.ResetCharacterSelection();
-            UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.m_LevelName);
+
+            if (MenuManager.m_LevelName.Length != 0)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.m_LevelName);
+            }
+            //hardcoded level load for easyer and faster testing during dev
+            else
+            {
+                Debug.Log("remove for build");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("L2_Kilimanjaro");
+            }
         }
     }
 }

@@ -193,6 +193,8 @@ public class CharacterControl : MonoBehaviour
     }
     public void Jump(InputAction.CallbackContext value)
     {
+        if (!this.enabled) return;
+
         if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
         {
             m_MoveDirection.y = m_Jumpspeed;

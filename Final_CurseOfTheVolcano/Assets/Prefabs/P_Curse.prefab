@@ -116,8 +116,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: bef7e011eca3c1b4f8864772e7e34fe5, type: 2}
   m_AudioSource: {fileID: 4065837281273595290}
   m_RunTimeBounce: 5
-  m_RunTimeInverseControl: 3
-  m_RunTimeParalyse: 10
+  m_RunTimeInverseControl: 5
+  m_RunTimeParalyse: 3
   m_RunTimeSpeedDown: 5
   m_RespawnTime: 10
   m_UILoader: {fileID: 4863959125124470649, guid: 4a5ac3b2e379d944784ec8c10ee63bf7, type: 3}
