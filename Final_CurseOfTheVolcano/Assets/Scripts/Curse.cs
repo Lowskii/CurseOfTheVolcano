@@ -88,6 +88,8 @@ public class Curse : MonoBehaviour
             {
                 if (item != null) DeParalysePlayers(item);
                 Destroy(item.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
+                item.GetComponent<Animator>().SetBool("IsStunned", false);
+                item.transform.Find("StunParticles").gameObject.SetActive(false);
             }
         }
         else if (m_CurrentCurseType == CurseType.Bounce)
@@ -146,6 +148,8 @@ public class Curse : MonoBehaviour
                     FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
                     text.GetComponent<Text>().text = "Stun";
                     text.GetComponent<Text>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                    item.GetComponent<Animator>().SetBool("IsStunned", true);
+                    item.transform.Find("StunParticles").gameObject.SetActive(true);
                 }
             }
             else if (m_CurrentCurseType == CurseType.Bounce)
