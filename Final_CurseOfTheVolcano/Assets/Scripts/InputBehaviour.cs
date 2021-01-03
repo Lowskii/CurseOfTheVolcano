@@ -13,7 +13,7 @@ public class InputBehaviour : MonoBehaviour
     Vector3 m_Rotation;
 
     Gamepad m_CurrentController;
-
+    static private List<PlayerInput.ActionEvent> m_SkipEvents = new List<PlayerInput.ActionEvent>();
     public void SetInputUser(InputUser inputUser, InputDevice controller)
     {
         m_CurrentController = (Gamepad)controller;
@@ -71,6 +71,8 @@ public class InputBehaviour : MonoBehaviour
                     action.canceled += newEvent.Invoke;
                     break;
                 case "Jump":
+                    m_SkipEvents.Add(newEvent);
+
                     newEvent.AddListener(m_CharacterControl.Jump);
                     action.performed += newEvent.Invoke;
                     break;
@@ -89,6 +91,10 @@ public class InputBehaviour : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+     if(m_SkipEvents.Count != 0)  m_SkipEvents.Clear();//clear the events from previous sessions
+    }
     private void Update()
     {
         //we want to be able to rotate the character in the selection screen but not when we are in the actual game
@@ -97,6 +103,10 @@ public class InputBehaviour : MonoBehaviour
             m_CharacterControl.ApplyRotation(m_Rotation);
         }
     }
+
+    static public List<PlayerInput.ActionEvent> SkipEvents
+    { get { return m_SkipEvents; } }
+
     public void SwitchToGameActionMapping()
     {
         m_Controls.GameControls.Enable();

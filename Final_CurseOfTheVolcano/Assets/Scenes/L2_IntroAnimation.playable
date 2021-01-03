@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Version: 0
   m_Tracks:
   - {fileID: 6284990681602090792}
-  m_FixedDuration: 30
+  m_FixedDuration: 25
   m_EditorSettings:
     m_Framerate: 60
   m_DurationMode: 1

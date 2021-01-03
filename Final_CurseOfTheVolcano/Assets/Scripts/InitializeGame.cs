@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
 public class InitializeGame : MonoBehaviour
@@ -14,6 +15,13 @@ public class InitializeGame : MonoBehaviour
     private const float m_AnimationStayDuration = 1.5f; //the time the camera stays at the end point of the dolly track
     private void Start()
     {
+        //add the skip function to the event
+        foreach (PlayerInput.ActionEvent skipEvent in InputBehaviour.SkipEvents)
+        {
+            skipEvent.AddListener(Skip);
+        } 
+
+        //invoke the start of the game countdown (when the intro animation is done)
         double startDuration = FindObjectOfType<PlayableDirector>().playableAsset.duration;
         Invoke("StartCountDown", (float)startDuration + m_AnimationStayDuration);
 
@@ -50,6 +58,11 @@ public class InitializeGame : MonoBehaviour
         Destroy(GameObject.Find("MainLayout"));
     }
 
+    private void Skip(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        StartCountDown();
+        CancelInvoke("StartCountDown");
+    }
     private void StartCountDown()
     {
         Destroy(m_IntroductionObjects);
