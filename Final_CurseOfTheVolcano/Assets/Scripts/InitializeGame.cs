@@ -21,7 +21,6 @@ public class InitializeGame : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(InputBehaviour.SkipEvents.Count);
         //add the skip function to the event
         foreach (PlayerInput.ActionEvent skipEvent in InputBehaviour.SkipEvents)
         {
