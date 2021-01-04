@@ -24,6 +24,7 @@ public class Curse : MonoBehaviour
     [SerializeField] float m_RespawnTime;
     [SerializeField] private GameObject m_UILoader;
     [SerializeField] private Sprite m_Bounce, m_Stun, m_Speed,m_Inverse;
+    private float m_logoTime=1.5f;
 
     private void Start()
     {
@@ -66,7 +67,11 @@ public class Curse : MonoBehaviour
 
     private IEnumerator ActivateCurse()
     {
+        if (CurseType.InverseControls== m_CurrentCurseType)
+        {
+            yield return new WaitForSeconds(m_logoTime);
 
+        }
 
         yield return new WaitForSeconds(m_RunTime);
         DeactivateCurseEffect();
