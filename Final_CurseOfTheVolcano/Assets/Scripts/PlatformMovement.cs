@@ -74,7 +74,7 @@ public class PlatformMovement : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<CharacterControl>().AddExternalMovement();
+            //other.GetComponent<CharacterControl>().AddExternalMovement();
         }
     }
 

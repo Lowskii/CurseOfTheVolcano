@@ -23,7 +23,7 @@ public class CharacterControl : MonoBehaviour
     private float m_TurnSmoothVelocity;
 
     [SerializeField] float m_TurnSmoothTime = 0.1f;
-    [SerializeField] private GameObject m_UITexture;
+    [SerializeField] private GameObject m_SaveUI,m_PushUI;
 
 
     [Tooltip("Multiplies with gravity")]
@@ -78,7 +78,7 @@ public class CharacterControl : MonoBehaviour
 
     private void Awake()
     {
-        m_UITexture.SetActive(false);
+        m_SaveUI.SetActive(false);
         m_CurrentPushForce = m_NormalPushForce;
         m_Anim = this.gameObject.GetComponent<Animator>();
     }
@@ -205,7 +205,7 @@ public class CharacterControl : MonoBehaviour
 
             if (!m_CharacterController.isGrounded)
             {
-                m_UITexture.SetActive(false);
+                m_SaveUI.SetActive(false);
                 m_IsSaveJumpAvailable = false;
             }
             if (m_IsDoubleJumpPossible && !m_CharacterController.isGrounded)
@@ -258,17 +258,27 @@ public class CharacterControl : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == gameObject) return;
-
+        if (m_IsPushPossible && !m_GettingPushed)
+            m_PushUI.SetActive(true);
         if (other.gameObject.tag == "Player" && m_IsPushActivated && m_IsPushPossible)
         {
-            m_IsPushPossible = false;
-
+            m_IsPushPossible = false;            
             GameObject Player = other.gameObject;
             Vector3 dir = Player.transform.position - transform.position;
 
             Player.GetComponent<CharacterControl>().KnockBack(dir);
         }
         m_IsPushActivated = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (m_IsPushPossible)
+            m_PushUI.SetActive(true);        
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        m_PushUI.SetActive(false);
     }
 
     public void Push(InputAction.CallbackContext value)
@@ -290,7 +300,8 @@ public class CharacterControl : MonoBehaviour
         m_GettingPushed = true;
 
         m_IsSaveJumpAvailable = true;
-        m_UITexture.SetActive(true);
+        m_PushUI.SetActive(false);
+        m_SaveUI.SetActive(true);        
         Invoke("DisableSaveJump", m_SaveTime);
     }
     public void ApplyKnockBack()
@@ -336,7 +347,7 @@ public class CharacterControl : MonoBehaviour
     }
     void DisableSaveJump()
     {
-        m_UITexture.SetActive(false);
+        m_SaveUI.SetActive(false);
         m_IsSaveJumpAvailable = false;
     }
 }
