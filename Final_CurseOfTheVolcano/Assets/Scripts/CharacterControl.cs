@@ -189,16 +189,22 @@ public class CharacterControl : MonoBehaviour
         }
         if (velocity.magnitude > 0.1f)
         {
-            m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
-        }
+            Vector3 movement = velocity * Time.deltaTime * m_MovementSpeed;
 
+            if (m_ExternalVelocity.magnitude > 0.1f)
+            {
+                movement += m_ExternalVelocity;
+                m_ExternalVelocity = Vector3.zero;
+            }
+            m_CharacterController.Move(movement);
+        }
         //add external velocity
-        if (m_ExternalVelocity.magnitude > 0.1f)
+        else if (m_ExternalVelocity.magnitude > 0.1f)
         {
             m_CharacterController.Move(m_ExternalVelocity);
             m_ExternalVelocity = Vector3.zero;
         }
-          
+
 
         float moveVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
         m_Anim.SetFloat("Velocity", moveVelocity);

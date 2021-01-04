@@ -16,7 +16,7 @@ public class PlatformMovement : MonoBehaviour
     private bool m_Moving;
     public bool IsMoving => m_Moving;
 
-    private Vector3 m_Movement;
+    private List<CharacterControl> m_PlayersOnPlatform = new List<CharacterControl>();
     void Start()
     {
         m_PointsIndex = 0;
@@ -36,11 +36,14 @@ public class PlatformMovement : MonoBehaviour
     private void MovePlatform()
     {
         Vector3 heading = m_CurrentTarget - this.transform.position;
+        Vector3 movement = heading.normalized * Speed * Time.deltaTime;
 
-        m_Movement = heading.normalized * Speed * Time.deltaTime;
+        this.transform.position += movement;
 
-        this.transform.position += m_Movement;
-
+        foreach  (CharacterControl ch in m_PlayersOnPlatform)
+        {
+            ch.AddExternalMovement(movement);
+        }
         if (heading.magnitude < m_Tolerance)
         {
             this.transform.position = m_CurrentTarget;
@@ -66,15 +69,19 @@ public class PlatformMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
-        other.transform.parent = this.transform;               
-        if (!Continuous && !m_Moving) NextPlatform();
-    }
-    private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            other.GetComponent<CharacterControl>().AddExternalMovement(m_Movement);
+            m_PlayersOnPlatform.Add(other.gameObject.GetComponent<CharacterControl>());
+
+            if (!Continuous && !m_Moving) NextPlatform();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            m_PlayersOnPlatform.Remove(other.gameObject.GetComponent<CharacterControl>());
         }
     }
 
