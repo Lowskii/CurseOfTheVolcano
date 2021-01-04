@@ -37,7 +37,7 @@ public class PlatformMovement : MonoBehaviour
     {
         Vector3 heading = m_CurrentTarget - this.transform.position;
 
-        m_Movement = (heading / heading.magnitude) * Speed * Time.deltaTime;
+        m_Movement = heading.normalized * Speed * Time.deltaTime;
 
         this.transform.position += m_Movement;
 
