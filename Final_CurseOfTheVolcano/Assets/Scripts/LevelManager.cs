@@ -15,14 +15,14 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {        
         DontDestroyOnLoad(this.gameObject);
-        if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro")
+        if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro" || SceneManager.GetActiveScene().name == "L1_Vesuvius")
             m_PlayerCount = FindObjectsOfType<CharacterControl>().Length;
     }
 
     private void Update()
     {
 
-        if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro")
+        if (SceneManager.GetActiveScene().name == "L2_Kilimanjaro" || SceneManager.GetActiveScene().name == "L1_Vesuvius")
         {
             if (Players.Count == m_PlayerCount)
             {
