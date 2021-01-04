@@ -42,13 +42,18 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        foreach (Player newPlayer in m_LivePlayers)
+        {
+            if (newPlayer.PlayerID == other.GetComponent<CharacterControl>().PlayerId)
+                return;
+        }
         Player player = new Player(other.GetComponent<CharacterControl>().PlayerId, m_LivePlayers.Count + 1, other.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.color, true);
 
         //Put the player on his placement position
         if (m_LivePlayers.Count < 3) //only 3 spots on tribune
         {
             other.transform.position = m_PlacementTransforms[m_LivePlayers.Count].position;
-            other.transform.rotation = m_PlacementTransforms[m_LivePlayers.Count].rotation;           
+            other.transform.rotation = m_PlacementTransforms[m_LivePlayers.Count].rotation;
         }
         other.gameObject.GetComponent<Animator>().SetBool("HasWon", true);
         other.gameObject.transform.Find("Canvas").GetComponent<Animator>().SetTrigger("GameOver");
