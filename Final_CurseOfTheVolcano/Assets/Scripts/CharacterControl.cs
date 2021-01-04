@@ -23,7 +23,7 @@ public class CharacterControl : MonoBehaviour
     private float m_TurnSmoothVelocity;
 
     [SerializeField] float m_TurnSmoothTime = 0.1f;
-    [SerializeField] private GameObject m_SaveUI,m_PushUI;
+    [SerializeField] private GameObject m_SaveUI, m_PushUI;
 
 
     [Tooltip("Multiplies with gravity")]
@@ -53,6 +53,8 @@ public class CharacterControl : MonoBehaviour
     private float m_DelayTimer;
     private Vector3 m_Inpact = Vector3.zero;
     private Vector3 m_CurrentInpact = Vector3.zero;
+
+    private Vector3 m_ExternalVelocity = Vector3.zero;
 
     private bool m_JustJumped = false;
     public bool m_IsDoubleJumpEnabled = false;
@@ -123,6 +125,11 @@ public class CharacterControl : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
         }
     }
+
+    public void AddExternalMovement(Vector3 velocity)
+    {
+        m_ExternalVelocity = velocity;
+    }
     private void ApplyMovement()
     {
 
@@ -142,7 +149,7 @@ public class CharacterControl : MonoBehaviour
             m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * m_Mass;
         }
 
-        ApplyRotation(m_MoveDirection);
+        if (!m_Paralyse) ApplyRotation(m_MoveDirection);
 
         Vector3 velocity = m_MoveDirection;
 
@@ -184,6 +191,15 @@ public class CharacterControl : MonoBehaviour
         {
             m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
         }
+
+        //add external velocity
+        if (m_ExternalVelocity.magnitude > 0.1f)
+        {
+            m_CharacterController.Move(m_ExternalVelocity);
+            m_ExternalVelocity = Vector3.zero;
+        }
+          
+
         float moveVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
         m_Anim.SetFloat("Velocity", moveVelocity);
         m_Anim.SetBool("IsGrounded", m_CharacterController.isGrounded);
@@ -259,12 +275,12 @@ public class CharacterControl : MonoBehaviour
     {
         if (other.gameObject == gameObject) return;
         if (other.gameObject.tag == "Player" && m_IsPushPossible && !m_GettingPushed && other.gameObject != this.gameObject)
-        {            
-                m_PushUI.SetActive(true);
+        {
+            m_PushUI.SetActive(true);
         }
         if (other.gameObject.tag == "Player" && m_IsPushActivated && m_IsPushPossible && other.gameObject != this.gameObject)
         {
-            m_IsPushPossible = false;            
+            m_IsPushPossible = false;
             GameObject Player = other.gameObject;
             Vector3 dir = Player.transform.position - transform.position;
 
@@ -275,11 +291,11 @@ public class CharacterControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && m_IsPushPossible && other.gameObject!=this.gameObject)
-        {           
-                m_PushUI.SetActive(true);
+        if (other.gameObject.tag == "Player" && m_IsPushPossible && other.gameObject != this.gameObject)
+        {
+            m_PushUI.SetActive(true);
         }
-               
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -306,7 +322,7 @@ public class CharacterControl : MonoBehaviour
 
         m_IsSaveJumpAvailable = true;
         m_PushUI.SetActive(false);
-        m_SaveUI.SetActive(true);        
+        m_SaveUI.SetActive(true);
         Invoke("DisableSaveJump", m_SaveTime);
     }
     public void ApplyKnockBack()
