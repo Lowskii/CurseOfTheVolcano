@@ -191,7 +191,7 @@ public class CharacterControl : MonoBehaviour
         {
             Vector3 movement = velocity * Time.deltaTime * m_MovementSpeed;
 
-            if (m_ExternalVelocity.magnitude > 0.1f)
+            if (m_ExternalVelocity.magnitude > 0.001f)
             {
                 movement += m_ExternalVelocity;
                 m_ExternalVelocity = Vector3.zero;

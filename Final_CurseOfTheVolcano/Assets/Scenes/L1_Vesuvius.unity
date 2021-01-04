@@ -1222,6 +1222,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
+      propertyPath: m_IsSideways
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
       propertyPath: Points.Array.data[0]
       value: 
       objectReference: {fileID: 1448590201}
@@ -1841,6 +1845,10 @@ PrefabInstance:
     - target: {fileID: 3921458352701091693, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
+      propertyPath: m_IsSideways
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
       propertyPath: Points.Array.data[0]
@@ -3616,6 +3624,10 @@ PrefabInstance:
     - target: {fileID: 3921458352701091693, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
+      propertyPath: m_IsSideways
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5692220662558707116, guid: 389bc92c4f8d9134bb8e1d2776af811b, type: 3}
       propertyPath: Points.Array.data[0]
