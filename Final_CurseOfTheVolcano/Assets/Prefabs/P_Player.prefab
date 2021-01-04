@@ -3851,6 +3851,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8048192972509034231, guid: f1efb89b05994a746a3d8fa5ec56ca3e, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1efb89b05994a746a3d8fa5ec56ca3e, type: 3}
 --- !u!4 &7726212886011623622 stripped
