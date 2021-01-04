@@ -16,6 +16,7 @@ public class PlatformMovement : MonoBehaviour
     private bool m_Moving;
     public bool IsMoving => m_Moving;
 
+    private Vector3 m_Movement;
     void Start()
     {
         m_PointsIndex = 0;
@@ -36,7 +37,9 @@ public class PlatformMovement : MonoBehaviour
     {
         Vector3 heading = m_CurrentTarget - this.transform.position;
 
-        this.transform.position += (heading / heading.magnitude) * Speed * Time.deltaTime;
+        m_Movement = (heading / heading.magnitude) * Speed * Time.deltaTime;
+
+        this.transform.position += m_Movement;
 
         if (heading.magnitude < m_Tolerance)
         {
@@ -67,8 +70,12 @@ public class PlatformMovement : MonoBehaviour
         other.transform.parent = this.transform;               
         if (!Continuous && !m_Moving) NextPlatform();
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        other.transform.parent = null;
+        if(other.tag == "Player")
+        {
+            other.GetComponent<CharacterControl>().AddExternalMovement();
+        }
     }
+
 }
