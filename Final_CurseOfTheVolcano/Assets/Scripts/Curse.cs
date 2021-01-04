@@ -125,6 +125,23 @@ public class Curse : MonoBehaviour
 
             FindAllEffectedPlayers(other);
 
+            switch (m_CurrentCurseType) 
+            {
+                case CurseType.Paralyse:
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
+                    break;
+                case CurseType.SpeedDown:
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
+                    break;
+                case CurseType.InverseControls:
+                FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
+                    break;
+                case CurseType.Bounce:
+                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
+                    break;
+                default:
+                    break;
+            }
             Invoke("ActivateCurse", m_logoTime);
         }
     }
@@ -145,7 +162,6 @@ public class Curse : MonoBehaviour
             {
                 if (item != null) InverseControlsPlayers(item);
                 GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
                 GameObject loader = Instantiate(m_UILoader, grid.transform);
                 loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
                 loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
@@ -171,7 +187,6 @@ public class Curse : MonoBehaviour
     {
         if (item != null) LetPlayersBounce(item);
         GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-        FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
         GameObject loader = Instantiate(m_UILoader, grid.transform);
         loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeBounce;
         loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
@@ -184,7 +199,6 @@ public class Curse : MonoBehaviour
     {
         if (item != null) SpeedDownPlayers(item);
         GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-        FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
         GameObject loader = Instantiate(m_UILoader, grid.transform);
         loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedDown;
         loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
@@ -199,7 +213,6 @@ public class Curse : MonoBehaviour
         {
             if (item != null) ParalysePlayers(item);
             GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-            FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeParalyse;
             loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
