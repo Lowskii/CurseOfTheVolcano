@@ -65,14 +65,9 @@ public class Curse : MonoBehaviour
     }
 
 
-    private IEnumerator ActivateCurse()
+    private IEnumerator TimeCurse()
     {
-        if (CurseType.InverseControls== m_CurrentCurseType)
-        {
-            yield return new WaitForSeconds(m_logoTime);
-
-        }
-
+      
         yield return new WaitForSeconds(m_RunTime);
         DeactivateCurseEffect();
 
@@ -133,69 +128,91 @@ public class Curse : MonoBehaviour
             {
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
-                    if (item != null) SpeedDownPlayers(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
-                    GameObject loader = Instantiate(m_UILoader, grid.transform);
-                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedDown;
-                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Speed;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+                    ActivateSpeedDownCurse(item);
                 }
 
             }
             else if (m_CurrentCurseType == CurseType.InverseControls)
             {
-                foreach (GameObject item in m_CurrentPlayerList)
-                {
-                    if (item != null) InverseControlsPlayers(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                   
-                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
-                    GameObject loader = Instantiate(m_UILoader, grid.transform);
-                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
-                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Inverse;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
-                }
+                Invoke("ActivateInverseControls",m_logoTime);
+                
 
             }
             else if (m_CurrentCurseType == CurseType.Paralyse)
             {
-                foreach (GameObject item in m_CurrentPlayerList)
-                {
-                    if (item != null) ParalysePlayers(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                    
-                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
-                    GameObject loader = Instantiate(m_UILoader, grid.transform);
-                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeParalyse;
-                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Stun;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
-                    item.GetComponent<Animator>().SetBool("IsStunned", true);
-                    item.transform.Find("StunParticles").gameObject.SetActive(true);
-                }
+                ActivateParalyseCurse();
             }
             else if (m_CurrentCurseType == CurseType.Bounce)
             {
                 foreach (GameObject item in m_CurrentPlayerList)
                 {
-                    if (item != null) LetPlayersBounce(item);
-                    GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();                    
-                    FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
-                    GameObject loader = Instantiate(m_UILoader, grid.transform);
-                    loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeBounce;
-                    loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Bounce;
-                    loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-                    StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+                    ActivateBounceCurse(item);
                 }
             }
-            StartCoroutine(ActivateCurse());
+            StartCoroutine(TimeCurse());
         }
     }
+
+    private void ActivateBounceCurse(GameObject item)
+    {
+        if (item != null) LetPlayersBounce(item);
+        GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+        FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Bounce";
+        GameObject loader = Instantiate(m_UILoader, grid.transform);
+        loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeBounce;
+        loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Bounce;
+        loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+    }
+
+    private void ActivateSpeedDownCurse(GameObject item)
+    {
+        if (item != null) SpeedDownPlayers(item);
+        GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+        FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Speed Down";
+        GameObject loader = Instantiate(m_UILoader, grid.transform);
+        loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedDown;
+        loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Speed;
+        loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+        StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+    }
+
+    private void ActivateParalyseCurse()
+    {
+        foreach (GameObject item in m_CurrentPlayerList)
+        {
+            if (item != null) ParalysePlayers(item);
+            GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+            FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Stun";
+            GameObject loader = Instantiate(m_UILoader, grid.transform);
+            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeParalyse;
+            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Stun;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+            item.GetComponent<Animator>().SetBool("IsStunned", true);
+            item.transform.Find("StunParticles").gameObject.SetActive(true);
+        }
+    }
+
+    private void ActivateInverseControls()
+    {
+        foreach (GameObject item in m_CurrentPlayerList)
+        {
+            if (item != null) InverseControlsPlayers(item);
+            GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+            FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
+            GameObject loader = Instantiate(m_UILoader, grid.transform);
+            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
+            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Inverse;
+            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+        }
+    }
+
     private void DeactivateVisuals()
     {
         this.GetComponent<MeshRenderer>().enabled = false;
