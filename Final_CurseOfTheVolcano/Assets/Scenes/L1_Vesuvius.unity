@@ -2429,13 +2429,33 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3736512153099269196, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736512153099269196, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736512153099269196, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227676611758332279, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: Speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4748883357058591273, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_Name
       value: MovingObstacle04
       objectReference: {fileID: 0}
+    - target: {fileID: 5117614845718679383, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6182505619345144315, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.9375
       objectReference: {fileID: 0}
     - target: {fileID: 6182505619345144315, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.z

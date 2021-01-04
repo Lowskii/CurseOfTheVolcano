@@ -25,9 +25,9 @@ public class MovingObstacleBehaviour : MonoBehaviour
         m_Moving = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (this.transform.position != m_CurrentTarget) MovePlatform();
+        if ((this.transform.position - m_CurrentTarget).magnitude > Speed * Time.deltaTime) MovePlatform();
         else UpdateTarget();
     }
 
