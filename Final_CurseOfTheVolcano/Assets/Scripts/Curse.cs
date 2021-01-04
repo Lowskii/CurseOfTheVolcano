@@ -121,38 +121,52 @@ public class Curse : MonoBehaviour
             FindObjectOfType<LevelManager>().LevelCanvas.GetComponent<Animator>().SetTrigger("ActivateCurse");
             m_AudioSource.Play();
 
-            FindAllEffectedPlayers(other);
             DeactivateVisuals();
 
-            if (m_CurrentCurseType == CurseType.SpeedDown)
-            {
-                foreach (GameObject item in m_CurrentPlayerList)
-                {
-                    ActivateSpeedDownCurse(item);
-                }
+            FindAllEffectedPlayers(other);
 
-            }
-            else if (m_CurrentCurseType == CurseType.InverseControls)
-            {
-                Invoke("ActivateInverseControls",m_logoTime);
-                
-
-            }
-            else if (m_CurrentCurseType == CurseType.Paralyse)
-            {
-                ActivateParalyseCurse();
-            }
-            else if (m_CurrentCurseType == CurseType.Bounce)
-            {
-                foreach (GameObject item in m_CurrentPlayerList)
-                {
-                    ActivateBounceCurse(item);
-                }
-            }
-            StartCoroutine(TimeCurse());
+            Invoke("ActivateCurse", m_logoTime);
         }
     }
 
+    private void ActivateCurse()
+    {
+        if (m_CurrentCurseType == CurseType.SpeedDown)
+        {
+            foreach (GameObject item in m_CurrentPlayerList)
+            {
+                ActivateSpeedDownCurse(item);
+            }
+
+        }
+        else if (m_CurrentCurseType == CurseType.InverseControls)
+        {
+            foreach (GameObject item in m_CurrentPlayerList)
+            {
+                if (item != null) InverseControlsPlayers(item);
+                GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
+                FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
+                GameObject loader = Instantiate(m_UILoader, grid.transform);
+                loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
+                loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Inverse;
+                loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
+                StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
+            }
+        }
+        else if (m_CurrentCurseType == CurseType.Paralyse)
+        {
+            ActivateParalyseCurse();
+        }
+        else if (m_CurrentCurseType == CurseType.Bounce)
+        {
+            foreach (GameObject item in m_CurrentPlayerList)
+            {
+                ActivateBounceCurse(item);
+            }
+        }
+        StartCoroutine(TimeCurse());
+    }
     private void ActivateBounceCurse(GameObject item)
     {
         if (item != null) LetPlayersBounce(item);
@@ -194,22 +208,6 @@ public class Curse : MonoBehaviour
             StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
             item.GetComponent<Animator>().SetBool("IsStunned", true);
             item.transform.Find("StunParticles").gameObject.SetActive(true);
-        }
-    }
-
-    private void ActivateInverseControls()
-    {
-        foreach (GameObject item in m_CurrentPlayerList)
-        {
-            if (item != null) InverseControlsPlayers(item);
-            GridLayoutGroup grid = item.GetComponentInChildren<GridLayoutGroup>();
-            FindObjectOfType<LevelManager>().LevelCanvas.GetComponentInChildren<Text>().text = "Inverse";
-            GameObject loader = Instantiate(m_UILoader, grid.transform);
-            loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeInverseControl;
-            loader.GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().sprite = m_Inverse;
-            loader.GetComponent<Image>().transform.Find("Art").GetComponent<Image>().color = this.gameObject.GetComponent<MeshRenderer>().material.color;
-            StartCoroutine(loader.GetComponent<Image>().GetComponent<Loader>().StartUITimer());
         }
     }
 
