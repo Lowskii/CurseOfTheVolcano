@@ -258,9 +258,11 @@ public class CharacterControl : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == gameObject) return;
-        if (m_IsPushPossible && !m_GettingPushed)
-            m_PushUI.SetActive(true);
-        if (other.gameObject.tag == "Player" && m_IsPushActivated && m_IsPushPossible)
+        if (other.gameObject.tag == "Player" && m_IsPushPossible && !m_GettingPushed && other.gameObject != this.gameObject)
+        {            
+                m_PushUI.SetActive(true);
+        }
+        if (other.gameObject.tag == "Player" && m_IsPushActivated && m_IsPushPossible && other.gameObject != this.gameObject)
         {
             m_IsPushPossible = false;            
             GameObject Player = other.gameObject;
@@ -273,8 +275,11 @@ public class CharacterControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (m_IsPushPossible)
-            m_PushUI.SetActive(true);        
+        if (other.gameObject.tag == "Player" && m_IsPushPossible && other.gameObject!=this.gameObject)
+        {           
+                m_PushUI.SetActive(true);
+        }
+               
     }
     private void OnTriggerExit(Collider other)
     {
