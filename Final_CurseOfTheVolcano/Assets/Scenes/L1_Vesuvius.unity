@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1824528275}
     m_Modifications:
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2275938220273672358, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -728,7 +736,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-7718
+  m_Name: pb_Mesh-88196
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2827,6 +2835,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1824528275}
     m_Modifications:
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.y
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2275938220273672358, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2886,6 +2902,14 @@ PrefabInstance:
     - target: {fileID: 6182505619345144315, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024355500322341765, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024355500322341765, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
@@ -3111,6 +3135,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1824528275}
     m_Modifications:
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.y
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2275938220273672358, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3170,6 +3202,10 @@ PrefabInstance:
     - target: {fileID: 6182505619345144315, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024355500322341765, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}

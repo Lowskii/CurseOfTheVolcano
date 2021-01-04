@@ -66,6 +66,8 @@ public class Curse : MonoBehaviour
 
     private IEnumerator ActivateCurse()
     {
+
+
         yield return new WaitForSeconds(m_RunTime);
         DeactivateCurseEffect();
 
@@ -189,7 +191,6 @@ public class Curse : MonoBehaviour
             StartCoroutine(ActivateCurse());
         }
     }
-
     private void DeactivateVisuals()
     {
         this.GetComponent<MeshRenderer>().enabled = false;

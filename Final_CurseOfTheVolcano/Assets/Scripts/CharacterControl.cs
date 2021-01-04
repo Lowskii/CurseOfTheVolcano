@@ -170,16 +170,19 @@ public class CharacterControl : MonoBehaviour
             velocity.z *= m_SpeedupSpeedFactor;
         }
 
+        if (m_Paralyse)
+        {
+            velocity.x = 0;
+            velocity.z = 0;
+
+            if (velocity.y > 0)
+            {
+                velocity.y = 0;
+            }
+        }
         if (velocity.magnitude > 0.1f)
         {
-            if (m_Paralyse)
-            {
-                m_CharacterController.Move(Vector3.zero);
-            }
-            else
-            {
-                m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
-            }
+            m_CharacterController.Move(velocity * Time.deltaTime * m_MovementSpeed);
         }
         float moveVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
         m_Anim.SetFloat("Velocity", moveVelocity);
@@ -216,11 +219,21 @@ public class CharacterControl : MonoBehaviour
     {
         var movement = value.ReadValue<Vector2>();
 
+
         float yDir = m_MoveDirection.y;
-        m_MoveDirection = new Vector3(movement.x, 0, movement.y);
+
+        if (movement.magnitude > 0.1f)
+        {
+            m_MoveDirection = new Vector3(movement.x, 0, movement.y);
+        }
+        else
+        {
+            m_MoveDirection = new Vector3(0, 0, 0);
+        }
 
         m_MoveDirection.Normalize();
         m_MoveDirection.y = yDir;
+
     }
 
     public void Interact(InputAction.CallbackContext value)

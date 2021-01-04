@@ -20,22 +20,30 @@ public class MovingObstacleBehaviour : MonoBehaviour
         m_PointsIndex = 0;
         if (Points.Length > 0) m_CurrentTarget = Points[m_PointsIndex].transform.position;
 
-        m_Tolerance = Speed * Time.deltaTime;
+        m_Tolerance = Speed * Time.fixedDeltaTime;
 
         m_Moving = false;
+
+        
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if ((this.transform.position - m_CurrentTarget).magnitude > Speed * Time.deltaTime) MovePlatform();
-        else UpdateTarget();
+        if ((this.transform.position - m_CurrentTarget).magnitude > Speed * Time.deltaTime)
+        {
+            MovePlatform();
+        }
+        else
+        { 
+        UpdateTarget();
+        }
     }
 
     private void MovePlatform()
     {
         Vector3 heading = m_CurrentTarget - this.transform.position;
 
-        this.transform.position += (heading / heading.magnitude) * Speed * Time.deltaTime;
+        this.transform.position += heading.normalized * Speed * Time.deltaTime;
 
         if (heading.magnitude < m_Tolerance)
         {
