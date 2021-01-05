@@ -1362,7 +1362,7 @@ MonoBehaviour:
   - {fileID: 758301928790071331, guid: 2532c76dfd8ac4345b9004766388f7b5, type: 3}
   - {fileID: 8122517204962964588, guid: 5aa5e8684de2df546b9944c38346dadf, type: 3}
   - {fileID: 8162882197597807446, guid: 7fe43333381c1ea488c24ed68b516fdc, type: 3}
-  m_Model: {fileID: 2099122097322138979, guid: 0a0499d49c5c28247a54bc90589e3329, type: 3}
+  m_Model: {fileID: 3060005204508335609, guid: ad629934683a93140b10521d5f7adcfd, type: 3}
   m_AudioSource: {fileID: 374742272}
   m_VictoryMusic: {fileID: 8300000, guid: b930b8abe8f9d1f4380668b212538e59, type: 3}
   m_DefeatMusic: {fileID: 8300000, guid: 0dcb6a05b560af748839361a1d77b6c2, type: 3}

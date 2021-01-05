@@ -23,7 +23,7 @@ public class CharacterControl : MonoBehaviour
     private float m_TurnSmoothVelocity;
 
     [SerializeField] float m_TurnSmoothTime = 0.1f;
-    [SerializeField] private GameObject m_SaveUI, m_PushUI;
+    [SerializeField] private GameObject m_SaveUI, m_PushUI, m_ExcamationUI;
 
 
     [Tooltip("Multiplies with gravity")]
@@ -228,6 +228,7 @@ public class CharacterControl : MonoBehaviour
             if (!m_CharacterController.isGrounded)
             {
                 m_SaveUI.SetActive(false);
+                m_ExcamationUI.SetActive(false);
                 m_IsSaveJumpAvailable = false;
             }
             if (m_IsDoubleJumpPossible && !m_CharacterController.isGrounded)
@@ -291,7 +292,7 @@ public class CharacterControl : MonoBehaviour
             Vector3 dir = Player.transform.position - transform.position;
 
             Player.GetComponent<CharacterControl>().KnockBack(dir);
-            Player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);
+            Player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);            
         }
         m_IsPushActivated = false;
     }
@@ -330,6 +331,7 @@ public class CharacterControl : MonoBehaviour
         m_IsSaveJumpAvailable = true;
         m_PushUI.SetActive(false);
         m_SaveUI.SetActive(true);
+        m_ExcamationUI.SetActive(true);
         Invoke("DisableSaveJump", m_SaveTime);
     }
     public void ApplyKnockBack()
@@ -376,6 +378,7 @@ public class CharacterControl : MonoBehaviour
     void DisableSaveJump()
     {
         m_SaveUI.SetActive(false);
+        m_ExcamationUI.SetActive(false);
         m_IsSaveJumpAvailable = false;
     }
 }
