@@ -323,7 +323,7 @@ public class CharacterControl : MonoBehaviour
         m_Inpact = direction * m_CurrentPushForce;
         m_CurrentInpact = m_Inpact;
 
-        m_KnockBackTimer = 0f;
+        m_KnockBackTimer = 0.2f;
         m_GettingPushed = true;
 
         m_IsSaveJumpAvailable = true;
