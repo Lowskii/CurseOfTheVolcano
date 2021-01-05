@@ -9,13 +9,15 @@ public class EndScreenManager : MonoBehaviour
     [SerializeField] private Transform[] m_Positions = new Transform[4];
     [SerializeField] private GameObject[] m_UI = new GameObject[4];
     [SerializeField] private GameObject m_Model;
+    [SerializeField] AudioSource m_AudioSource;
+    [SerializeField] private AudioClip m_VictoryMusic, m_DefeatMusic;
     private Controls m_GameInputControls;
 
     private List<Player> m_Players;    
     private LevelManager m_LevelManager;    
 
     private void Awake()
-    {
+    {        
         m_GameInputControls = new Controls();
         m_GameInputControls.MenuControls.Enable();
 
@@ -25,6 +27,12 @@ public class EndScreenManager : MonoBehaviour
         m_LevelManager = FindObjectOfType<LevelManager>();
         m_Players = m_LevelManager.Players;       
         SetPlayerPosition();
+
+        if(m_LevelManager.LivePlayers.Count < 1)
+            m_AudioSource.clip = m_DefeatMusic;        
+        else
+            m_AudioSource.clip = m_VictoryMusic;        
+        m_AudioSource.Play();
     }
 
     private void SetPlayerPosition()

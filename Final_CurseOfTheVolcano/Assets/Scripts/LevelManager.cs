@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public GameObject LevelCanvas;
     public List<Player> Players = new List<Player>();
     private List<Player> m_LivePlayers = new List<Player>();
+    public List<Player> LivePlayers => m_LivePlayers;
     private int m_PlayerCount = 0;
 
     [SerializeField] Transform[] m_PlacementTransforms = new Transform[3];
