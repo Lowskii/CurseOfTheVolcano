@@ -291,6 +291,7 @@ public class CharacterControl : MonoBehaviour
             Vector3 dir = Player.transform.position - transform.position;
 
             Player.GetComponent<CharacterControl>().KnockBack(dir);
+            Player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);
         }
         m_IsPushActivated = false;
     }
