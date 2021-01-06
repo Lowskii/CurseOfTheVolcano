@@ -2581,6 +2581,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1824528275}
     m_Modifications:
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426892676084598266, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
+      propertyPath: m_BounceForce.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2275938220273672358, guid: 68d01f24234acf948bade88b1d0aa3e3, type: 3}
       propertyPath: m_RootOrder
       value: 3
