@@ -1065,11 +1065,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 427147904549481572, guid: 4f389d9069d730b44865a97fc335caae, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 427147904789121368, guid: 4f389d9069d730b44865a97fc335caae, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 427147904935505578, guid: 4f389d9069d730b44865a97fc335caae, type: 3}
       propertyPath: m_Pivot.x
@@ -1175,6 +1175,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressBar
       objectReference: {fileID: 0}
+    - target: {fileID: 427147904935505580, guid: 4f389d9069d730b44865a97fc335caae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f389d9069d730b44865a97fc335caae, type: 3}
 --- !u!1001 &184722491
@@ -1255,6 +1259,10 @@ PrefabInstance:
     - target: {fileID: 1815204980961084282, guid: f7fb9ae23028e4f4fae711464fadea5f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815204982002616740, guid: f7fb9ae23028e4f4fae711464fadea5f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1815204982294093655, guid: f7fb9ae23028e4f4fae711464fadea5f, type: 3}
       propertyPath: m_LocalPosition.x
