@@ -8,31 +8,31 @@ using UnityEngine.Events;
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 public class CharacterControl : MonoBehaviour
 {
-    private int m_PlayerId;
+    int m_PlayerId;
 
-    public CharacterController CharacterController;
+    public CharacterController m_CharacterController;
 
     [Range(0, 30)]
-    public float MovementSpeed;
+    public float m_MovementSpeed;
 
     [Range(0, 3)]
-    public float NormalPushForce;
+    public float m_NormalPushForce;
     [Range(0, 5)]
-    public float StrongPushForce;
+    public float m_StrongPushForce;
     private float m_CurrentPushForce;
     private float m_TurnSmoothVelocity;
 
-    [SerializeField] private float m_TurnSmoothTime = 0.1f;
+    [SerializeField] float m_TurnSmoothTime = 0.1f;
     [SerializeField] private GameObject m_SaveUI, m_PushUI, m_ExcamationUI;
 
 
     [Tooltip("Multiplies with gravity")]
     [Range(0, 100)]
-    public float Mass;
+    public float m_Mass;
 
     [SerializeField] private float m_Jumpspeed = 3.5f;
 
-    private Vector3 m_MoveDirection = Vector3.zero;
+    Vector3 m_MoveDirection = Vector3.zero;
 
     //pushing
     private bool m_IsPushActivated = false;
@@ -43,12 +43,12 @@ public class CharacterControl : MonoBehaviour
     private float m_SpeedupSpeedFactor = 1.5f;
 
     private float m_KnockBackTimer = 1f;
-    [SerializeField] private float m_PushDelay = 2.5f;
-    private bool m_GettingPushed = false;
+    [SerializeField] float m_PushDelay = 2.5f;
+    bool m_GettingPushed = false;
 
     //saving
-    private bool m_IsSaveJumpAvailable = false;
-    private float m_SaveTime = 1.6f;
+    bool m_IsSaveJumpAvailable = false;
+    float m_SaveTime = 1.6f;
 
     private float m_DelayTimer;
     private Vector3 m_Inpact = Vector3.zero;
@@ -57,15 +57,15 @@ public class CharacterControl : MonoBehaviour
     private Vector3 m_ExternalVelocity = Vector3.zero;
 
     private bool m_JustJumped = false;
-    public bool IsDoubleJumpEnabled = false;
-    public bool IsSpedUp = false;
-    public bool IsStrongerPush = false;
+    public bool m_IsDoubleJumpEnabled = false;
+    public bool m_IsSpedUp = false;
+    public bool m_IsStrongerPush = false;
 
 
-    public bool IsSpeedDown = false;
-    public bool IsBouncing = false;
-    public bool Paralyse = false;
-    public bool IsMovementInversed = false;
+    public bool m_IsSpeedDown = false;
+    public bool m_IsBouncing = false;
+    public bool m_Paralyse = false;
+    public bool m_IsMovementInversed = false;
 
     private Animator m_Anim;
 
@@ -81,7 +81,7 @@ public class CharacterControl : MonoBehaviour
     private void Awake()
     {
         m_SaveUI.SetActive(false);
-        m_CurrentPushForce = NormalPushForce;
+        m_CurrentPushForce = m_NormalPushForce;
         m_Anim = this.gameObject.GetComponent<Animator>();
     }
     private void Update()
@@ -96,7 +96,7 @@ public class CharacterControl : MonoBehaviour
 
     private void BounceWhenNeeded()
     {
-        if (IsBouncing && CharacterController.isGrounded)
+        if (m_IsBouncing && m_CharacterController.isGrounded)
         {
             m_MoveDirection.y = m_Jumpspeed;
             m_JustJumped = true;
@@ -105,13 +105,13 @@ public class CharacterControl : MonoBehaviour
 
     private void CheckPushForce()
     {
-        if (IsStrongerPush)
+        if (m_IsStrongerPush)
         {
-            m_CurrentPushForce = StrongPushForce;
+            m_CurrentPushForce = m_StrongPushForce;
         }
         else
         {
-            m_CurrentPushForce = NormalPushForce;
+            m_CurrentPushForce = m_NormalPushForce;
 
         }
     }
@@ -133,7 +133,7 @@ public class CharacterControl : MonoBehaviour
     private void ApplyMovement()
     {
 
-        if (CharacterController.isGrounded)
+        if (m_CharacterController.isGrounded)
         {
             //keep a small motion down when the player is not jumping
             if (!m_JustJumped)
@@ -146,10 +146,10 @@ public class CharacterControl : MonoBehaviour
         else
         {
             //apply gravity
-            m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * Mass;
+            m_MoveDirection.y += Physics.gravity.y * Time.deltaTime * m_Mass;
         }
 
-        if (!Paralyse) ApplyRotation(m_MoveDirection);
+        if (!m_Paralyse) ApplyRotation(m_MoveDirection);
 
         Vector3 velocity = m_MoveDirection;
 
@@ -160,24 +160,24 @@ public class CharacterControl : MonoBehaviour
             velocity.z /= m_PushedSlowFactor;
         }
 
-        if (IsMovementInversed)
+        if (m_IsMovementInversed)
         {
             velocity.x = -velocity.x;
             velocity.z = -velocity.z;
         }
 
-        if (IsSpeedDown)
+        if (m_IsSpeedDown)
         {
             velocity.x /= m_SlowSpeedFactor;
             velocity.z /= m_SlowSpeedFactor;
         }
-        if (IsSpedUp)
+        if (m_IsSpedUp)
         {
             velocity.x *= m_SpeedupSpeedFactor;
             velocity.z *= m_SpeedupSpeedFactor;
         }
 
-        if (Paralyse)
+        if (m_Paralyse)
         {
             velocity.x = 0;
             velocity.z = 0;
@@ -189,26 +189,26 @@ public class CharacterControl : MonoBehaviour
         }
         if (velocity.magnitude > 0.1f)
         {
-            Vector3 movement = velocity * Time.deltaTime * MovementSpeed;
+            Vector3 movement = velocity * Time.deltaTime * m_MovementSpeed;
 
             if (m_ExternalVelocity.magnitude > 0.001f)
             {
                 movement += m_ExternalVelocity;
                 m_ExternalVelocity = Vector3.zero;
             }
-            CharacterController.Move(movement);
+            m_CharacterController.Move(movement);
         }
         //add external velocity
         else if (m_ExternalVelocity.magnitude > 0.1f)
         {
-            CharacterController.Move(m_ExternalVelocity);
+            m_CharacterController.Move(m_ExternalVelocity);
             m_ExternalVelocity = Vector3.zero;
         }
 
 
         float moveVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
         m_Anim.SetFloat("Velocity", moveVelocity);
-        m_Anim.SetBool("IsGrounded", CharacterController.isGrounded);
+        m_Anim.SetBool("IsGrounded", m_CharacterController.isGrounded);
     }
 
     public void ApplyJumpForce(float jumpForce)
@@ -220,18 +220,18 @@ public class CharacterControl : MonoBehaviour
     {
         if (!this.enabled) return;
 
-        if (CharacterController.isGrounded || (m_IsDoubleJumpPossible && IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
+        if (m_CharacterController.isGrounded || (m_IsDoubleJumpPossible && m_IsDoubleJumpEnabled) || m_IsSaveJumpAvailable)
         {
             m_MoveDirection.y = m_Jumpspeed;
             m_JustJumped = true;
 
-            if (!CharacterController.isGrounded)
+            if (!m_CharacterController.isGrounded)
             {
                 m_SaveUI.SetActive(false);
                 m_ExcamationUI.SetActive(false);
                 m_IsSaveJumpAvailable = false;
             }
-            if (m_IsDoubleJumpPossible && !CharacterController.isGrounded)
+            if (m_IsDoubleJumpPossible && !m_CharacterController.isGrounded)
             {
                 m_IsDoubleJumpPossible = false;
             }
@@ -288,11 +288,11 @@ public class CharacterControl : MonoBehaviour
         if (other.gameObject.tag == "Player" && m_IsPushActivated && m_IsPushPossible && other.gameObject != this.gameObject)
         {
             m_IsPushPossible = false;
-            GameObject player = other.gameObject;
-            Vector3 dir = player.transform.position - transform.position;
+            GameObject Player = other.gameObject;
+            Vector3 dir = Player.transform.position - transform.position;
 
-            player.GetComponent<CharacterControl>().KnockBack(dir);
-            player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);            
+            Player.GetComponent<CharacterControl>().KnockBack(dir);
+            Player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);            
         }
         m_IsPushActivated = false;
     }
@@ -348,7 +348,7 @@ public class CharacterControl : MonoBehaviour
 
             if (motion.magnitude > 0.1f)
             {
-                CharacterController.Move(motion);
+                m_CharacterController.Move(motion);
             }
         }
         else

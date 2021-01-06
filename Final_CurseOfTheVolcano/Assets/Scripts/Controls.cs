@@ -8,10 +8,10 @@ using UnityEngine.InputSystem.Utilities;
 
 public class @Controls : IInputActionCollection, IDisposable
 {
-    public InputActionAsset Asset { get; }
+    public InputActionAsset asset { get; }
     public @Controls()
     {
-        Asset = InputActionAsset.FromJson(@"{
+        asset = InputActionAsset.FromJson(@"{
     ""name"": ""Controls"",
     ""maps"": [
         {
@@ -197,13 +197,13 @@ public class @Controls : IInputActionCollection, IDisposable
     ""controlSchemes"": []
 }");
         // GameControls
-        m_GameControls = Asset.FindActionMap("GameControls", throwIfNotFound: true);
+        m_GameControls = asset.FindActionMap("GameControls", throwIfNotFound: true);
         m_GameControls_Movement = m_GameControls.FindAction("Movement", throwIfNotFound: true);
         m_GameControls_Jump = m_GameControls.FindAction("Jump", throwIfNotFound: true);
         m_GameControls_Interact = m_GameControls.FindAction("Interact", throwIfNotFound: true);
         m_GameControls_Push = m_GameControls.FindAction("Push", throwIfNotFound: true);
         // MenuControls
-        m_MenuControls = Asset.FindActionMap("MenuControls", throwIfNotFound: true);
+        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
         m_MenuControls_Select = m_MenuControls.FindAction("Select", throwIfNotFound: true);
         m_MenuControls_Selection = m_MenuControls.FindAction("Selection", throwIfNotFound: true);
         m_MenuControls_Start = m_MenuControls.FindAction("Start", throwIfNotFound: true);
@@ -212,31 +212,31 @@ public class @Controls : IInputActionCollection, IDisposable
 
     public void Dispose()
     {
-        UnityEngine.Object.Destroy(Asset);
+        UnityEngine.Object.Destroy(asset);
     }
 
     public InputBinding? bindingMask
     {
-        get => Asset.bindingMask;
-        set => Asset.bindingMask = value;
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
     }
 
     public ReadOnlyArray<InputDevice>? devices
     {
-        get => Asset.devices;
-        set => Asset.devices = value;
+        get => asset.devices;
+        set => asset.devices = value;
     }
 
-    public ReadOnlyArray<InputControlScheme> controlSchemes => Asset.controlSchemes;
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
     public bool Contains(InputAction action)
     {
-        return Asset.Contains(action);
+        return asset.Contains(action);
     }
 
     public IEnumerator<InputAction> GetEnumerator()
     {
-        return Asset.GetEnumerator();
+        return asset.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -246,12 +246,12 @@ public class @Controls : IInputActionCollection, IDisposable
 
     public void Enable()
     {
-        Asset.Enable();
+        asset.Enable();
     }
 
     public void Disable()
     {
-        Asset.Disable();
+        asset.Disable();
     }
 
     // GameControls

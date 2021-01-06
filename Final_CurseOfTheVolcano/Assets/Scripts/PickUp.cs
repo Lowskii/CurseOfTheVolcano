@@ -12,15 +12,15 @@ public class PickUp : MonoBehaviour
     [SerializeField] private float m_RunTimeDoubleJump = 5;
     [SerializeField] private float m_RunTimeSpeedUp = 3;
     [SerializeField] private float m_RunTimeStrongerPush = 10;
-    [SerializeField] private float m_RespawnTime;
-    public Material[] ListOfMaterials = new Material[3];
-    public AudioSource AudioSource;
+    [SerializeField] float m_RespawnTime;
+    public AudioSource m_AudioSource;
     [SerializeField] private GameObject m_UILoader;
     [SerializeField] private Sprite m_Fist, m_DoubleJump, m_Speed;
 
 
     private void Start()
     {
+
         CreateRandomPickUp();
 
     }
@@ -39,17 +39,17 @@ public class PickUp : MonoBehaviour
         if (PickUpType.DoubleJump == m_PickUpType)
         {
 
-            m_Player.GetComponent<CharacterControl>().IsDoubleJumpEnabled = false;
+            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.SpedUp == m_PickUpType)
         {
-            m_Player.GetComponent<CharacterControl>().IsSpedUp = false;
+            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
-            m_Player.GetComponent<CharacterControl>().IsStrongerPush = false;
+            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
     }
@@ -63,15 +63,12 @@ public class PickUp : MonoBehaviour
         {
             case 0:
                 m_PickUpType = PickUpType.SpedUp;
-                GetComponent<Renderer>().material = ListOfMaterials[0];
                 break;
             case 1:
                 m_PickUpType = PickUpType.DoubleJump;
-                GetComponent<Renderer>().material = ListOfMaterials[1];
                 break;
             case 2:
                 m_PickUpType = PickUpType.StrongerPush;
-                GetComponent<Renderer>().material = ListOfMaterials[2];
                 break;
             default:
                 break;
@@ -95,7 +92,7 @@ public class PickUp : MonoBehaviour
         if (PickUpType.DoubleJump == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().IsDoubleJumpEnabled = true;
+            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeDoubleJump;
@@ -109,7 +106,7 @@ public class PickUp : MonoBehaviour
         else if (PickUpType.SpedUp == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().IsSpedUp = true;
+            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedUp;
@@ -122,7 +119,7 @@ public class PickUp : MonoBehaviour
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().IsStrongerPush = true;
+            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeStrongerPush;
