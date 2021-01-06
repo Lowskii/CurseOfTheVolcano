@@ -112,7 +112,6 @@ public class CharacterControl : MonoBehaviour
         else
         {
             m_CurrentPushForce = m_NormalPushForce;
-
         }
     }
 
@@ -291,7 +290,7 @@ public class CharacterControl : MonoBehaviour
             GameObject Player = other.gameObject;
             Vector3 dir = Player.transform.position - transform.position;
 
-            Player.GetComponent<CharacterControl>().KnockBack(dir);
+            Player.GetComponent<CharacterControl>().KnockBack(dir, m_CurrentPushForce);
             Player.GetComponent<InputBehaviour>().RumbleController(0.5f, 0.7f);            
         }
         m_IsPushActivated = false;
@@ -317,12 +316,12 @@ public class CharacterControl : MonoBehaviour
         Invoke("DisablePushActivated", 0.25f);
     }
 
-    public void KnockBack(Vector3 direction)
+    public void KnockBack(Vector3 direction, float pushForce)
     {
         direction.y = 0; //we don't want people getting knocked up or down
         direction.Normalize();
 
-        m_Inpact = direction * m_CurrentPushForce;
+        m_Inpact = direction * pushForce;
         m_CurrentInpact = m_Inpact;
 
         m_KnockBackTimer = 0.2f;
