@@ -10,7 +10,6 @@ public class Curse : MonoBehaviour
     private int m_RandomNumer;
 
     private ArrayList m_CurrentPlayerList = new ArrayList();
-    public Material[] ListOfMaterials = new Material[4];
 
     public AudioSource AudioSource;
 
