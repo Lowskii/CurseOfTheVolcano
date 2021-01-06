@@ -87,7 +87,7 @@ public class PickUp : MonoBehaviour
     {
         //if (other.gameObject.layer == LayerMask.GetMask("Player"))
         //{
-        AudioSource.Play();
+        m_AudioSource.Play();
 
         if (PickUpType.DoubleJump == m_PickUpType)
         {
