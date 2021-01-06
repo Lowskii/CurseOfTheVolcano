@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CharacterController: {fileID: 7069288085226141754}
   m_MovementSpeed: 9
-  m_NormalPushForce: 0.42
-  m_StrongPushForce: 0.5
+  m_NormalPushForce: 0.41
+  m_StrongPushForce: 0.55
   m_TurnSmoothTime: 0.1
   m_SaveUI: {fileID: 503076221768081227}
   m_PushUI: {fileID: 4175556309806930724}
