@@ -130,7 +130,7 @@ public class SpawnManager : MonoBehaviour
                 playerCameraRect.height = 0.5f;
                 playerCameraRect.width = 0.5f;
                 playerCameraRect.y = 0.5f;
-                playerCameraRect.x = 0.25f;
+                playerCameraRect.x = 0f;
                 m_Cameras[0].rect = playerCameraRect;
 
                 playerCameraRect = m_Cameras[1].rect;

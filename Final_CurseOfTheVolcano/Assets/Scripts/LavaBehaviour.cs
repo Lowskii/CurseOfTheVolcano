@@ -57,9 +57,12 @@ public class LavaBehaviour : MonoBehaviour
             hit.gameObject.transform.Find("Canvas").transform.Find("Red").gameObject.SetActive(true);
             hit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
 
+            FindObjectOfType<LevelProgressionBar>().PlayerDied(hit.gameObject);
+
             StartCoroutine(PlaySound());
 
             IncreaseSpeed();
+
             //CharacterControl.PlayerDied();
 
             //TODO: Find alternative for ending it so abruptly 

@@ -11,7 +11,9 @@ public class InitializeGame : MonoBehaviour
     [SerializeField] LavaBehaviour m_LavaBeh;
 
     [SerializeField] List<GameObject> m_Players = new List<GameObject>();
+
     [SerializeField] GameObject m_IntroductionObjects;
+    [SerializeField] GameObject m_ProgressBar;
 
     private const float m_AnimationStayDuration = 1.5f; //the time the camera stays at the end point of the dolly track
 
@@ -53,8 +55,11 @@ public class InitializeGame : MonoBehaviour
             //make the player a seperate gameobject 
             inputs[i].transform.parent = null;
 
-            //setup the camera rects 
-            Camera playerCam = inputs[i].GetComponentInChildren<Camera>();
+            //add the player to the progress bar
+            m_ProgressBar.GetComponent<LevelProgressionBar>().AddPlayer(inputs[i].gameObject);
+
+             //setup the camera rects 
+             Camera playerCam = inputs[i].GetComponentInChildren<Camera>();
             playerCam.rect = menuCam.rect;
             playerCam.transform.parent = null;
 
@@ -74,6 +79,9 @@ public class InitializeGame : MonoBehaviour
         Destroy(m_IntroductionObjects);
 
         m_IsCountdownActive = true;
+
+        m_ProgressBar.SetActive(true);
+        m_ProgressBar.GetComponent<LevelProgressionBar>().EnableSliders();
     }
     private void StartGame()
     {
