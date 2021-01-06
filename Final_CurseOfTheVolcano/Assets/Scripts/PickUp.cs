@@ -12,9 +12,9 @@ public class PickUp : MonoBehaviour
     [SerializeField] private float m_RunTimeDoubleJump = 5;
     [SerializeField] private float m_RunTimeSpeedUp = 3;
     [SerializeField] private float m_RunTimeStrongerPush = 10;
-    [SerializeField] float m_RespawnTime;
-    public Material[] m_ListOfMaterials = new Material[3];
-    public AudioSource m_AudioSource;
+    [SerializeField] private float m_RespawnTime;
+    public Material[] ListOfMaterials = new Material[3];
+    public AudioSource AudioSource;
     [SerializeField] private GameObject m_UILoader;
     [SerializeField] private Sprite m_Fist, m_DoubleJump, m_Speed;
 
@@ -63,15 +63,15 @@ public class PickUp : MonoBehaviour
         {
             case 0:
                 m_PickUpType = PickUpType.SpedUp;
-                GetComponent<Renderer>().material = m_ListOfMaterials[0];
+                GetComponent<Renderer>().material = ListOfMaterials[0];
                 break;
             case 1:
                 m_PickUpType = PickUpType.DoubleJump;
-                GetComponent<Renderer>().material = m_ListOfMaterials[1];
+                GetComponent<Renderer>().material = ListOfMaterials[1];
                 break;
             case 2:
                 m_PickUpType = PickUpType.StrongerPush;
-                GetComponent<Renderer>().material = m_ListOfMaterials[2];
+                GetComponent<Renderer>().material = ListOfMaterials[2];
                 break;
             default:
                 break;
@@ -90,7 +90,7 @@ public class PickUp : MonoBehaviour
     {
         //if (other.gameObject.layer == LayerMask.GetMask("Player"))
         //{
-        m_AudioSource.Play();
+        AudioSource.Play();
 
         if (PickUpType.DoubleJump == m_PickUpType)
         {

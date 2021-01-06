@@ -11,8 +11,8 @@ public class LevelManager : MonoBehaviour
     public List<Player> LivePlayers => m_LivePlayers;
     private int m_PlayerCount = 0;
 
-    [SerializeField] Transform[] m_PlacementTransforms = new Transform[3];
-    [SerializeField] AudioSource m_AudioSource;
+    [SerializeField] private Transform[] m_PlacementTransforms = new Transform[3];
+    [SerializeField] private AudioSource m_AudioSource;
     private void Awake()
     {        
         DontDestroyOnLoad(this.gameObject);

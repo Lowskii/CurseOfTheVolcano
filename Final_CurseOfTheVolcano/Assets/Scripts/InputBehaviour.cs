@@ -8,11 +8,11 @@ using UnityEngine.InputSystem.UI;
 
 public class InputBehaviour : MonoBehaviour
 {
-    Controls m_Controls;
-    CharacterControl m_CharacterControl;
-    Vector3 m_Rotation;
+    private Controls m_Controls;
+    private CharacterControl m_CharacterControl;
+    private Vector3 m_Rotation;
 
-    Gamepad m_CurrentController;
+    private Gamepad m_CurrentController;
     static private List<PlayerInput.ActionEvent> m_SkipEvents = new List<PlayerInput.ActionEvent>();
     public void SetInputUser(InputUser inputUser, InputDevice controller)
     {

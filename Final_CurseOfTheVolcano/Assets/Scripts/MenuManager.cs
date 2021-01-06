@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private string m_SceneName;
 
-    public static string m_LevelName = "";
+    public static string LevelName = "";
 
     public void QuitGame()
     {
@@ -17,14 +17,14 @@ public class MenuManager : MonoBehaviour
     }
     public void PlayLevel1()
     {
-        m_LevelName = "L1_Vesuvius";
+        LevelName = "L1_Vesuvius";
 
         SceneManager.LoadScene(m_SceneName);
     }
 
     public void PlayLevel2()
     {
-        m_LevelName = "L2_Kilimanjaro";
+        LevelName = "L2_Kilimanjaro";
 
         SceneManager.LoadScene(m_SceneName);
     }

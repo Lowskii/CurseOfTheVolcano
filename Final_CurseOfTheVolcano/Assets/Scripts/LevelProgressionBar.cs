@@ -7,16 +7,16 @@ public class LevelProgressionBar : MonoBehaviour
 {
     Dictionary<GameObject, Slider> m_PlayersSlider = new Dictionary<GameObject, Slider>();
 
-    [SerializeField] Slider m_Slider;
-    [SerializeField] Canvas m_Canvas;
+    [SerializeField] private Slider m_Slider;
+    [SerializeField] private Canvas m_Canvas;
 
-    [SerializeField] Sprite m_Skull;
-    [SerializeField] Sprite m_PlayerSprite;
+    [SerializeField] private Sprite m_Skull;
+    [SerializeField] private Sprite m_PlayerSprite;
 
-    [SerializeField] Transform m_Lava;
+    [SerializeField] private Transform m_Lava;
 
-    [SerializeField] Transform m_Finish;
-    [SerializeField] Transform m_StartPoint; //could be any of the players spawns since we only need the height
+    [SerializeField] private Transform m_Finish;
+    [SerializeField] private Transform m_StartPoint; //could be any of the players spawns since we only need the height
 
     private float m_DistanceToTop;
 

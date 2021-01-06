@@ -8,7 +8,7 @@ public class PlatformMovement : MonoBehaviour
     public float Speed;
     public float DelayTime;
     public bool Continuous;
-    public bool m_IsSideways = false;
+    public bool IsSideways = false;
 
     private Vector3 m_CurrentTarget;
     private int m_PointsIndex;
@@ -16,7 +16,7 @@ public class PlatformMovement : MonoBehaviour
     private float m_DelayStart;
     private bool m_Moving;
     public bool IsMoving => m_Moving;
-    Vector3 movement;
+    private Vector3 m_Movement;
     private List<CharacterControl> m_PlayersOnPlatform = new List<CharacterControl>();
     void Start()
     {
@@ -37,15 +37,15 @@ public class PlatformMovement : MonoBehaviour
     private void MovePlatform()
     {
         Vector3 heading = m_CurrentTarget - this.transform.position;
-        movement = heading.normalized * Speed * Time.deltaTime;
+        m_Movement = heading.normalized * Speed * Time.deltaTime;
 
-        this.transform.position += movement;
+        this.transform.position += m_Movement;
 
-        if (m_IsSideways)
+        if (IsSideways)
         {
             foreach (CharacterControl ch in m_PlayersOnPlatform)
             {
-                ch.AddExternalMovement(movement);
+                ch.AddExternalMovement(m_Movement);
             }
         }
 

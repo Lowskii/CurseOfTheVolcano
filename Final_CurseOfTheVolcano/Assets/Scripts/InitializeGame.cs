@@ -7,19 +7,19 @@ using UnityEngine.Playables;
 
 public class InitializeGame : MonoBehaviour
 {
-    [SerializeField] Transform[] m_SpawnPoints = new Transform[4];
-    [SerializeField] LavaBehaviour m_LavaBeh;
+    [SerializeField] private Transform[] m_SpawnPoints = new Transform[4];
+    [SerializeField] private LavaBehaviour m_LavaBeh;
 
-    [SerializeField] List<GameObject> m_Players = new List<GameObject>();
+    [SerializeField] private List<GameObject> m_Players = new List<GameObject>();
 
-    [SerializeField] GameObject m_IntroductionObjects;
-    [SerializeField] GameObject m_ProgressBar;
+    [SerializeField] private GameObject m_IntroductionObjects;
+    [SerializeField] private GameObject m_ProgressBar;
 
     private const float m_AnimationStayDuration = 1.5f; //the time the camera stays at the end point of the dolly track
 
-    [SerializeField] TextMeshProUGUI m_CountDownText;
-    [SerializeField] float m_StartCountdown = 3.5f;
-    bool m_IsCountdownActive = false;
+    [SerializeField] private TextMeshProUGUI m_CountDownText;
+    [SerializeField] private float m_StartCountdown = 3.5f;
+    private bool m_IsCountdownActive = false;
 
     private void Start()
     {

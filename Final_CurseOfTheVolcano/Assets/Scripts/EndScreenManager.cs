@@ -9,7 +9,7 @@ public class EndScreenManager : MonoBehaviour
     [SerializeField] private Transform[] m_Positions = new Transform[4];
     [SerializeField] private GameObject[] m_UI = new GameObject[4];
     [SerializeField] private GameObject m_Model;
-    [SerializeField] AudioSource m_AudioSource;
+    [SerializeField] private AudioSource m_AudioSource;
     [SerializeField] private AudioClip m_VictoryMusic, m_DefeatMusic;
     private Controls m_GameInputControls;
 

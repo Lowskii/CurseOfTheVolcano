@@ -38,8 +38,6 @@ public class LavaBehaviour : MonoBehaviour
         m_LavaSound.Play();
         yield return new WaitForSeconds(0.5f);
         m_ScreamSound.Play();
-
-
     }
     private void OnTriggerEnter(Collider hit)
     {

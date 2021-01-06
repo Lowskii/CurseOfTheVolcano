@@ -10,9 +10,9 @@ public class Curse : MonoBehaviour
     private int m_RandomNumer;
 
     private ArrayList m_CurrentPlayerList = new ArrayList();
-    public Material[] m_ListOfMaterials = new Material[4];
+    public Material[] ListOfMaterials = new Material[4];
 
-    public AudioSource m_AudioSource;
+    public AudioSource AudioSource;
 
     [SerializeField] private float m_RunTimeBounce = 5;
     [SerializeField] private float m_RunTimeInverseControl = 3;
@@ -21,7 +21,7 @@ public class Curse : MonoBehaviour
 
     private float m_RunTime = 10;
 
-    [SerializeField] float m_RespawnTime;
+    [SerializeField] private float m_RespawnTime;
     [SerializeField] private GameObject m_UILoader;
     [SerializeField] private Sprite m_Bounce, m_Stun, m_Speed,m_Inverse;
     private float m_logoTime=1.5f;
@@ -38,22 +38,22 @@ public class Curse : MonoBehaviour
         {
             case 0:
                 m_CurrentCurseType = CurseType.Bounce;
-                GetComponent<Renderer>().material = m_ListOfMaterials[0];
+                GetComponent<Renderer>().material = ListOfMaterials[0];
                 m_RunTime = m_RunTimeBounce;
                 break;
             case 1:
                 m_CurrentCurseType = CurseType.InverseControls;
-                GetComponent<Renderer>().material = m_ListOfMaterials[1];
+                GetComponent<Renderer>().material = ListOfMaterials[1];
                 m_RunTime = m_RunTimeInverseControl;
                 break;
             case 2:
                 m_CurrentCurseType = CurseType.Paralyse;
-                GetComponent<Renderer>().material = m_ListOfMaterials[2];
+                GetComponent<Renderer>().material = ListOfMaterials[2];
                 m_RunTime = m_RunTimeParalyse;
                 break;
             case 3:
                 m_CurrentCurseType = CurseType.SpeedDown;
-                GetComponent<Renderer>().material = m_ListOfMaterials[3];
+                GetComponent<Renderer>().material = ListOfMaterials[3];
                 m_RunTime = m_RunTimeSpeedDown;
                 break;
             default:
@@ -119,7 +119,7 @@ public class Curse : MonoBehaviour
         if (/*other.gameObject.layer == LayerMask.GetMask("Player")*/other.gameObject.tag == "Player")
         {
             FindObjectOfType<LevelManager>().LevelCanvas.GetComponent<Animator>().SetTrigger("ActivateCurse");
-            m_AudioSource.Play();
+            AudioSource.Play();
 
             DeactivateVisuals();
 

@@ -6,10 +6,10 @@ using UnityEngine.InputSystem.Users;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] GameObject m_SelectionMenu;
-    [SerializeField] GameObject m_MainLayout;
+    [SerializeField] private GameObject m_SelectionMenu;
+    [SerializeField] private GameObject m_MainLayout;
 
-    [SerializeField] GameObject m_HelpText;
+    [SerializeField] private GameObject m_HelpText;
 
 
     private List<int> m_ControllerIds = new List<int>();
@@ -189,9 +189,9 @@ public class SpawnManager : MonoBehaviour
         {
             CharacterSelection.ResetCharacterSelection();
 
-            if (MenuManager.m_LevelName.Length != 0)
+            if (MenuManager.LevelName.Length != 0)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.m_LevelName);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(MenuManager.LevelName);
             }
             //hardcoded level load for easyer and faster testing during dev
             else
