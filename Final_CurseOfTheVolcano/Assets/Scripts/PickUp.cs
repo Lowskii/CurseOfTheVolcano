@@ -13,7 +13,6 @@ public class PickUp : MonoBehaviour
     [SerializeField] private float m_RunTimeSpeedUp = 3;
     [SerializeField] private float m_RunTimeStrongerPush = 10;
     [SerializeField] float m_RespawnTime;
-    public Material[] m_ListOfMaterials = new Material[3];
     public AudioSource m_AudioSource;
     [SerializeField] private GameObject m_UILoader;
     [SerializeField] private Sprite m_Fist, m_DoubleJump, m_Speed;
@@ -21,6 +20,7 @@ public class PickUp : MonoBehaviour
 
     private void Start()
     {
+
         CreateRandomPickUp();
 
     }
@@ -63,15 +63,12 @@ public class PickUp : MonoBehaviour
         {
             case 0:
                 m_PickUpType = PickUpType.SpedUp;
-                GetComponent<Renderer>().material = m_ListOfMaterials[0];
                 break;
             case 1:
                 m_PickUpType = PickUpType.DoubleJump;
-                GetComponent<Renderer>().material = m_ListOfMaterials[1];
                 break;
             case 2:
                 m_PickUpType = PickUpType.StrongerPush;
-                GetComponent<Renderer>().material = m_ListOfMaterials[2];
                 break;
             default:
                 break;
