@@ -39,17 +39,17 @@ public class PickUp : MonoBehaviour
         if (PickUpType.DoubleJump == m_PickUpType)
         {
 
-            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = false;
+            m_Player.GetComponent<CharacterControl>().IsDoubleJumpEnabled = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.SpedUp == m_PickUpType)
         {
-            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = false;
+            m_Player.GetComponent<CharacterControl>().IsSpedUp = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
-            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = false;
+            m_Player.GetComponent<CharacterControl>().IsStrongerPush = false;
             Destroy(m_Player.GetComponentInChildren<GridLayoutGroup>().transform.GetChild(0).gameObject);
         }
     }
@@ -92,7 +92,7 @@ public class PickUp : MonoBehaviour
         if (PickUpType.DoubleJump == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().m_IsDoubleJumpEnabled = true;
+            m_Player.GetComponent<CharacterControl>().IsDoubleJumpEnabled = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeDoubleJump;
@@ -106,7 +106,7 @@ public class PickUp : MonoBehaviour
         else if (PickUpType.SpedUp == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().m_IsSpedUp = true;
+            m_Player.GetComponent<CharacterControl>().IsSpedUp = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeSpeedUp;
@@ -119,7 +119,7 @@ public class PickUp : MonoBehaviour
         else if (PickUpType.StrongerPush == m_PickUpType)
         {
             m_Player = other.gameObject;
-            m_Player.GetComponent<CharacterControl>().m_IsStrongerPush = true;
+            m_Player.GetComponent<CharacterControl>().IsStrongerPush = true;
             GridLayoutGroup grid = m_Player.GetComponentInChildren<GridLayoutGroup>();
             GameObject loader = Instantiate(m_UILoader, grid.transform);
             loader.GetComponent<Image>().GetComponent<Loader>().MaxValue = m_RunTimeStrongerPush;
