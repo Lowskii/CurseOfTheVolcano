@@ -51,6 +51,7 @@ public class LevelProgressionBar : MonoBehaviour
         playerSlider.gameObject.SetActive(false);
 
         m_PlayersSlider.Add(player, playerSlider);
+        m_Canvas.transform.Find("Demon").SetAsLastSibling();
     }
     private float CalculateProgress(float yPos)
     {
