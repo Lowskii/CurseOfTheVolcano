@@ -230,7 +230,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsBouncing = false;
+            item.GetComponent<CharacterControl>().m_IsBouncing = false;
         }
     }
 
@@ -238,7 +238,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().Paralyse = false;
+            item.GetComponent<CharacterControl>().m_Paralyse = false;
         }
     }
 
@@ -246,7 +246,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsMovementInversed = false;
+            item.GetComponent<CharacterControl>().m_IsMovementInversed = false;
         }
     }
 
@@ -254,14 +254,14 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsSpeedDown = false;
+            item.GetComponent<CharacterControl>().m_IsSpeedDown = false;
         }
     }
     private void LetPlayersBounce(GameObject item)
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsBouncing = true;
+            item.GetComponent<CharacterControl>().m_IsBouncing = true;
         }
     }
 
@@ -270,7 +270,7 @@ public class Curse : MonoBehaviour
         if (item.GetComponent<CharacterController>() != null)
         {
             item.GetComponent<InputBehaviour>().RumbleController(0.5f, m_RunTime);
-            item.GetComponent<CharacterControl>().Paralyse = true;
+            item.GetComponent<CharacterControl>().m_Paralyse = true;
         }
     }
 
@@ -278,7 +278,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsMovementInversed = true;
+            item.GetComponent<CharacterControl>().m_IsMovementInversed = true;
         }
     }
 
@@ -286,7 +286,7 @@ public class Curse : MonoBehaviour
     {
         if (item.GetComponent<CharacterController>() != null)
         {
-            item.GetComponent<CharacterControl>().IsSpeedDown = true;
+            item.GetComponent<CharacterControl>().m_IsSpeedDown = true;
         }
     }
 
