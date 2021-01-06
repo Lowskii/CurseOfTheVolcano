@@ -134,14 +134,14 @@ public class SpawnManager : MonoBehaviour
                 m_Cameras[0].rect = playerCameraRect;
 
                 playerCameraRect = m_Cameras[1].rect;
-                playerCameraRect.x = 0.0f;
-                playerCameraRect.y = 0.0f;
+                playerCameraRect.x = 0.5f;
+                playerCameraRect.y = 0.5f;
                 playerCameraRect.width = 0.5f;
                 playerCameraRect.height = 0.5f;
                 m_Cameras[1].rect = playerCameraRect;
 
                 playerCameraRect = m_Cameras[2].rect;
-                playerCameraRect.x = 0.5f;
+                playerCameraRect.x = 0.0f;
                 playerCameraRect.y = 0.0f;
                 playerCameraRect.width = 0.5f;
                 playerCameraRect.height = 0.5f;
@@ -185,9 +185,8 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         //check if we are ready to start the game
-        if (m_PlayerSelections.TrueForAll(p => p.IsReady) && m_PlayerSelections.Count >= 1)
+        if (m_PlayerSelections.TrueForAll(p => p.IsReady) && m_PlayerSelections.Count > 1)
         {
-            Debug.Log("this needs to change to m_MinPlayers for final build");
             CharacterSelection.ResetCharacterSelection();
 
             if (MenuManager.m_LevelName.Length != 0)
