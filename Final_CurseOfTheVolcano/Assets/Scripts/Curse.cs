@@ -10,7 +10,6 @@ public class Curse : MonoBehaviour
     private int m_RandomNumer;
 
     private ArrayList m_CurrentPlayerList = new ArrayList();
-    public Material[] m_ListOfMaterials = new Material[4];
 
     public AudioSource m_AudioSource;
 
@@ -29,6 +28,7 @@ public class Curse : MonoBehaviour
     private void Start()
     {
         CreateRandomCurse();
+
     }
     private void CreateRandomCurse()
     {
@@ -38,22 +38,18 @@ public class Curse : MonoBehaviour
         {
             case 0:
                 m_CurrentCurseType = CurseType.Bounce;
-                GetComponent<Renderer>().material = m_ListOfMaterials[0];
                 m_RunTime = m_RunTimeBounce;
                 break;
             case 1:
-                m_CurrentCurseType = CurseType.InverseControls;
-                GetComponent<Renderer>().material = m_ListOfMaterials[1];
+                m_CurrentCurseType = CurseType.InverseControls;           
                 m_RunTime = m_RunTimeInverseControl;
                 break;
             case 2:
-                m_CurrentCurseType = CurseType.Paralyse;
-                GetComponent<Renderer>().material = m_ListOfMaterials[2];
+                m_CurrentCurseType = CurseType.Paralyse;         
                 m_RunTime = m_RunTimeParalyse;
                 break;
             case 3:
                 m_CurrentCurseType = CurseType.SpeedDown;
-                GetComponent<Renderer>().material = m_ListOfMaterials[3];
                 m_RunTime = m_RunTimeSpeedDown;
                 break;
             default:
